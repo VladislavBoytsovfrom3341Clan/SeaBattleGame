@@ -3,6 +3,9 @@
 
 #include<vector>
 
+extern const int minimalShipLength;
+extern const int maximalShipLength;
+
 enum class SegmentCondition
 {
     destroyed,
@@ -17,15 +20,17 @@ class Battleship
         SegmentCondition mSegmentCondition;
     public:
         BattleshipSegment();
-        void takeDamage(int damage);
+        void takeDamage(const int damage);
         SegmentCondition getStatus();
     };
 
     const int mLength;
-    std::vector<BattleshipSegment> segments;
+    std::vector<BattleshipSegment> mSegments;
 
 public:
     Battleship(int length);
+    std::vector<SegmentCondition> getShipCondition();
+    void damageSegment(const int index, const int damage);
 };
 
 #endif

@@ -9,7 +9,7 @@ Battleship::BattleshipSegment::BattleshipSegment()
     mSegmentCondition=SegmentCondition::intact;
 }
 
-void Battleship::BattleshipSegment::takeDamage(int damage)
+void Battleship::BattleshipSegment::takeDamage(const int damage)
 {
     if(damage>=2)
         mSegmentCondition=SegmentCondition::destroyed;
@@ -38,4 +38,19 @@ Battleship::Battleship(int length):mLength(length)
         BattleshipSegment newSegment;
         mSegments.push_back(newSegment);
     }
+}
+
+std::vector<SegmentCondition> Battleship::getShipCondition()
+{
+    std::vector<SegmentCondition> out;
+    for(auto i: mSegments)
+        out.push_back(i.getStatus());
+    return out;
+}
+
+void Battleship::damageSegment(const int index, const int damage)
+{
+    if(index<0 or index>=maximalShipLength)
+        throw std::length_error("Invalid segment index");
+    mSegments[index].takeDamage(damage);
 }
