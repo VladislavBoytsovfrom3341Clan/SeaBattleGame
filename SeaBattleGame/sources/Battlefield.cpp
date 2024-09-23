@@ -73,12 +73,15 @@ void Battlefield::setShip(Battleship* ship, int x, int y, Orientation orientatio
     }
     if(x<0 or x>=mHorizontalSize-xOffset or y<0 or y>mVerticalSize-yOffset)
         throw std::invalid_argument("Invalid ship coordinates");
-    for(int j=y-1; j<y+yOffset+1; j++)
+    for(int j=y-1; j<=y+yOffset+1; j++)
         if(j>=0 and j<mVerticalSize)
-            for(int i=x-1; i<x+xOffset; i++)
+            for(int i=x-1; i<=x+xOffset+1; i++)
                 if(i>=0 and i<mHorizontalSize)
+                {
+                    std::cout<<"\n"<<i<<" - "<<j<<"\n";
                     if(mBattlefieldArray[j][i].hasShip())
                         throw std::logic_error("Intersection between ships occured");
+                }
 
     int segmentIndex=0;
     for(int j=y; j<=y+yOffset; j++)
