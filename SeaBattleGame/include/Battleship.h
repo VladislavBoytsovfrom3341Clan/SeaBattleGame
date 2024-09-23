@@ -30,6 +30,8 @@ class Battleship
 public:
     Battleship(int length);
     std::vector<SegmentCondition> getShipCondition();
+    SegmentCondition getSegmentCondition(const int index);
+    int getLength();
     void damageSegment(const int index, const int damage);
 };
 

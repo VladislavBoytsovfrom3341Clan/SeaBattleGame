@@ -48,6 +48,18 @@ std::vector<SegmentCondition> Battleship::getShipCondition()
     return out;
 }
 
+SegmentCondition Battleship::getSegmentCondition(const int index)
+{
+    if(index<0 or index>=mLength)
+        throw std::length_error("Invelid index");
+    return mSegments[index].getStatus();
+}
+
+int Battleship::getLength()
+{
+    return mLength;
+}
+
 void Battleship::damageSegment(const int index, const int damage)
 {
     if(index<0 or index>=maximalShipLength)

@@ -1,5 +1,5 @@
-#ifndef SHIP_MANAGER.H
-#define SHIP_MANAGER.H
+#ifndef SHIP_MANAGER
+#define SHIP_MANAGER
 
 class ShipManager
 {

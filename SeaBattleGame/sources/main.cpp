@@ -1,4 +1,4 @@
-#include"Battleship.h"
+#include"Battlefield.h"
 #include<iostream>
 
 void printShip(Battleship& ship)
@@ -14,9 +14,14 @@ void printShip(Battleship& ship)
 
 int main()
 {
-    Battleship ms(4);
-    printShip(ms);
-    ms.damageSegment(0, 1);
-    ms.damageSegment(2, 2);
-    printShip(ms);
+    Battlefield b(10, 10);
+    b.display();
+    Battleship s4(4);
+    b.setShip(&s4, 1, 1, Orientation::vertical);
+    b.attackCell(0, 0);
+    b.attackCell(1, 1);
+    b.attackCell(1, 2);
+    b.attackCell(2, 1);
+    b.attackCell(1, 1);
+    b.display();
 }
