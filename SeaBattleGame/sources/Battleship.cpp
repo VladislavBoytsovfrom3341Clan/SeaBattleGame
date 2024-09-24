@@ -40,12 +40,12 @@ Battleship::Battleship(int length):mLength(length)
     }
 }
 
-std::vector<SegmentCondition> Battleship::getShipCondition()
+bool Battleship::isAlive()
 {
-    std::vector<SegmentCondition> out;
-    for(auto i: mSegments)
-        out.push_back(i.getStatus());
-    return out;
+    for(auto segment: mSegments)
+        if(segment.getStatus()!=SegmentCondition::destroyed)
+            return true;
+    return false;
 }
 
 SegmentCondition Battleship::getSegmentCondition(const int index)

@@ -78,7 +78,6 @@ void Battlefield::setShip(Battleship* ship, int x, int y, Orientation orientatio
             for(int i=x-1; i<=x+xOffset+1; i++)
                 if(i>=0 and i<mHorizontalSize)
                 {
-                    std::cout<<"\n"<<i<<" - "<<j<<"\n";
                     if(mBattlefieldArray[j][i].hasShip())
                         throw std::logic_error("Intersection between ships occured");
                 }
