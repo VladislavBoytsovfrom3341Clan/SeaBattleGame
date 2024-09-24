@@ -1,17 +1,6 @@
 #include"Battlefield.h"
 #include<iostream>
 
-void printShip(Battleship& ship)
-{
-    std::cout<<"\n";
-    std::vector<SegmentCondition> s1 = ship.getShipCondition();
-    for(auto i: s1)
-    {
-        std::cout<<int(i)<<" ";
-    }
-    std::cout<<"\n";
-}
-
 int main()
 {
     Battlefield b(10, 10);
