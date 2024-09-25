@@ -10,10 +10,13 @@ int main()
     f.attackCell(0, 0);
     f.display();
 
-    Battlefield g(f);
+    Battlefield g(5, 5);
+    g.display();
+    g=f;
     ms.setShipToBattlefield(g, 0, 2, 2, Orientation::vertical);
     g.attackCell(2, 2);
     f.attackCell(2, 2);
+    g.attackCell(0, 0);
     f.display();
     g.display();
 }

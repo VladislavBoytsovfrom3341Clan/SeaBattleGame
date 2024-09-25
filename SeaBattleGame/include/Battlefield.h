@@ -28,16 +28,11 @@ class Battlefield
         CellStatus mStatus = CellStatus::unknown;
     public:
         BattlefieldCell() = default;
-        BattlefieldCell(const BattlefieldCell& copy);
-        BattlefieldCell(BattlefieldCell&& copy);
         CellStatus getStatus();
         SegmentCondition getSegmentCondition();
         bool hasShip();
         void setShipSegment(Battleship* shipPointer, const int shipSegmentIndex);
         void attackCell(const int damage);
-
-        BattlefieldCell& operator=(const BattlefieldCell& copy);
-        BattlefieldCell& operator=(BattlefieldCell&& moved);
     };
     int mHorizontalSize;
     int mVerticalSize;

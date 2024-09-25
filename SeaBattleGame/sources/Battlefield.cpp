@@ -21,19 +21,13 @@ Battlefield::Battlefield(const int horizontalSize, const int verticalSize):mHori
     }
 }
 
-Battlefield::Battlefield(const Battlefield& copy):
-mHorizontalSize(copy.mHorizontalSize), mVerticalSize(copy.mVerticalSize)
-{
-    mBattlefieldArray = copy.mBattlefieldArray;
-}
+Battlefield::Battlefield(const Battlefield& copy):Battlefield(copy.mHorizontalSize, copy.mVerticalSize){}
 
-Battlefield::Battlefield(Battlefield&& moved):
-mHorizontalSize(moved.mHorizontalSize), mVerticalSize(moved.mVerticalSize)
+Battlefield::Battlefield(Battlefield&& moved)
 {
-    mBattlefieldArray = std::move(moved.mBattlefieldArray);
-
-    moved.mHorizontalSize=-1;
-    moved.mVerticalSize=-1;
+    mHorizontalSize=std::move(moved.mHorizontalSize);
+    mVerticalSize=std::move(moved.mVerticalSize);
+    mBattlefieldArray=std::move(moved.mBattlefieldArray);
 }
 
 void Battlefield::setShip(Battleship* ship, int x, int y, Orientation orientation)
@@ -112,7 +106,17 @@ Battlefield& Battlefield::operator=(const Battlefield& copy)
     {
         mHorizontalSize=copy.mHorizontalSize;
         mVerticalSize=copy.mVerticalSize;
-        mBattlefieldArray=copy.mBattlefieldArray;
+        mBattlefieldArray.clear();
+        mBattlefieldArray.resize(copy.mVerticalSize);
+        for(int y=0;y<copy.mVerticalSize; y++)
+        {
+            mBattlefieldArray[y].resize(copy.mHorizontalSize);
+            for(int x=0; x<copy.mHorizontalSize; x++)
+            {
+                BattlefieldCell newCell;
+                mBattlefieldArray[y].push_back(newCell);
+            }
+        }
     }
     return *this;
 }
@@ -121,12 +125,9 @@ Battlefield& Battlefield::operator=(Battlefield&& moved)
 {
     if(&moved!=this)
     {
-        mHorizontalSize=moved.mHorizontalSize;
-        mVerticalSize=moved.mVerticalSize;
+        mHorizontalSize=std::move(moved.mHorizontalSize);
+        mVerticalSize=std::move(moved.mVerticalSize);
         mBattlefieldArray=std::move(moved.mBattlefieldArray);
-
-        moved.mHorizontalSize=-1;
-        moved.mVerticalSize=-1;
     }
     return *this;
 }
