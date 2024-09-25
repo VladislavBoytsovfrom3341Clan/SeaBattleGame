@@ -40,7 +40,7 @@ Battleship::Battleship(int length):mLength(length)
     }
 }
 
-bool Battleship::isAlive()
+bool Battleship::isAlive() const
 {
     for(auto segment: mSegments)
         if(segment.getStatus()!=SegmentCondition::destroyed)

@@ -24,15 +24,18 @@ class Battleship
         SegmentCondition getStatus();
     };
 
-    const int mLength;
+    int mLength;
     std::vector<BattleshipSegment> mSegments;
 
 public:
+    Battleship() = default;
     Battleship(int length);
-    bool isAlive();
+    bool isAlive() const;
     SegmentCondition getSegmentCondition(const int index);
     int getLength();
     void damageSegment(const int index, const int damage);
+
+
 };
 
 #endif
