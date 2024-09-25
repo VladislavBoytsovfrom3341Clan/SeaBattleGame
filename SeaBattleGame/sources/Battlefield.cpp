@@ -4,22 +4,6 @@
 const int minimalFieldSize = minimalShipLength;
 const int maximalFieldSize = 25;
 
-void Battlefield::BattlefieldCell::setShipSegment(Battleship* shipPointer, const int shipSegmentIndex)
-{
-    mShipPointer = shipPointer;
-    mShipSegmentIndex = shipSegmentIndex;
-}
-
-void Battlefield::BattlefieldCell::attackCell(const int damage)
-{
-    if (mShipPointer == nullptr)
-        mStatus = CellStatus::empty;
-    else
-    {
-        mShipPointer->damageSegment(mShipSegmentIndex, damage);
-        mStatus = CellStatus::shipped;
-    }
-}
 
 Battlefield::Battlefield(const int horizontalSize, const int verticalSize):mHorizontalSize(horizontalSize), mVerticalSize(verticalSize)
 {
@@ -37,23 +21,22 @@ Battlefield::Battlefield(const int horizontalSize, const int verticalSize):mHori
     }
 }
 
-CellStatus Battlefield::BattlefieldCell::getStatus()
+Battlefield::Battlefield(const Battlefield& copy):
+mHorizontalSize(copy.mHorizontalSize), mVerticalSize(copy.mVerticalSize)
 {
-    return mStatus;
+    mBattlefieldArray = copy.mBattlefieldArray;
 }
 
-SegmentCondition Battlefield::BattlefieldCell::getSegmentCondition()
+Battlefield::Battlefield(Battlefield&& moved):
+mHorizontalSize(moved.mHorizontalSize), mVerticalSize(moved.mVerticalSize)
 {
-    if (mShipPointer == nullptr)
-        throw std::logic_error("No ship handles this cell");
-    return mShipPointer->getSegmentCondition(mShipSegmentIndex);
-}
+    mBattlefieldArray = moved.mBattlefieldArray;
 
-bool Battlefield::BattlefieldCell::hasShip()
-{
-    if (mShipPointer == nullptr)
-        return false;
-    return true;
+    moved.mHorizontalSize=-1;
+    moved.mVerticalSize=-1;
+    for(auto line: mBattlefieldArray)
+        line.clear();
+    mBattlefieldArray.clear();
 }
 
 void Battlefield::setShip(Battleship* ship, int x, int y, Orientation orientation)
@@ -124,4 +107,32 @@ void Battlefield::display()
         std::cout<<"\n";
     }
     std::cout<<"\n";
+}
+
+Battlefield& Battlefield::operator=(const Battlefield& copy)
+{
+    if(&copy!=this)
+    {
+        mHorizontalSize=copy.mHorizontalSize;
+        mVerticalSize=copy.mVerticalSize;
+        mBattlefieldArray=copy.mBattlefieldArray;
+    }
+    return *this;
+}
+
+Battlefield& Battlefield::operator=(Battlefield&& moved)
+{
+    if(&moved!=this)
+    {
+        mHorizontalSize=moved.mHorizontalSize;
+        mVerticalSize=moved.mVerticalSize;
+        mBattlefieldArray=moved.mBattlefieldArray;
+
+        moved.mHorizontalSize=-1;
+        moved.mVerticalSize=-1;
+        for(auto line: mBattlefieldArray)
+            line.clear();
+        mBattlefieldArray.clear();
+    }
+    return *this;
 }

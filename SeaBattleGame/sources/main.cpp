@@ -4,12 +4,16 @@
 int main()
 {
     
-    ShipManager ms({{4, 1}, {3, 2}, {1, 4}});
+    ShipManager ms({{1, 4}});
     Battlefield f(10, 10);
-    std::cout<<ms.getInactiveShipsNumber()<<'\n';
-    ms.setShipToBattlefield(f, 0 , 1, 1, Orientation::horizontal);
-    std::cout<<ms.getInactiveShipsNumber()<<'\n';
-    f.attackCell(1, 1);
-    f.attackCell(2, 1);
+    ms.setShipToBattlefield(f, 0, 0, 0, Orientation::vertical);
+    f.attackCell(0, 0);
     f.display();
+
+    Battlefield g(f);
+    ms.setShipToBattlefield(g, 0, 2, 2, Orientation::vertical);
+    g.attackCell(2, 2);
+    f.attackCell(2, 2);
+    f.display();
+    g.display();
 }

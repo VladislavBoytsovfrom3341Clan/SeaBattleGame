@@ -34,7 +34,7 @@ public:
     SegmentCondition getSegmentCondition(const int index);
     int getLength();
     void damageSegment(const int index, const int damage);
-
+    ~Battleship() = default;
 
 };
 

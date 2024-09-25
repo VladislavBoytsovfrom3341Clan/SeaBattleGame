@@ -13,7 +13,7 @@ set(HEADER_FILES ${INCLUDE_DIRECTORIES}/Battleship.h ${INCLUDE_DIRECTORIES}/Ship
 
 #setting source files
 set(SOURCE_OUT ${SOURCE_DIR}/main.cpp)
-set(SOURCE_LIB ${SOURCE_DIR}/Battleship.cpp ${SOURCE_DIR}/ShipManager.cpp ${SOURCE_DIR}/Battlefield.cpp ${HEADER_FILES})
+set(SOURCE_LIB ${SOURCE_DIR}/Battleship.cpp ${SOURCE_DIR}/ShipManager.cpp ${SOURCE_DIR}/Battlefield.cpp ${SOURCE_DIR}/BattlefieldCell.cpp ${HEADER_FILES})
 
 #changing executable directory
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ../)
