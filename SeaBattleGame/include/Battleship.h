@@ -21,7 +21,7 @@ class Battleship
     public:
         BattleshipSegment();
         void takeDamage(const int damage);
-        SegmentCondition getStatus();
+        SegmentCondition getStatus() const noexcept;
     };
 
     int mLength;
@@ -29,10 +29,10 @@ class Battleship
 
 public:
     Battleship() = default;
-    Battleship(int length);
-    bool isAlive() const;
-    SegmentCondition getSegmentCondition(const int index);
-    int getLength();
+    explicit Battleship(int length);
+    bool isAlive() const noexcept;
+    SegmentCondition getSegmentCondition(const int index) const;
+    int getLength() const noexcept;
     void damageSegment(const int index, const int damage);
     ~Battleship() = default;
 

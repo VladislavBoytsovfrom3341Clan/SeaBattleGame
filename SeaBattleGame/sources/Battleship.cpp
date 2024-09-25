@@ -23,7 +23,7 @@ void Battleship::BattleshipSegment::takeDamage(const int damage)
         }
 }
 
-SegmentCondition Battleship::BattleshipSegment::getStatus()
+SegmentCondition Battleship::BattleshipSegment::getStatus() const noexcept
 {
     return mSegmentCondition;
 }
@@ -40,7 +40,7 @@ Battleship::Battleship(int length):mLength(length)
     }
 }
 
-bool Battleship::isAlive() const
+bool Battleship::isAlive() const noexcept
 {
     for(auto segment: mSegments)
         if(segment.getStatus()!=SegmentCondition::destroyed)
@@ -48,14 +48,14 @@ bool Battleship::isAlive() const
     return false;
 }
 
-SegmentCondition Battleship::getSegmentCondition(const int index)
+SegmentCondition Battleship::getSegmentCondition(const int index) const
 {
     if(index<0 or index>=mLength)
         throw std::length_error("Invelid index");
     return mSegments[index].getStatus();
 }
 
-int Battleship::getLength()
+int Battleship::getLength() const noexcept
 {
     return mLength;
 }

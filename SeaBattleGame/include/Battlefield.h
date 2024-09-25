@@ -31,7 +31,7 @@ class Battlefield
         CellStatus getStatus();
         SegmentCondition getSegmentCondition();
         bool hasShip();
-        void setShipSegment(Battleship* shipPointer, const int shipSegmentIndex);
+        void setShipSegment(Battleship* const shipPointer, const int shipSegmentIndex) noexcept;
         void attackCell(const int damage);
     };
     int mHorizontalSize;
