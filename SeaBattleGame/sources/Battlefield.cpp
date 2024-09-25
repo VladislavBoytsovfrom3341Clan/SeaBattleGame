@@ -30,13 +30,10 @@ mHorizontalSize(copy.mHorizontalSize), mVerticalSize(copy.mVerticalSize)
 Battlefield::Battlefield(Battlefield&& moved):
 mHorizontalSize(moved.mHorizontalSize), mVerticalSize(moved.mVerticalSize)
 {
-    mBattlefieldArray = moved.mBattlefieldArray;
+    mBattlefieldArray = std::move(moved.mBattlefieldArray);
 
     moved.mHorizontalSize=-1;
     moved.mVerticalSize=-1;
-    for(auto line: mBattlefieldArray)
-        line.clear();
-    mBattlefieldArray.clear();
 }
 
 void Battlefield::setShip(Battleship* ship, int x, int y, Orientation orientation)
@@ -126,13 +123,10 @@ Battlefield& Battlefield::operator=(Battlefield&& moved)
     {
         mHorizontalSize=moved.mHorizontalSize;
         mVerticalSize=moved.mVerticalSize;
-        mBattlefieldArray=moved.mBattlefieldArray;
+        mBattlefieldArray=std::move(moved.mBattlefieldArray);
 
         moved.mHorizontalSize=-1;
         moved.mVerticalSize=-1;
-        for(auto line: mBattlefieldArray)
-            line.clear();
-        mBattlefieldArray.clear();
     }
     return *this;
 }
