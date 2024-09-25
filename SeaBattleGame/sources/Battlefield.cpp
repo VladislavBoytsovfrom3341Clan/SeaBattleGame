@@ -15,8 +15,7 @@ Battlefield::Battlefield(const int horizontalSize, const int verticalSize):mHori
         mBattlefieldArray[y].resize(mHorizontalSize);
         for(int x=0; x<mHorizontalSize; x++)
         {
-            BattlefieldCell newCell;
-            mBattlefieldArray[y].push_back(newCell);
+            mBattlefieldArray[y].emplace_back();
         }
     }
 }
@@ -113,8 +112,7 @@ Battlefield& Battlefield::operator=(const Battlefield& copy)
             mBattlefieldArray[y].resize(copy.mHorizontalSize);
             for(int x=0; x<copy.mHorizontalSize; x++)
             {
-                BattlefieldCell newCell;
-                mBattlefieldArray[y].push_back(newCell);
+                mBattlefieldArray[y].emplace_back();
             }
         }
     }

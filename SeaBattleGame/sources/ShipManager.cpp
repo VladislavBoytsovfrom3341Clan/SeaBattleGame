@@ -12,8 +12,7 @@ ShipManager::ShipManager(std::initializer_list<std::pair<int, int>> shipList)
             throw std::invalid_argument("Ships number must be greater than zero");
         for(int i=0; i<shipSeries.second; i++)
         {
-            Battleship newShip(shipSeries.first);
-            mInactiveShipArray.push_back(newShip);
+            mInactiveShipArray.emplace_back(shipSeries.first);
         }
     }
 }
@@ -43,7 +42,7 @@ void ShipManager::setShipToBattlefield(Battlefield& field, int shipIndex, int x,
         throw std::invalid_argument("Invalid ship index");
     field.setShip(&mInactiveShipArray.at(shipIndex), x, y, orientation);
     mActiveShipArray.push_back(mInactiveShipArray.at(shipIndex));
-    mInactiveShipArray.erase(std::next(mInactiveShipArray.begin(), shipIndex));   
+    mInactiveShipArray.erase(mInactiveShipArray.begin() + shipIndex);   
 }
 
 int ShipManager::getInactiveShipsNumber()
