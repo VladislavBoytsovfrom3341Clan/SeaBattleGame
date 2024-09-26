@@ -1,10 +1,6 @@
 #include"Battlefield.h"
 #include<iostream>
 
-const int minimalFieldSize = minimalShipLength;
-const int maximalFieldSize = 25;
-
-
 Battlefield::Battlefield(const int horizontalSize, const int verticalSize):mHorizontalSize(horizontalSize), mVerticalSize(verticalSize)
 {
     if(horizontalSize<minimalFieldSize or verticalSize<minimalFieldSize or horizontalSize>maximalFieldSize or verticalSize>maximalFieldSize)

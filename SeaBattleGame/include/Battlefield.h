@@ -3,8 +3,8 @@
 
 #include"Battleship.h"
 
-extern const int minimalFieldSize;
-extern const int maximalFieldSize;
+constexpr int minimalFieldSize = minimalShipLength;
+constexpr int maximalFieldSize = 25;
 
 enum class CellStatus
 {

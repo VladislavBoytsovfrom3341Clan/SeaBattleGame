@@ -3,8 +3,9 @@
 
 #include<vector>
 
-extern const int minimalShipLength;
-extern const int maximalShipLength;
+constexpr int minimalShipLength = 1;
+constexpr int maximalShipLength = 4;
+
 
 enum class SegmentCondition
 {

@@ -1,9 +1,6 @@
 #include "Battleship.h"
 #include<iostream>
 
-const int minimalShipLength=1;
-const int maximalShipLength=4;
-
 Battleship::BattleshipSegment::BattleshipSegment()
 {
     mSegmentCondition=SegmentCondition::intact;
