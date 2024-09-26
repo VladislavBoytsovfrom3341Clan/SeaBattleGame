@@ -44,13 +44,14 @@ void ShipManager::setShipToBattlefield(Battlefield& field, int shipIndex, int x,
     if (shipIndex<0 or shipIndex>=mInactiveShipArray.size())
         throw std::invalid_argument("Invalid ship index");
     
-    //may throw an exception from field, so needs to be processed once being called
-    field.setShip(&mInactiveShipArray.at(shipIndex), x, y, orientation);
-
     //adds ship to an active vector
     mActiveShipArray.push_back(mInactiveShipArray.at(shipIndex));
 
-    //and delete fron inactive
+    //may throw an exception from field, so needs to be processed once being called
+    field.setShip(&(mActiveShipArray.at(mActiveShipArray.size()-1)), x, y, orientation);
+
+    
+    //and delete from inactive
     mInactiveShipArray.erase(mInactiveShipArray.begin() + shipIndex);   
 }
 

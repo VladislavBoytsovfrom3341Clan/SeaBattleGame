@@ -1,6 +1,5 @@
 #include "Battleship.h"
-#include<iostream>
-
+#include<stdexcept>
 Battleship::BattleshipSegment::BattleshipSegment()
 {
     mSegmentCondition=SegmentCondition::intact;
@@ -45,7 +44,7 @@ Battleship::Battleship(int length):mLength(length)
     if(length<minimalShipLength or length>maximalShipLength)
         throw std::logic_error("Invalid ship size");
     for(int i=0; i<mLength; i++)
-        mSegments.emplace_back(BattleshipSegment());
+        mSegments.emplace_back();
 }
 
 bool Battleship::isAlive() const noexcept

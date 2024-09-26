@@ -67,12 +67,13 @@ void Battlefield::setShip(Battleship* ship, int x, int y, Orientation orientatio
                     if(mBattlefieldArray[j][i].hasShip())
                         throw std::logic_error("Intersection between ships occured");
                 }
-
     //sets ship to the cells by segments
     int segmentIndex=0;
     for(int j=y; j<=y+yOffset; j++)
         for(int i=x; i<=x+xOffset; i++)
-            mBattlefieldArray[j][i].setShipSegment(ship, segmentIndex++);  
+        {
+            mBattlefieldArray[j][i].setShipSegment(ship, segmentIndex++);
+        }
 }
 
 bool Battlefield::hasShipAtCell(int x, int y) const
