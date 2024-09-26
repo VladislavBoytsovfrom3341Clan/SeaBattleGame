@@ -49,12 +49,12 @@ class Battlefield
 
         BattlefieldCell() = default;
 
-        CellStatus getStatus();
+        CellStatus getStatus() const noexcept;
 
-        SegmentCondition getSegmentCondition();
+        SegmentCondition getSegmentCondition() const;
 
         //returns True if there is a ship in cell
-        bool hasShip();
+        bool hasShip() const;
 
         //sets ship segment to the cell, adding a pointer to ship
         void setShipSegment(Battleship* const shipPointer, const int shipSegmentIndex) noexcept;
@@ -81,6 +81,16 @@ public:
 
     //set a ship to a shosen cell
     void setShip(Battleship* ship, int x, int y, Orientation orientation);
+
+    //checks if there if ship in cell at (x, y) 
+    bool hasShipAtCell(int x, int y) const;
+
+    //gets a status of cell at (x, y)
+    CellStatus getCellStatus(int x, int y) const;
+
+    //gets a Condition of segment of ship if has one
+    //may throw an exception if there is no ship
+    SegmentCondition getCellShipCondition(int x, int y) const;
 
     //DEBUG method for displaying map to std::cout
     void display();

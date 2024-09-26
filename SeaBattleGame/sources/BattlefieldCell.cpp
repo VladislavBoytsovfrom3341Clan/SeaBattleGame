@@ -18,21 +18,19 @@ void Battlefield::BattlefieldCell::attackCell(const int damage)
     }
 }
 
-CellStatus Battlefield::BattlefieldCell::getStatus()
+CellStatus Battlefield::BattlefieldCell::getStatus() const noexcept
 {
     return mStatus;
 }
 
-SegmentCondition Battlefield::BattlefieldCell::getSegmentCondition()
+SegmentCondition Battlefield::BattlefieldCell::getSegmentCondition() const
 {
     if (mShipPointer == nullptr)
         throw std::logic_error("No ship handles this cell");
     return mShipPointer->getSegmentCondition(mShipSegmentIndex);
 }
 
-bool Battlefield::BattlefieldCell::hasShip()
+bool Battlefield::BattlefieldCell::hasShip() const
 {
-    if (mShipPointer == nullptr)
-        return false;
-    return true;
+    return mShipPointer != nullptr;
 }

@@ -75,6 +75,31 @@ void Battlefield::setShip(Battleship* ship, int x, int y, Orientation orientatio
             mBattlefieldArray[j][i].setShipSegment(ship, segmentIndex++);  
 }
 
+bool Battlefield::hasShipAtCell(int x, int y) const
+{
+    if(x<0 or x>=mHorizontalSize or y<0 or y>=mVerticalSize)
+        throw std::invalid_argument("Invalid cell indexes");
+
+    return mBattlefieldArray[y][x].hasShip();
+}
+
+CellStatus Battlefield::getCellStatus(int x, int y) const
+{
+    if(x<0 or x>=mHorizontalSize or y<0 or y>=mVerticalSize)
+        throw std::invalid_argument("Invalid cell indexes");
+    
+    return mBattlefieldArray[y][x].getStatus();
+}
+
+SegmentCondition Battlefield::getCellShipCondition(int x, int y) const
+{
+    if(x<0 or x>=mHorizontalSize or y<0 or y>=mVerticalSize)
+        throw std::invalid_argument("Invalid cell indexes");
+    
+    //may throw an exception if there is no ship
+    return mBattlefieldArray[y][x].getSegmentCondition();
+}
+
 void Battlefield::attackCell(int x, int y)
 {
     mBattlefieldArray[y][x].attackCell(1);
