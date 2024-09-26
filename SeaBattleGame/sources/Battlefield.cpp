@@ -1,23 +1,31 @@
 #include"Battlefield.h"
 #include<iostream>
 
-Battlefield::Battlefield(const int horizontalSize, const int verticalSize):mHorizontalSize(horizontalSize), mVerticalSize(verticalSize)
+//sets basic field size
+Battlefield::Battlefield(const int horizontalSize, const int verticalSize):
+mHorizontalSize(horizontalSize), mVerticalSize(verticalSize)
 {
-    if(horizontalSize<minimalFieldSize or verticalSize<minimalFieldSize or horizontalSize>maximalFieldSize or verticalSize>maximalFieldSize)
+    if(horizontalSize<minimalFieldSize or verticalSize<minimalFieldSize or 
+    horizontalSize>maximalFieldSize or verticalSize>maximalFieldSize)
         throw std::logic_error("Invalid field size");
+
+    //fulls field with empty cells
     mBattlefieldArray.resize(mVerticalSize);
     for(int y=0;y<mVerticalSize; y++)
     {
         mBattlefieldArray[y].resize(mHorizontalSize);
         for(int x=0; x<mHorizontalSize; x++)
         {
-            mBattlefieldArray[y].emplace_back();
+            mBattlefieldArray[y][x] = BattlefieldCell();
         }
     }
 }
 
-Battlefield::Battlefield(const Battlefield& copy):Battlefield(copy.mHorizontalSize, copy.mVerticalSize){}
+//copies only field sizes, not ships
+Battlefield::Battlefield(const Battlefield& copy):
+Battlefield(copy.mHorizontalSize, copy.mVerticalSize){}
 
+//moves all stuff
 Battlefield::Battlefield(Battlefield&& moved)
 {
     mHorizontalSize=std::move(moved.mHorizontalSize);
@@ -27,9 +35,14 @@ Battlefield::Battlefield(Battlefield&& moved)
 
 void Battlefield::setShip(Battleship* ship, int x, int y, Orientation orientation)
 {
-    int xOffset, yOffset;
     if(ship == nullptr)
         throw std::invalid_argument("Ship pointer is nullptr");
+
+    /**
+     * Uses offset to calculate the exact ships area as
+     * (x+xOffset, y+yOffset)
+    */
+    int xOffset, yOffset;
     if(orientation == Orientation::horizontal)
     {
         xOffset = ship->getLength()-1;
@@ -40,8 +53,12 @@ void Battlefield::setShip(Battleship* ship, int x, int y, Orientation orientatio
         xOffset=0;
         yOffset=ship->getLength()-1;
     }
+
+    //check if ship fits in the field
     if(x<0 or x>=mHorizontalSize-xOffset or y<0 or y>mVerticalSize-yOffset)
         throw std::invalid_argument("Invalid ship coordinates");
+    
+    //collision check
     for(int j=y-1; j<=y+yOffset+1; j++)
         if(j>=0 and j<mVerticalSize)
             for(int i=x-1; i<=x+xOffset+1; i++)
@@ -51,6 +68,7 @@ void Battlefield::setShip(Battleship* ship, int x, int y, Orientation orientatio
                         throw std::logic_error("Intersection between ships occured");
                 }
 
+    //sets ship to the cells by segments
     int segmentIndex=0;
     for(int j=y; j<=y+yOffset; j++)
         for(int i=x; i<=x+xOffset; i++)
@@ -62,6 +80,7 @@ void Battlefield::attackCell(int x, int y)
     mBattlefieldArray[y][x].attackCell(1);
 }
 
+//DEBUG METHOD
 void Battlefield::display()
 {
     /**
@@ -95,6 +114,7 @@ void Battlefield::display()
     std::cout<<"\n";
 }
 
+//WARNING: does not copy ships, only field sizes
 Battlefield& Battlefield::operator=(const Battlefield& copy)
 {
     if(&copy!=this)
@@ -108,7 +128,7 @@ Battlefield& Battlefield::operator=(const Battlefield& copy)
             mBattlefieldArray[y].resize(copy.mHorizontalSize);
             for(int x=0; x<copy.mHorizontalSize; x++)
             {
-                mBattlefieldArray[y].emplace_back();
+                mBattlefieldArray[y][x]= BattlefieldCell();
             }
         }
     }

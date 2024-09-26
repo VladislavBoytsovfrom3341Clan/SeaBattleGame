@@ -33,7 +33,7 @@ public:
     //returns link to const vector of all inactive ships
     const std::vector<Battleship>& getInactiveShips() const;
 
-    //nethod will be used by player/bot interface to call fields method
+    //method will be used by player/bot interface to call fields method
     void setShipToBattlefield(Battlefield& field, int shipIndex, int x, int y, Orientation orientation);
 };
 
