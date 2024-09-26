@@ -56,7 +56,7 @@ void Battlefield::setShip(Battleship* ship, int x, int y, Orientation orientatio
 
     //check if ship fits in the field
     if(x<0 or x>=mHorizontalSize-xOffset or y<0 or y>mVerticalSize-yOffset)
-        throw std::invalid_argument("Invalid ship coordinates");
+        throw std::logic_error("Invalid ship coordinates");
     
     //collision check
     for(int j=y-1; j<=y+yOffset+1; j++)

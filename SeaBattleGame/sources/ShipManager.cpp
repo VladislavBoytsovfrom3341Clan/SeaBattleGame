@@ -12,50 +12,57 @@ ShipManager::ShipManager(std::initializer_list<std::pair<int, int>> shipList)
             throw std::invalid_argument("Ships number must be greater than zero");
 
         for(int i=0; i<shipSeries.second; i++)
-            mInactiveShipArray.emplace_back(shipSeries.first);
+            mShipsArray.push_back({Battleship(shipSeries.first), false});
     }
 }
 
-const std::vector<Battleship>& ShipManager::getInactiveShips() const
+std::vector<Battleship> ShipManager::getInactiveShips() const
 {
-    return mInactiveShipArray;
+    std::vector<Battleship> ships;
+    for(auto ship: mShipsArray)
+        if(ship.second == false)
+            ships.push_back(ship.first);
+    return ships;
+}
+
+std::vector<Battleship> ShipManager::getShips() const
+{
+    std::vector<Battleship> ships;
+    for(auto ship: mShipsArray)
+        ships.push_back(ship.first);
+    return ships;
 }
 
 int ShipManager::getAliveShipsNumber()
 {
     int shipNum=0;
 
-    //counts every inactive ship
-    for(auto ship: mInactiveShipArray)
-        if(ship.isAlive())
-            shipNum++;
-
-    //and every active ship
-    for(auto ship: mActiveShipArray)
-        if(ship.isAlive())
+    for(auto ship: mShipsArray)
+        if(ship.first.isAlive())
             shipNum++;
     return shipNum;
 }
 
 void ShipManager::setShipToBattlefield(Battlefield& field, int shipIndex, int x, int y, Orientation orientation)
 {
-    if(mInactiveShipArray.size() == 0)
+    if(getInactiveShipsNumber() == 0)
         throw std::logic_error("No ships to be set available");
-    if (shipIndex<0 or shipIndex>=mInactiveShipArray.size())
+    if (shipIndex<0 or shipIndex>=getInactiveShipsNumber())
         throw std::invalid_argument("Invalid ship index");
-    
-    //adds ship to an active vector
-    mActiveShipArray.push_back(mInactiveShipArray.at(shipIndex));
-
+    if(mShipsArray[shipIndex].second)
+        throw std::logic_error("Ship was already placed to field");
+        
     //may throw an exception from field, so needs to be processed once being called
-    field.setShip(&(mActiveShipArray.at(mActiveShipArray.size()-1)), x, y, orientation);
-
-    
-    //and delete from inactive
-    mInactiveShipArray.erase(mInactiveShipArray.begin() + shipIndex);   
+    field.setShip(&mShipsArray[shipIndex].first, x, y, orientation);
+    mShipsArray[shipIndex].second=true;
 }
 
 int ShipManager::getInactiveShipsNumber()
 {
-    return mInactiveShipArray.size();
+    int shipNum=0;
+
+    for(auto ship: mShipsArray)
+        if(ship.second==false)
+            shipNum++;
+    return shipNum;
 }

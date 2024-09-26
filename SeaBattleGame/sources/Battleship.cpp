@@ -1,5 +1,6 @@
 #include "Battleship.h"
 #include<stdexcept>
+
 Battleship::BattleshipSegment::BattleshipSegment()
 {
     mSegmentCondition=SegmentCondition::intact;
@@ -71,7 +72,9 @@ int Battleship::getLength() const noexcept
 void Battleship::damageSegment(const int index, const int damage)
 {
     if(index<0 or index>=mLength)
+    {
         throw std::length_error("Invalid segment index");
+    }
     mSegments[index].takeDamage(damage);
 }
 

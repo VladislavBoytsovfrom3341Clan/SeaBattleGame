@@ -15,11 +15,7 @@
 */
 class ShipManager
 {
-    //not placed on field ships
-    std::vector<Battleship> mInactiveShipArray;
-
-    //placed on field ships
-    std::vector<Battleship> mActiveShipArray;
+    std::vector<std::pair<Battleship, bool>> mShipsArray;
 
 public:
 
@@ -30,9 +26,11 @@ public:
 
     int getInactiveShipsNumber();
 
-    //returns link to const vector of all inactive ships
-    const std::vector<Battleship>& getInactiveShips() const;
+    //returns vector of all inactive ships
+    std::vector<Battleship> getInactiveShips() const;
 
+    std::vector<Battleship> getShips() const;
+    
     //method will be used by player/bot interface to call fields method
     void setShipToBattlefield(Battlefield& field, int shipIndex, int x, int y, Orientation orientation);
 };

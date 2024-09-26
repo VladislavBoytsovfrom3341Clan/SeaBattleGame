@@ -27,16 +27,18 @@ int main()
     myShip.damageSegment(1, 1);
     printShip(myShip);
 
-    ShipManager myManager({{4, 1}, {2, 3}, {1, 2}});
+    ShipManager myManager({{4, 2}, {2, 3}, {1, 2}});
     printShipsInManager(myManager);
 
     Battlefield myField(20, 15);
-    myManager.setShipToBattlefield(myField, 0, 3, 4, Orientation::horizontal);
+    myManager.setShipToBattlefield(myField, 0, 1, 2, Orientation::horizontal);
+    myManager.setShipToBattlefield(myField, 1, 10, 1, Orientation::vertical);
     printShipsInManager(myManager);
-    myField.attackCell(3, 4);
-    myField.attackCell(6, 4);
-    myField.attackCell(2, 4);
-    myField.attackCell(7, 4);
+    myField.display();
+    myField.attackCell(1, 1);
+    myField.attackCell(2, 1);
+    myField.attackCell(2, 2);
+    myField.attackCell(1, 2);
 
     myField.display();
 }
