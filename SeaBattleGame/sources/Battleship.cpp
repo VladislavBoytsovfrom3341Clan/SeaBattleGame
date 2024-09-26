@@ -66,3 +66,27 @@ void Battleship::damageSegment(const int index, const int damage)
         throw std::length_error("Invalid segment index");
     mSegments[index].takeDamage(damage);
 }
+
+void Battleship::BattleshipSegment::repair(const int val)
+{
+    if(val>0)
+    {
+        if(val==1)
+        {
+            if(mSegmentCondition==SegmentCondition::destroyed)
+                mSegmentCondition=SegmentCondition::damaged;
+            else 
+                mSegmentCondition=SegmentCondition::intact;
+        }
+        else
+            mSegmentCondition=SegmentCondition::intact;
+    }
+}
+
+std::vector<SegmentCondition> Battleship::getShipCondition() const
+{
+    std::vector<SegmentCondition> segments;
+    for(auto segment: mSegments)
+        segments.push_back(segment.getStatus());
+    return segments;
+}
