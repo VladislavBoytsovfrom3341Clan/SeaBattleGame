@@ -15,7 +15,7 @@ void printShip(const Battleship& ship)
 void printShipsInManager(const ShipManager& manager)
 {
     auto ships = manager.getInactiveShips();
-    std::cout<<"Inactive ships in manager\n";
+    std::cout<<"Inactive ships in manager: "<<manager.getInactiveShipsNumber()<<'\n';
     for(auto ship: ships)
         printShip(ship);
 }
@@ -46,6 +46,10 @@ int main()
     myField.attackCell(10, 3);
     myField.attackCell(10, 4);
     myField.attackCell(10, 5);
+
+    std::cout<<int(myField.getCellStatus(10, 2))<<'\n';
+    if(myField.hasShipAtCell(10, 2))
+        std::cout<<int(myField.getCellShipCondition(10, 2))<<'\n';
 
     myField.display();
 }

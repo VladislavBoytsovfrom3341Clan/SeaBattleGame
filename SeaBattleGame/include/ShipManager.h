@@ -22,14 +22,14 @@ public:
     //gets list of pairs <shipLength, amount>, places all to inactive ships
     ShipManager(std::initializer_list<std::pair<int, int>> shipList);
 
-    int getAliveShipsNumber();
+    int getAliveShipsNumber() const noexcept;
 
-    int getInactiveShipsNumber();
+    int getInactiveShipsNumber() const noexcept;
 
     //returns vector of all inactive ships
-    std::vector<Battleship> getInactiveShips() const;
+    std::vector<Battleship> getInactiveShips() const noexcept;
 
-    std::vector<Battleship> getShips() const;
+    std::vector<Battleship> getShips() const noexcept;
     
     //method will be used by player/bot interface to call fields method
     void setShipToBattlefield(Battlefield& field, int shipIndex, int x, int y, Orientation orientation);

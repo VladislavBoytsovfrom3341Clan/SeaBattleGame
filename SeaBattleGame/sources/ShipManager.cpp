@@ -19,7 +19,7 @@ ShipManager::ShipManager(std::initializer_list<std::pair<int, int>> shipList)
     }
 }
 
-std::vector<Battleship> ShipManager::getInactiveShips() const
+std::vector<Battleship> ShipManager::getInactiveShips() const noexcept
 {
     std::vector<Battleship> ships;
     for(auto ship: mShipsArray)
@@ -28,7 +28,7 @@ std::vector<Battleship> ShipManager::getInactiveShips() const
     return ships;
 }
 
-std::vector<Battleship> ShipManager::getShips() const
+std::vector<Battleship> ShipManager::getShips() const noexcept
 {
     std::vector<Battleship> ships;
     for(auto ship: mShipsArray)
@@ -36,7 +36,7 @@ std::vector<Battleship> ShipManager::getShips() const
     return ships;
 }
 
-int ShipManager::getAliveShipsNumber()
+int ShipManager::getAliveShipsNumber() const noexcept
 {
     int shipNum=0;
 
@@ -60,7 +60,7 @@ void ShipManager::setShipToBattlefield(Battlefield& field, int shipIndex, int x,
     mShipsArray[shipIndex].second=true;
 }
 
-int ShipManager::getInactiveShipsNumber()
+int ShipManager::getInactiveShipsNumber() const noexcept
 {
     int shipNum=0;
 
