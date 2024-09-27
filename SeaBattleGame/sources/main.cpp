@@ -27,15 +27,19 @@ int main()
     myShip.damageSegment(1, 1);
     printShip(myShip);
 
-    ShipManager myManager({{4, 2}, {2, 3}, {1, 2}});
+    ShipManager myManager({{1, 2}, {2, 3}, {1, 2}});
     printShipsInManager(myManager);
 
     Battlefield myField(20, 15);
     myManager.setShipToBattlefield(myField, 0, 1, 2, Orientation::horizontal);
     printShipsInManager(myManager);
-    myManager.setShipToBattlefield(myField, 1, 10, 1, Orientation::vertical);
+    Battlefield newField(24, 24);
+    newField.display();
+    newField=myField;
+    myManager.setShipToBattlefield(newField, 1, 10, 1, Orientation::vertical);
     printShipsInManager(myManager);
     myField.display();
+    newField.display();
     myField.attackCell(1, 1);
     myField.attackCell(2, 1);
     myField.attackCell(2, 2);
@@ -47,9 +51,31 @@ int main()
     myField.attackCell(10, 4);
     myField.attackCell(10, 5);
 
-    std::cout<<int(myField.getCellStatus(10, 2))<<'\n';
-    if(myField.hasShipAtCell(10, 2))
-        std::cout<<int(myField.getCellShipCondition(10, 2))<<'\n';
+    newField.attackCell(1, 1);
+    newField.attackCell(2, 1);
+    newField.attackCell(2, 2);
+    newField.attackCell(1, 2);
+
+    newField.attackCell(10, 1);
+    newField.attackCell(10, 2);
+    newField.attackCell(10, 3);
+    newField.attackCell(10, 4);
+    newField.attackCell(10, 5);
+
+    std::cout<<"Before attack: "<<myManager.getAliveShipsNumber()<<'\n';
+
+    newField.attackCell(10, 1);
+    newField.attackCell(10, 2);
+    newField.attackCell(10, 3);
+    newField.attackCell(10, 4);
+    newField.attackCell(10, 5);
+
+    std::cout<<"After attack: "<<myManager.getAliveShipsNumber()<<'\n';
+
+    std::cout<<int(myField.getCellStatus(10, 1))<<'\n';
+    if(newField.hasShipAtCell(10, 1))
+        std::cout<<int(newField.getCellShipCondition(10, 1))<<'\n';
 
     myField.display();
+    newField.display();
 }
