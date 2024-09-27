@@ -47,7 +47,7 @@ void ShipManager::setShipToBattlefield(Battlefield& field, int shipIndex, int x,
 {
     if(getInactiveShipsNumber() == 0)
         throw std::logic_error("No ships to be set available");
-    if (shipIndex<0 or shipIndex>=getInactiveShipsNumber())
+    if (shipIndex<0 or shipIndex>=mShipsArray.size())
         throw std::invalid_argument("Invalid ship index");
     if(mShipsArray[shipIndex].second)
         throw std::logic_error("Ship was already placed to field");
