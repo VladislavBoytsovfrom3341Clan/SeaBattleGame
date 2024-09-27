@@ -15,7 +15,7 @@
 */
 class ShipManager
 {
-    std::vector<std::pair<Battleship, bool>> mShipsArray;
+    std::vector<std::pair<Battleship*, bool>> mShipsArray;
 
 public:
 
@@ -33,6 +33,8 @@ public:
     
     //method will be used by player/bot interface to call fields method
     void setShipToBattlefield(Battlefield& field, int shipIndex, int x, int y, Orientation orientation);
+
+    ~ShipManager();
 };
 
 #endif

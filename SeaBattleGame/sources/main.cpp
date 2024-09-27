@@ -32,6 +32,7 @@ int main()
 
     Battlefield myField(20, 15);
     myManager.setShipToBattlefield(myField, 0, 1, 2, Orientation::horizontal);
+    printShipsInManager(myManager);
     myManager.setShipToBattlefield(myField, 1, 10, 1, Orientation::vertical);
     printShipsInManager(myManager);
     myField.display();
@@ -39,6 +40,12 @@ int main()
     myField.attackCell(2, 1);
     myField.attackCell(2, 2);
     myField.attackCell(1, 2);
+
+    myField.attackCell(10, 1);
+    myField.attackCell(10, 2);
+    myField.attackCell(10, 3);
+    myField.attackCell(10, 4);
+    myField.attackCell(10, 5);
 
     myField.display();
 }

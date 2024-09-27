@@ -12,7 +12,10 @@ ShipManager::ShipManager(std::initializer_list<std::pair<int, int>> shipList)
             throw std::invalid_argument("Ships number must be greater than zero");
 
         for(int i=0; i<shipSeries.second; i++)
-            mShipsArray.push_back({Battleship(shipSeries.first), false});
+        {
+            Battleship* newShip = new Battleship(shipSeries.first);
+            mShipsArray.push_back({newShip, false});
+        }
     }
 }
 
@@ -21,7 +24,7 @@ std::vector<Battleship> ShipManager::getInactiveShips() const
     std::vector<Battleship> ships;
     for(auto ship: mShipsArray)
         if(ship.second == false)
-            ships.push_back(ship.first);
+            ships.push_back(*ship.first);
     return ships;
 }
 
@@ -29,7 +32,7 @@ std::vector<Battleship> ShipManager::getShips() const
 {
     std::vector<Battleship> ships;
     for(auto ship: mShipsArray)
-        ships.push_back(ship.first);
+        ships.push_back(*ship.first);
     return ships;
 }
 
@@ -38,7 +41,7 @@ int ShipManager::getAliveShipsNumber()
     int shipNum=0;
 
     for(auto ship: mShipsArray)
-        if(ship.first.isAlive())
+        if(ship.first->isAlive())
             shipNum++;
     return shipNum;
 }
@@ -53,7 +56,7 @@ void ShipManager::setShipToBattlefield(Battlefield& field, int shipIndex, int x,
         throw std::logic_error("Ship was already placed to field");
         
     //may throw an exception from field, so needs to be processed once being called
-    field.setShip(&mShipsArray[shipIndex].first, x, y, orientation);
+    field.setShip(mShipsArray[shipIndex].first, x, y, orientation);
     mShipsArray[shipIndex].second=true;
 }
 
@@ -65,4 +68,12 @@ int ShipManager::getInactiveShipsNumber()
         if(ship.second==false)
             shipNum++;
     return shipNum;
+}
+
+ShipManager::~ShipManager()
+{
+    for(auto ship: mShipsArray)
+    {
+        delete ship.first;
+    }
 }
