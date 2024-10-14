@@ -15,22 +15,26 @@
 */
 class ShipManager
 {
-    std::vector<std::pair<Battleship*, bool>> mShipsArray;
+    std::vector<Battleship*> mInactiveShipsArray;
+    std::vector<Battleship*> mActiveShipsArray;
 
 public:
 
     //gets list of pairs <shipLength, amount>, places all to inactive ships
     ShipManager(std::initializer_list<std::pair<int, int>> shipList);
 
+    int getShipsNumber() const noexcept;
+
     int getAliveShipsNumber() const noexcept;
 
     int getInactiveShipsNumber() const noexcept;
 
-    //returns vector of all inactive ships
-    std::vector<Battleship> getInactiveShips() const noexcept;
+    int getActiveShipsNumber() const noexcept;
 
-    std::vector<Battleship> getShips() const noexcept;
-    
+    const Battleship& getActiveShip(int index) const;
+
+    const Battleship& getInactiveShip(int index) const;
+
     //method will be used by player/bot interface to call fields method
     void setShipToBattlefield(Battlefield& field, int shipIndex, int x, int y, Orientation orientation);
 
