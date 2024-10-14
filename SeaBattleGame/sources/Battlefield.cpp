@@ -21,9 +21,20 @@ mHorizontalSize(horizontalSize), mVerticalSize(verticalSize)
     }
 }
 
-//copies only field sizes, not ships
+//ship poiners are copied, not ships
 Battlefield::Battlefield(const Battlefield& copy):
-Battlefield(copy.mHorizontalSize, copy.mVerticalSize){}
+Battlefield(copy.mHorizontalSize, copy.mVerticalSize)
+{
+    mBattlefieldArray.resize(mVerticalSize);
+    for(int y=0;y<mVerticalSize; y++)
+    {
+        mBattlefieldArray[y].resize(mHorizontalSize);
+        for(int x=0; x<mHorizontalSize; x++)
+        {
+            mBattlefieldArray[y][x] = copy.mBattlefieldArray[y][x];
+        }
+    }
+}
 
 //moves all stuff
 Battlefield::Battlefield(Battlefield&& moved)
@@ -101,9 +112,9 @@ SegmentCondition Battlefield::getCellShipCondition(int x, int y) const
     return mBattlefieldArray[y][x].getSegmentCondition();
 }
 
-void Battlefield::attackCell(int x, int y)
+void Battlefield::attackCell(int x, int y, int damage)
 {
-    mBattlefieldArray[y][x].attackCell(1);
+    mBattlefieldArray[y][x].attackCell(damage);
 }
 
 //DEBUG METHOD
@@ -140,7 +151,7 @@ void Battlefield::display()
     std::cout<<"\n";
 }
 
-//WARNING: does not copy ships, only field sizes
+//ship poiners are copied, not ships
 Battlefield& Battlefield::operator=(const Battlefield& copy)
 {
     if(&copy!=this)
@@ -154,7 +165,7 @@ Battlefield& Battlefield::operator=(const Battlefield& copy)
             mBattlefieldArray[y].resize(copy.mHorizontalSize);
             for(int x=0; x<copy.mHorizontalSize; x++)
             {
-                mBattlefieldArray[y][x]= BattlefieldCell();
+                mBattlefieldArray[y][x]= copy.mBattlefieldArray[y][x];
             }
         }
     }

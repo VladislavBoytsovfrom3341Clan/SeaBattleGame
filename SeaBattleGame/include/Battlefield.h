@@ -71,9 +71,11 @@ class Battlefield
     std::vector<std::vector<BattlefieldCell>> mBattlefieldArray;
 
 public:
+    Battlefield() = default;
+
     Battlefield(const int horizontalSize, const int verticalSize);
 
-    //WARNING: copy constructor does not copy ships, only field sizes
+    //WARNING: copy constructor does not deep copy ships 
     Battlefield(const Battlefield& copy);
 
     //move constructor actually moves stuff
@@ -96,9 +98,9 @@ public:
     void display();
 
     //method for attacking a chosen cell
-    void attackCell(int x, int y);
+    void attackCell(int x, int y, int damage=1);
 
-    //WARNING: copy operator does not copy ships, only field sizes
+    //WARNING: copy operator does not deep copy ships
     Battlefield& operator=(const Battlefield& copy);
 
     //move operator actually moves stuff
