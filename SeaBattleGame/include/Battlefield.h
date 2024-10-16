@@ -57,7 +57,7 @@ class Battlefield
         bool hasShip() const;
 
         //sets ship segment to the cell, adding a pointer to ship
-        void setShipSegment(Battleship* const shipPointer, const int shipSegmentIndex) noexcept;
+        void setShipSegment(Battleship& ship, const int shipSegmentIndex) noexcept;
 
         //method to damage a ship by the segment if there is a ship
         void attackCell(const int damage);
@@ -82,7 +82,7 @@ public:
     Battlefield(Battlefield&& moved);
 
     //set a ship to a shosen cell
-    void setShip(Battleship* ship, int x, int y, Orientation orientation);
+    void setShip(Battleship& ship, int x, int y, Orientation orientation);
 
     //checks if there if ship in cell at (x, y) 
     bool hasShipAtCell(int x, int y) const;

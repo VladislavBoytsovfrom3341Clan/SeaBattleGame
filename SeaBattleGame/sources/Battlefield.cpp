@@ -44,11 +44,8 @@ Battlefield::Battlefield(Battlefield&& moved)
     mBattlefieldArray=std::move(moved.mBattlefieldArray);
 }
 
-void Battlefield::setShip(Battleship* ship, int x, int y, Orientation orientation)
+void Battlefield::setShip(Battleship& ship, int x, int y, Orientation orientation)
 {
-    if(ship == nullptr)
-        throw std::invalid_argument("Ship pointer is nullptr");
-
     /**
      * Uses offset to calculate the exact ships area as
      * (x+xOffset, y+yOffset)
@@ -56,13 +53,13 @@ void Battlefield::setShip(Battleship* ship, int x, int y, Orientation orientatio
     int xOffset, yOffset;
     if(orientation == Orientation::horizontal)
     {
-        xOffset = ship->getLength()-1;
+        xOffset = ship.getLength()-1;
         yOffset = 0;
     }
     else
     {
         xOffset=0;
-        yOffset=ship->getLength()-1;
+        yOffset=ship.getLength()-1;
     }
 
     //check if ship fits in the field

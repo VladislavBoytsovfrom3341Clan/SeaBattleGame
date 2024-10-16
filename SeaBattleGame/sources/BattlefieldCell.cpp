@@ -1,9 +1,9 @@
 #include"Battlefield.h"
 #include<stdexcept>
 
-void Battlefield::BattlefieldCell::setShipSegment(Battleship* const shipPointer, const int shipSegmentIndex) noexcept
+void Battlefield::BattlefieldCell::setShipSegment(Battleship& ship, const int shipSegmentIndex) noexcept
 {
-    mShipPointer = shipPointer;
+    mShipPointer = &ship;
     mShipSegmentIndex = shipSegmentIndex;
 }
 

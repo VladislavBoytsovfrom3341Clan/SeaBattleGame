@@ -29,8 +29,10 @@ int main()
     printShipsInManager(myManager);
 
     Battlefield myField(20, 15);
-    myManager.setShipToBattlefield(myField, 0, 1, 2, Orientation::horizontal);
-    myManager.setShipToBattlefield(myField, 0, 5, 6, Orientation::vertical);
+    myField.setShip(myManager.getInactiveShip(0), 1, 2, Orientation::horizontal);
+    myField.setShip(myManager.getInactiveShip(1), 5, 6, Orientation::vertical);
+    myManager.setShipActive(0);
+    myManager.setShipActive(0);
     myField.display();
     printShipsInManager(myManager);
     myField.attackCell(1, 1);

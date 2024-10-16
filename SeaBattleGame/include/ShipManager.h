@@ -31,12 +31,13 @@ public:
 
     int getActiveShipsNumber() const noexcept;
 
-    const Battleship& getActiveShip(int index) const;
+    Battleship& getActiveShip(int index) const;
 
-    const Battleship& getInactiveShip(int index) const;
+    Battleship& getInactiveShip(int index) const;
 
-    //method will be used by player/bot interface to call fields method
-    void setShipToBattlefield(Battlefield& field, int shipIndex, int x, int y, Orientation orientation);
+    void setShipActive(int index);
+
+    void setShipInactive(int index);
 
     ~ShipManager();
 };

@@ -48,7 +48,7 @@ int ShipManager::getActiveShipsNumber() const noexcept
     return mActiveShipsArray.size();
 }
 
-const Battleship& ShipManager::getActiveShip(int index) const
+Battleship& ShipManager::getActiveShip(int index) const
 {
     if(index<0 or index>=mActiveShipsArray.size())
         throw std::invalid_argument("Invalid ship index");
@@ -56,26 +56,27 @@ const Battleship& ShipManager::getActiveShip(int index) const
 }
 
 
-const Battleship& ShipManager::getInactiveShip(int index) const
+Battleship& ShipManager::getInactiveShip(int index) const
 {
     if(index<0 or index>=mInactiveShipsArray.size())
         throw std::invalid_argument("Invalid ship index");   
     return *(mInactiveShipsArray[index]);
 }
-void ShipManager::setShipToBattlefield(Battlefield& field, int shipIndex, int x, int y, Orientation orientation)
+
+void ShipManager::setShipActive(int index)
 {
-    if(getInactiveShipsNumber() == 0)
-        throw std::logic_error("No ships to be set available");
-    if (shipIndex<0 or shipIndex>=mInactiveShipsArray.size())
-        throw std::invalid_argument("Invalid ship index");
-        
-    std::cout<<"positioning started\n";
-    //may throw an exception from field, so needs to be processed once being called
-    field.setShip(mInactiveShipsArray[shipIndex], x, y, orientation);
-    std::cout<<"ship set\n";
-    std::move(mInactiveShipsArray.begin()+shipIndex, mInactiveShipsArray.begin()+shipIndex+1, std::back_inserter(mActiveShipsArray));
-    std::cout<<"move done\n";
-    mInactiveShipsArray.erase(mInactiveShipsArray.begin()+shipIndex);
+    if (index<0 or index>=mInactiveShipsArray.size())
+        std::invalid_argument("Invalid ship index");
+    std::move(mInactiveShipsArray.begin()+index, mInactiveShipsArray.begin()+index+1, std::back_inserter(mActiveShipsArray));
+    mInactiveShipsArray.erase(mInactiveShipsArray.begin()+index);
+}
+
+void ShipManager::setShipInactive(int index)
+{
+    if (index<0 or index>=mActiveShipsArray.size())
+        std::invalid_argument("Invalid ship index");
+    std::move(mActiveShipsArray.begin()+index, mActiveShipsArray.begin()+index+1, std::back_inserter(mInactiveShipsArray));
+    mActiveShipsArray.erase(mActiveShipsArray.begin()+index);
 }
 
 ShipManager::~ShipManager()
