@@ -9,7 +9,7 @@ protected:
     ShipManager* mShipManager;
 public:
     CastableOnShipManager() = default;
-    void set(ShipManager& manager);
+    void set(ShipManager& manager) noexcept;
 };
 
 #endif

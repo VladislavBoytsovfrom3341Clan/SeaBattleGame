@@ -12,10 +12,10 @@ class Scanner: public IAbility, public CastableOnMap
     {
         int mSegNumber = 0;
     public:
-        void setResult(int num);
-        void add();
-        int getSegNumber();
-        bool containShips();
+        void setResult(int num) noexcept;
+        void add() noexcept;
+        int getSegNumber() const noexcept;
+        bool containShips() const noexcept;
     };
 
     ResultScanner result;
@@ -23,8 +23,8 @@ public:
     Scanner() = default;
     void set(Battlefield& field, Coords coords);
     void cast() override;
-    bool containShips();
-    int getSegNum();
+    bool containShips() const noexcept;
+    int getSegNum() const noexcept;
 };
 
 #endif

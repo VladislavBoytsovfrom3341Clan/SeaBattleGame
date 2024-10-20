@@ -2,22 +2,22 @@
 
 #include<stdexcept>
 
-void Scanner::ResultScanner::setResult(int num)
+void Scanner::ResultScanner::setResult(int num) noexcept
 {
     mSegNumber=num;
 }
 
-void Scanner::ResultScanner::add()
+void Scanner::ResultScanner::add() noexcept
 {
     mSegNumber++;
 }
 
-int Scanner::ResultScanner::getSegNumber()
+int Scanner::ResultScanner::getSegNumber() const noexcept
 {
     return mSegNumber;
 }
 
-bool Scanner::ResultScanner::containShips()
+bool Scanner::ResultScanner::containShips() const noexcept
 {
     return mSegNumber>0;
 }
@@ -38,12 +38,12 @@ void Scanner::cast()
                 result.add();
 }
 
-bool Scanner::containShips()
+bool Scanner::containShips() const noexcept
 {
     return result.containShips();
 }
 
-int Scanner::getSegNum()
+int Scanner::getSegNum() const noexcept
 {
     return result.getSegNumber();
 }
