@@ -42,14 +42,14 @@ int main()
     
     DoubleDamage dd;
     dd.set(myField, Coords{1, 2});
-    //dd.cast();
+    dd.cast();
 
     Shelling sh;
     sh.set(myManager);
-    //sh.cast();
+    sh.cast();
 
     Scanner sc;
-    sc.set(myField, Coords{2, 1});
+    sc.set(myField, Coords{0, 1});
     sc.cast();
     std::cout<<"Scanner detected "<<sc.getSegNum()<<'\n';
 

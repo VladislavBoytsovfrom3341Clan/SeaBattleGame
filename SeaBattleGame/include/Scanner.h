@@ -21,7 +21,7 @@ class Scanner: public IAbility, public CastableOnMap
     ResultScanner result;
 public:
     Scanner() = default;
-    //void set(Battlefield& field, int x, int y);
+    void set(Battlefield& field, Coords coords);
     void cast() override;
     bool containShips();
     int getSegNum();

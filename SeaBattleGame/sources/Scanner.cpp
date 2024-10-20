@@ -1,5 +1,7 @@
 #include"Scanner.h"
 
+#include<stdexcept>
+
 void Scanner::ResultScanner::setResult(int num)
 {
     mSegNumber=num;
@@ -18,6 +20,14 @@ int Scanner::ResultScanner::getSegNumber()
 bool Scanner::ResultScanner::containShips()
 {
     return mSegNumber>0;
+}
+
+void Scanner::set(Battlefield& field, Coords coords)
+{
+    if(coords.x<0 or coords.x>=field.size().x-1 or coords.y<0 or coords.y>=field.size().y-1)
+        throw std::invalid_argument("Invalid coords given");
+    mField = &field;
+    mCoords = coords;
 }
 
 void Scanner::cast()
