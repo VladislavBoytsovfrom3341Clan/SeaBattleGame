@@ -1,6 +1,10 @@
 #include"ShipManager.h"
 #include<iostream>
 
+#include"DoubleDamage.h"
+#include"Shelling.h"
+#include"Scanner.h"
+
 //no OOP only as debug func
 void printShip(const Battleship& ship)
 {
@@ -35,13 +39,20 @@ int main()
     myManager.setShipActive(0);
     myField.display();
     printShipsInManager(myManager);
-    myField.attackCell(1, 1);
-    myField.attackCell(1, 2);
-    myField.attackCell(2, 2);
-    myField.attackCell(3, 2);
-    myField.attackCell(4, 2);
-    myField.attackCell(5, 6);
-    myField.attackCell(5, 8);
+    
+    DoubleDamage dd;
+    dd.set(myField, 1, 2);
+    //dd.cast();
+
+    Shelling sh;
+    sh.set(myManager);
+    //sh.cast();
+
+    Scanner sc;
+    sc.set(myField, 2, 1);
+    sc.cast();
+    std::cout<<"Scanner detected "<<sc.getSegNum()<<'\n';
+
     myField.display();
     printShipsInManager(myManager);
 
