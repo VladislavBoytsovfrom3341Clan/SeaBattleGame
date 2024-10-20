@@ -1,5 +1,5 @@
-#ifndef BATTLEFIELD
-#define BATTLEFIELD
+#ifndef BATTLEFIELD_H
+#define BATTLEFIELD_H
 
 #include"Battleship.h"
 
@@ -19,6 +19,12 @@ enum class Orientation
 {
     horizontal, 
     vertical
+};
+
+struct Coords
+{
+    int x;
+    int y;
 };
 
 /**
@@ -82,23 +88,25 @@ public:
     Battlefield(Battlefield&& moved);
 
     //set a ship to a shosen cell
-    void setShip(Battleship& ship, int x, int y, Orientation orientation);
+    void setShip(Battleship& ship, Coords coords, Orientation orientation);
 
     //checks if there if ship in cell at (x, y) 
-    bool hasShipAtCell(int x, int y) const;
+    bool hasShipAtCell(Coords coords) const;
+
+    Coords size() const noexcept;
 
     //gets a status of cell at (x, y)
-    CellStatus getCellStatus(int x, int y) const;
+    CellStatus getCellStatus(Coords coords) const;
 
     //gets a Condition of segment of ship if has one
     //may throw an exception if there is no ship
-    SegmentCondition getCellShipCondition(int x, int y) const;
+    SegmentCondition getCellShipCondition(Coords coords) const;
 
     //DEBUG method for displaying map to std::cout
     void display();
 
     //method for attacking a chosen cell
-    void attackCell(int x, int y, int damage=1);
+    void attackCell(Coords coords, int damage=1);
 
     //WARNING: copy operator does not deep copy ships
     Battlefield& operator=(const Battlefield& copy);

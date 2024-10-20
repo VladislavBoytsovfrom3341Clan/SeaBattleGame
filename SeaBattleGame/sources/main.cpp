@@ -33,15 +33,15 @@ int main()
     printShipsInManager(myManager);
 
     Battlefield myField(20, 15);
-    myField.setShip(myManager.getInactiveShip(0), 1, 2, Orientation::horizontal);
-    myField.setShip(myManager.getInactiveShip(1), 5, 6, Orientation::vertical);
+    myField.setShip(myManager.getInactiveShip(0), Coords{1, 2}, Orientation::horizontal);
+    myField.setShip(myManager.getInactiveShip(1), Coords{5, 6}, Orientation::vertical);
     myManager.setShipActive(0);
     myManager.setShipActive(0);
     myField.display();
     printShipsInManager(myManager);
     
     DoubleDamage dd;
-    dd.set(myField, 1, 2);
+    dd.set(myField, Coords{1, 2});
     //dd.cast();
 
     Shelling sh;
@@ -49,7 +49,7 @@ int main()
     //sh.cast();
 
     Scanner sc;
-    sc.set(myField, 2, 1);
+    sc.set(myField, Coords{2, 1});
     sc.cast();
     std::cout<<"Scanner detected "<<sc.getSegNum()<<'\n';
 

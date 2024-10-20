@@ -44,7 +44,7 @@ Battlefield::Battlefield(Battlefield&& moved)
     mBattlefieldArray=std::move(moved.mBattlefieldArray);
 }
 
-void Battlefield::setShip(Battleship& ship, int x, int y, Orientation orientation)
+void Battlefield::setShip(Battleship& ship, Coords coords, Orientation orientation)
 {
     /**
      * Uses offset to calculate the exact ships area as
@@ -61,6 +61,9 @@ void Battlefield::setShip(Battleship& ship, int x, int y, Orientation orientatio
         xOffset=0;
         yOffset=ship.getLength()-1;
     }
+
+    int x=coords.x;
+    int y=coords.y;
 
     //check if ship fits in the field
     if(x<0 or x>=mHorizontalSize-xOffset or y<0 or y>mVerticalSize-yOffset)
@@ -84,34 +87,39 @@ void Battlefield::setShip(Battleship& ship, int x, int y, Orientation orientatio
         }
 }
 
-bool Battlefield::hasShipAtCell(int x, int y) const
+bool Battlefield::hasShipAtCell(Coords coords) const
 {
-    if(x<0 or x>=mHorizontalSize or y<0 or y>=mVerticalSize)
+    if(coords.x<0 or coords.x>=mHorizontalSize or coords.y<0 or coords.y>=mVerticalSize)
         throw std::invalid_argument("Invalid cell indexes");
 
-    return mBattlefieldArray[y][x].hasShip();
+    return mBattlefieldArray[coords.y][coords.x].hasShip();
 }
 
-CellStatus Battlefield::getCellStatus(int x, int y) const
+Coords Battlefield::size() const noexcept
 {
-    if(x<0 or x>=mHorizontalSize or y<0 or y>=mVerticalSize)
+    return Coords{mHorizontalSize, mVerticalSize};
+}
+
+CellStatus Battlefield::getCellStatus(Coords coords) const
+{
+    if(coords.x<0 or coords.x>=mHorizontalSize or coords.y<0 or coords.y>=mVerticalSize)
         throw std::invalid_argument("Invalid cell indexes");
     
-    return mBattlefieldArray[y][x].getStatus();
+    return mBattlefieldArray[coords.y][coords.x].getStatus();
 }
 
-SegmentCondition Battlefield::getCellShipCondition(int x, int y) const
+SegmentCondition Battlefield::getCellShipCondition(Coords coords) const
 {
-    if(x<0 or x>=mHorizontalSize or y<0 or y>=mVerticalSize)
+    if(coords.x<0 or coords.x>=mHorizontalSize or coords.y<0 or coords.y>=mVerticalSize)
         throw std::invalid_argument("Invalid cell indexes");
     
     //may throw an exception if there is no ship
-    return mBattlefieldArray[y][x].getSegmentCondition();
+    return mBattlefieldArray[coords.y][coords.x].getSegmentCondition();
 }
 
-void Battlefield::attackCell(int x, int y, int damage)
+void Battlefield::attackCell(Coords coords, int damage)
 {
-    mBattlefieldArray[y][x].attackCell(damage);
+    mBattlefieldArray[coords.y][coords.x].attackCell(damage);
 }
 
 //DEBUG METHOD

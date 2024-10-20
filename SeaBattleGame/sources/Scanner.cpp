@@ -22,9 +22,9 @@ bool Scanner::ResultScanner::containShips()
 
 void Scanner::cast()
 {
-    for(int i=mY; i<mY+scannerRange; i++)
-        for(int j=mX; j<mX+scannerRange; j++)
-            if(mField->hasShipAtCell(j ,i))
+    for(int i=mCoords.y; i<mCoords.y+scannerRange; i++)
+        for(int j=mCoords.x; j<mCoords.x+scannerRange; j++)
+            if(mField->hasShipAtCell(Coords{j ,i}))
                 result.add();
 }
 

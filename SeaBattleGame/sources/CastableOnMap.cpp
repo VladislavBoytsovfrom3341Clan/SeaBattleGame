@@ -1,8 +1,7 @@
 #include"CastableOnMap.h"
 
-void CastableOnMap::set(Battlefield& field, int x, int y)
+void CastableOnMap::set(Battlefield& field, Coords coords)
 {
-    mField=&field;
-    mX=x;
-    mY=y;
+    mField = &field;
+    mCoords = coords;
 }

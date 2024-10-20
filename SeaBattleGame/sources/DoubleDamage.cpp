@@ -2,5 +2,5 @@
 
 void DoubleDamage::cast()
 {
-    mField->attackCell(mX, mY, 2);
+    mField->attackCell(mCoords, 2);
 }

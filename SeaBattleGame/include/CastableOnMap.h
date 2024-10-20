@@ -7,10 +7,10 @@ class CastableOnMap
 {
 protected:
     Battlefield* mField;
-    int mX, mY;
+    Coords mCoords;
 public:
     CastableOnMap() = default;
-    void set(Battlefield& field, int x, int y);
+    void set(Battlefield& field, Coords coords);
 };
 
 #endif
