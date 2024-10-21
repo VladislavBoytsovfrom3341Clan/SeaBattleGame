@@ -1,0 +1,5 @@
+include_directories(${PROJECT_SOURCE_DIR}/include)
+
+add_subdirectory(Abilities)
+add_subdirectory(Battlefield)
+add_subdirectory(Battleship)
