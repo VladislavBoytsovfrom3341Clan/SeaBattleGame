@@ -1,9 +1,7 @@
 #include"ShipManager.h"
 #include<iostream>
 
-#include"DoubleDamage.h"
-#include"Shelling.h"
-#include"Scanner.h"
+#include "AbilityManager.h"
 
 //no OOP only as debug func
 void printShip(const Battleship& ship)
@@ -27,6 +25,11 @@ void printShipsInManager(const ShipManager& manager)
         printShip(manager.getActiveShip(i));
 }
 
+void useAbility(AbilityManager& manager)
+{
+    
+}
+
 int main()
 {
     ShipManager myManager({{4, 2}, {2, 3}, {1, 2}});
@@ -40,18 +43,36 @@ int main()
     myField.display();
     printShipsInManager(myManager);
     
-    DoubleDamage dd;
-    dd.set(myField, Coords{1, 2});
-    dd.cast();
+    AbilityManager myAbilities;
 
-    Shelling sh;
-    sh.set(myManager);
-    sh.cast();
 
-    Scanner sc;
-    sc.set(myField, Coords{0, 1});
-    sc.cast();
-    std::cout<<"Scanner detected "<<sc.getSegNum()<<'\n';
+    int i=0;
+    while(!myAbilities.empty() and i<15)
+    {
+        IAbility& ab = myAbilities.getAbility();
+        if(typeid(ab) == typeid(DoubleDamage))
+        {
+            DoubleDamage& dd = dynamic_cast<DoubleDamage&>(ab);
+            dd.set(myField, Coords{1, 2});
+            dd.cast();
+        }
+        else if(typeid(ab) == typeid(Shelling))
+        {
+            Shelling& sh = dynamic_cast<Shelling&>(ab);
+            sh.set(myManager);
+            sh.cast();
+        }
+        else if(typeid(ab) == typeid(Scanner))
+        {
+            Scanner& sc = dynamic_cast<Scanner&>(ab);
+            sc.set(myField, Coords{0, 1});
+            sc.cast();
+            std::cout<<"Scanner detected "<<sc.getSegNum()<<'\n';
+        }
+        myAbilities.popAbility();
+        i++;
+        myAbilities.addAbility();
+    }
 
     myField.display();
     printShipsInManager(myManager);
