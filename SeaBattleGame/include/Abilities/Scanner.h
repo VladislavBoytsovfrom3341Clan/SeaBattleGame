@@ -2,11 +2,22 @@
 #define SCANER_H
 
 #include"IAbility.h"
-#include"CastableOnMap.h"
+#include"IAbilitySettings.h"
+#include"Battlefield.h"
 
 constexpr int scannerRange = 2;
 
-class Scanner: public IAbility, public CastableOnMap
+class ScannerSettings: public IAbilitySettings
+{
+public:
+    Battlefield& mField;
+    Coords mCoords;
+
+    ScannerSettings(Battlefield& field, Coords coords);
+    AbilityType getType() override;
+};
+
+class Scanner: public IAbility
 {
     class ResultScanner
     {
@@ -19,9 +30,10 @@ class Scanner: public IAbility, public CastableOnMap
     };
 
     ResultScanner result;
+    Battlefield& mField;
+    Coords mCoords;
 public:
-    Scanner() = default;
-    void set(Battlefield& field, Coords coords);
+    Scanner(Battlefield& field, Coords coords);
     void cast() override;
     bool containShips() const noexcept;
     int getSegNum() const noexcept;

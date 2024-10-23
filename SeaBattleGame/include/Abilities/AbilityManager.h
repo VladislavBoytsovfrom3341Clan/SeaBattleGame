@@ -3,14 +3,13 @@
 
 #include <queue>
 
+#include "AbilityFactory.h"
 #include "IAbility.h"
-#include "DoubleDamage.h"
-#include "Scanner.h"
-#include "Shelling.h"
 
 class AbilityManager
 {
-    std::queue<IAbility*> mAbilities;
+    std::queue<AbilityType> mAbilities;
+    AbilityFactory mFactory;
 
     IAbility* makeRandomAbility() const noexcept;
 public:

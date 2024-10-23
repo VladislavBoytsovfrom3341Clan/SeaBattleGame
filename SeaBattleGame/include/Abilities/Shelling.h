@@ -2,12 +2,23 @@
 #define SHELLING_H
 
 #include"IAbility.h"
-#include"CastableOnShipManager.h"
+#include"IAbilitySettings.h"
+#include"ShipManager.h"
 
-class Shelling: public IAbility, public CastableOnShipManager
+class ShellingSettings: public IAbilitySettings
 {
 public:
-    Shelling() = default;
+    ShipManager& mManager;
+
+    ShellingSettings(ShipManager& manager);
+    AbilityType getType() override;
+};
+
+class Shelling: public IAbility
+{
+    ShipManager& mShipManager;
+public:
+    Shelling(ShipManager& manager);
     void cast() override;
 };
 

@@ -1,7 +1,6 @@
 set(ABILITIES_SOURCES 
-        AbilityManager.cpp 
-        CastableOnMap.cpp 
-        CastableOnShipManager.cpp 
+#        AbilityManager.cpp
+        AbilityFactory.cpp
         DoubleDamage.cpp
         Scanner.cpp
         Shelling.cpp)
@@ -11,11 +10,11 @@ set(ABILITIES_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 include_directories(${ABILITIES_INCLUDE_DIR}/Abilities ${ABILITIES_INCLUDE_DIR}/Battlefield ${ABILITIES_INCLUDE_DIR}/Battleship)
 
 set(ABILITIES_HEADERS
-        ${ABILITIES_INCLUDE_DIR}/Abilities/AbilityManager.h 
-        ${ABILITIES_INCLUDE_DIR}/Abilities/CastableOnMap.h 
-        ${ABILITIES_INCLUDE_DIR}/Abilities/CastableOnShipManager.h
+        ${ABILITIES_INCLUDE_DIR}/Abilities/AbilityFactory.h
+#        ${ABILITIES_INCLUDE_DIR}/Abilities/AbilityManager.h 
         ${ABILITIES_INCLUDE_DIR}/Abilities/DoubleDamage.h
         ${ABILITIES_INCLUDE_DIR}/Abilities/IAbility.h
+        ${ABILITIES_INCLUDE_DIR}/Abilities/IAbilitySettings.h
         ${ABILITIES_INCLUDE_DIR}/Abilities/Scanner.h
         ${ABILITIES_INCLUDE_DIR}/Abilities/Shelling.h)
 

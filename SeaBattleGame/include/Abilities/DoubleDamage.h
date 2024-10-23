@@ -1,13 +1,26 @@
 #ifndef DOUBLE_DAMAGE_H
 #define DOUBLE_DAMAGE_H
 
-#include"IAbility.h"
-#include"CastableOnMap.h"
+#include "IAbility.h"
+#include "IAbilitySettings.h"
+#include "Battlefield.h"
 
-class DoubleDamage: public IAbility, public CastableOnMap
+class DoubleDamageSettings: public IAbilitySettings
 {
 public:
-    DoubleDamage() = default;
+    Battlefield& mField;
+    Coords mCoords;
+
+    DoubleDamageSettings(Battlefield& field, Coords coords);
+    AbilityType getType() override;
+};
+
+class DoubleDamage: public IAbility
+{
+    Battlefield& mField;
+    Coords mCoords;
+public:
+    DoubleDamage(Battlefield& field, Coords coords);
     void cast() override;
 };
 
