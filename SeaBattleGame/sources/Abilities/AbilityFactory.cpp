@@ -7,7 +7,7 @@ IAbility* AbilityFactory::getAbility()
 
 void AbilityFactory::buildDoubleDamage(DoubleDamageSettings* ddSettings)
 {
-    mBuildedAbility = new DoubleDamage(ddSettings->mField, ddSettings->mCoords);
+    mBuildedAbility = new DoubleDamage(ddSettings->mMultiplier);
 }
 
 void AbilityFactory::buildShelling(ShellingSettings* shSettings)

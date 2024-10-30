@@ -1,7 +1,7 @@
 #include"DoubleDamage.h"
 
-DoubleDamageSettings::DoubleDamageSettings(Battlefield& field, Coords coords):
-mField(field), mCoords(coords){}
+DoubleDamageSettings::DoubleDamageSettings(int& multiplier):
+mMultiplier(multiplier){}
 
 AbilityType DoubleDamageSettings::getType()
 {
@@ -13,10 +13,10 @@ void DoubleDamageSettings::acceptVisitor(IVisitor& visitor)
     visitor.visit(this);
 }
 
-DoubleDamage::DoubleDamage(Battlefield& field, Coords coords):
-mField(field), mCoords(coords){}
+DoubleDamage::DoubleDamage(int& multiplier):
+mMultiplier(multiplier){}
 
 void DoubleDamage::cast()
 {
-    mField.attackCell(mCoords, 2);
+    mMultiplier = 2;
 }

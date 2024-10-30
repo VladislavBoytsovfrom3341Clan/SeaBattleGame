@@ -8,10 +8,9 @@
 class DoubleDamageSettings: public IAbilitySettings
 {
 public:
-    Battlefield& mField;
-    Coords mCoords;
+    int& mMultiplier;
 
-    DoubleDamageSettings(Battlefield& field, Coords coords);
+    DoubleDamageSettings(int& multiplier);
 
     AbilityType getType() override;
     void acceptVisitor(IVisitor& visitor) override;
@@ -19,10 +18,9 @@ public:
 
 class DoubleDamage: public IAbility
 {
-    Battlefield& mField;
-    Coords mCoords;
+    int& mMultiplier;
 public:
-    DoubleDamage(Battlefield& field, Coords coords);  
+    DoubleDamage(int& multiplier);  
     void cast() override;
 };
 

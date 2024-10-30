@@ -41,12 +41,17 @@ int main()
     
     AbilityManager a_manager;
 
+    /**THIS THING WILL BE STORAGED IN PLAYER CLASS AS ONE OF
+     * PLAYER CURRENT STATS
+     * **/
+    int damageMultiplier=1;
+
     while(!a_manager.empty())
     switch (a_manager.getFirstAbility())
     {
     case AbilityType::DoubleDamage:
     {
-        DoubleDamageSettings ddSettings(myField, {1, 2});
+        DoubleDamageSettings ddSettings(damageMultiplier);
         a_manager.castLastAbility(ddSettings);
         std::cout<<"DoubleDamage casted\n";
         break;
@@ -69,6 +74,7 @@ int main()
         break;
     }
 
+    myField.attackCell({2,2}, damageMultiplier);
     myField.display();
     printShipsInManager(myManager);
 
