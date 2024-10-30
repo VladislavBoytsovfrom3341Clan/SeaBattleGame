@@ -10,6 +10,11 @@ AbilityType ScannerSettings::getType()
     return AbilityType::Scanner;
 }
 
+void ScannerSettings::acceptVisitor(IVisitor& visitor)
+{
+    visitor.visit(this);
+}
+
 Scanner::Scanner(Battlefield& field, Coords coords):
 mField(field), mCoords(coords){}
 

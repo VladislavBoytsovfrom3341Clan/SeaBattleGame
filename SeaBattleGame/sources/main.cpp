@@ -1,8 +1,7 @@
 #include"ShipManager.h"
 #include<iostream>
 
-#include "AbilityFactory.h"
-#include "DoubleDamage.h"
+#include "AbilityManager.h"
 
 //no OOP only as debug func
 void printShip(const Battleship& ship)
@@ -40,10 +39,35 @@ int main()
     myField.display();
     printShipsInManager(myManager);
     
-    AbilityFactory factory;
-    DoubleDamageSettings* dds = new DoubleDamageSettings(myField, {1, 2});
-    IAbility* ab = factory.build(dds);
-    ab->cast();
+    AbilityManager a_manager;
+
+    while(!a_manager.empty())
+    switch (a_manager.getFirstAbility())
+    {
+    case AbilityType::DoubleDamage:
+    {
+        DoubleDamageSettings ddSettings(myField, {1, 2});
+        a_manager.castLastAbility(ddSettings);
+        std::cout<<"DoubleDamage casted\n";
+        break;
+    }
+    case AbilityType::Scanner:
+    {
+        ScannerSettings scSettings(myField, {1, 2});
+        a_manager.castLastAbility(scSettings);
+        std::cout<<"Scanner casted\n";
+        break;
+    }
+    case AbilityType::Shelling:
+    {
+        ShellingSettings shSettings(myManager);
+        a_manager.castLastAbility(shSettings);
+        std::cout<<"Shelling casted\n";
+        break;
+    }
+    default:
+        break;
+    }
 
     myField.display();
     printShipsInManager(myManager);

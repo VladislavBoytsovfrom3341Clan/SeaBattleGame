@@ -2,53 +2,69 @@
 
 #include <vector>
 #include <cstdlib>
+#include <algorithm>
 #include <stdexcept>
+#include <random>
 
 constexpr int abilitiesNum = 3;
 
-AbilityManager::AbilityManager()
+AbilityManager::AbilityManager():
+mVisitor(mFactory)
 {
-    std::vector<IAbility*> tempAbilitiesVector;
-    tempAbilitiesVector.push_back(new DoubleDamage);
-    tempAbilitiesVector.push_back(new Shelling);
-    tempAbilitiesVector.push_back(new Scanner);
+    std::vector<AbilityType> tempAbilitiesVector = 
+        {AbilityType::DoubleDamage, AbilityType::Scanner, AbilityType::Shelling};
 
-    while(tempAbilitiesVector.size() > 0)
+    auto rng = std::default_random_engine {};
+    std::shuffle(tempAbilitiesVector.begin(), tempAbilitiesVector.end(), rng);
+    
+    for(auto i: tempAbilitiesVector)
+        mAbilities.push(i);
+}
+
+void AbilityManager::addRandomAbility()
+{
+    std::random_device rd;   
+    std::mt19937 gen(rd());  
+    std::uniform_int_distribution<> dist(1, abilitiesNum);
+
+    switch (dist(gen))
     {
-        int index = std::rand() % tempAbilitiesVector.size();
-        mAbilities.push(tempAbilitiesVector.at(index));
-        tempAbilitiesVector.erase(tempAbilitiesVector.begin() + index);
+    case 1:
+    {
+        mAbilities.push(AbilityType::DoubleDamage);
+        break;
+    }
+    {
+        mAbilities.push(AbilityType::Scanner);
+        break;
+    }
+    {
+        mAbilities.push(AbilityType::Shelling);
+        break;
+    }    
+    default:
+        break;
     }
 }
 
-IAbility* AbilityManager::makeRandomAbility() const noexcept
+IAbility* AbilityManager::buildAbility(IAbilitySettings* settings)
 {
-    IAbility* newAbility;
-    int index = rand() % abilitiesNum;
-    switch (index)
-    {
-    case 0:
-        newAbility = new DoubleDamage;
-        break;
-    
-    case 1:
-        newAbility = new Scanner;
-        break;
-
-    case 2:
-        newAbility = new Shelling;
-        break;
-
-    default:
-        newAbility = new DoubleDamage;
-        break;
-    };
-    return newAbility;
+    settings->acceptVisitor(mVisitor);
+    return mFactory.getAbility();
 }
 
-void AbilityManager::addAbility() noexcept
+void AbilityManager::castLastAbility(IAbilitySettings& settings)
 {
-    mAbilities.push(makeRandomAbility());
+    if(settings.getType() != mAbilities.front())
+        throw std::logic_error("Invalid ability settings type");
+    
+    IAbility* currentAbility = this->buildAbility(&settings);
+
+    currentAbility->cast();
+
+    delete currentAbility;
+
+    mAbilities.pop();
 }
 
 bool AbilityManager::empty() const noexcept
@@ -56,33 +72,15 @@ bool AbilityManager::empty() const noexcept
     return mAbilities.empty();
 }
 
-int AbilityManager::getAbilityNumber() const noexcept
-{
-    return mAbilities.size();
-}
 
-IAbility& AbilityManager::getAbility() const
+AbilityType AbilityManager::getFirstAbility() const
 {
     if (this->empty())
         throw std::logic_error("No free abilities");
-    return *mAbilities.front();
-}
-
-void AbilityManager::popAbility() noexcept
-{
-    if(this->empty())
-        return;
-    IAbility* temp = mAbilities.front();
-    mAbilities.pop();
-    delete temp;
+    return mAbilities.front();
 }
 
 AbilityManager::~AbilityManager()
 {
-    while(!mAbilities.empty())
-    {
-        IAbility* temp = mAbilities.front();
-        delete temp;
-        mAbilities.pop();
-    }
+    
 }

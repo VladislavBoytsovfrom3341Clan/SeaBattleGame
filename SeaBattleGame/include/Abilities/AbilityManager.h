@@ -5,21 +5,23 @@
 
 #include "AbilityFactory.h"
 #include "IAbility.h"
+#include "AbilitySettingsVisitor.h"
 
 class AbilityManager
 {
     std::queue<AbilityType> mAbilities;
     AbilityFactory mFactory;
+    AbilitySettingsVisitor mVisitor;
 
-    IAbility* makeRandomAbility() const noexcept;
+    IAbility* buildAbility(IAbilitySettings* settings);
 public:
     AbilityManager();
 
-    void addAbility() noexcept;
     bool empty() const noexcept;
-    int getAbilityNumber() const noexcept;
-    IAbility& getAbility() const;
-    void popAbility() noexcept;
+
+    AbilityType getFirstAbility() const;
+    void castLastAbility(IAbilitySettings& settings);
+    void addRandomAbility();
 
     ~AbilityManager();
 };

@@ -11,7 +11,10 @@ public:
     ShipManager& mManager;
 
     ShellingSettings(ShipManager& manager);
+
     AbilityType getType() override;
+
+    void acceptVisitor(IVisitor& visitor) override;
 };
 
 class Shelling: public IAbility

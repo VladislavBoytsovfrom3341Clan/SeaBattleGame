@@ -14,7 +14,10 @@ public:
     Coords mCoords;
 
     ScannerSettings(Battlefield& field, Coords coords);
+
     AbilityType getType() override;
+
+    void acceptVisitor(IVisitor& visitor) override;
 };
 
 class Scanner: public IAbility

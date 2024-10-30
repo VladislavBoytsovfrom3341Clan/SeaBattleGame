@@ -12,7 +12,9 @@ public:
     Coords mCoords;
 
     DoubleDamageSettings(Battlefield& field, Coords coords);
+
     AbilityType getType() override;
+    void acceptVisitor(IVisitor& visitor) override;
 };
 
 class DoubleDamage: public IAbility
@@ -20,7 +22,7 @@ class DoubleDamage: public IAbility
     Battlefield& mField;
     Coords mCoords;
 public:
-    DoubleDamage(Battlefield& field, Coords coords);
+    DoubleDamage(Battlefield& field, Coords coords);  
     void cast() override;
 };
 
