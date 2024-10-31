@@ -2,24 +2,12 @@
 #define I_ABILITY_SETTINGS_H
 
 #include "IVisitor.h"
-
-enum class AbilityType
-{
-    DoubleDamage=1,
-    Scanner,
-    Shelling
-};
-
+#include "AbilityType.h"
 class IAbilitySettings
 {
 public:
     virtual AbilityType getType()=0;
     virtual void acceptVisitor(IVisitor& visitor)=0;
-};
-
-class AbilityResult
-{
-
 };
 
 #endif

@@ -2,9 +2,9 @@
 #define ABILITY_FACTORY_H
 
 #include "IAbility.h"
-#include "DoubleDamage.h"
-#include "Shelling.h"
-#include "Scanner.h"
+#include "DoubleDamageSettings.h"
+#include "ShellingSettings.h"
+#include "ScannerSettings.h"
 
 class AbilityFactory
 {

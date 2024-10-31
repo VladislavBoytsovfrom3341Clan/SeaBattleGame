@@ -3,10 +3,11 @@
 
 #include <queue>
 
-#include "AbilityFactory.h"
+#include "AbilityType.h"
 #include "IAbility.h"
+#include "AbilityFactory.h"
 #include "AbilitySettingsVisitor.h"
-#include "AbilityResultHandler.h"
+
 
 class AbilityManager
 {

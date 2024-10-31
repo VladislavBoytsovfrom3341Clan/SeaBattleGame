@@ -1,27 +1,5 @@
-#include"Scanner.h"
-
-#include<stdexcept>
-
-ScannerSettings::ScannerSettings(Battlefield& field, Coords coords, AbilityResultHandler& handler):
-mField(field), mCoords(coords), mHandler(handler){}
-
-AbilityType ScannerSettings::getType()
-{
-    return AbilityType::Scanner;
-}
-
-void ScannerSettings::acceptVisitor(IVisitor& visitor)
-{
-    visitor.visit(this);
-}
-
-ScannerResult::ScannerResult(int num):
-mSegNum(num){}
-
-int ScannerResult::getResult()
-{
-    return mSegNum;
-}
+#include "Scanner.h"
+#include "ScannerResult.h"
 
 Scanner::Scanner(Battlefield& field, Coords coords, AbilityResultHandler& handler):
 mField(field), mCoords(coords), mHandler(handler){}

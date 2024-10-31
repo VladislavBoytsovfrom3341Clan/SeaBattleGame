@@ -2,6 +2,7 @@
 #include<iostream>
 #include"OutOfRangeAttackException.h"
 #include"ShipPlacementException.h"
+#include"ScannerResult.h"
 
 #include "AbilityManager.h"
 
@@ -71,7 +72,7 @@ int main()
             }
             case AbilityType::Scanner:
             {
-                ScannerSettings scSettings(myField, {4, 2}, a_handler);
+                ScannerSettings scSettings(myField, {1, 1}, a_handler);
                 a_manager.castLastAbility(scSettings);
                 ScannerResult* res = static_cast<ScannerResult*>(a_handler.getResult());
                 std::cout<<"Scanner casted, result: "<<res->getResult()<<"\n";

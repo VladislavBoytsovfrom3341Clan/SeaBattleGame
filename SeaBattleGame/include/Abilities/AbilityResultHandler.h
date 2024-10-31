@@ -1,7 +1,7 @@
 #ifndef ABILITY_RESULT_HANDLER_H
 #define ABILITY_RESULT_HANDLER_H
 
-#include "IAbilitySettings.h"
+#include "AbilityResult.h"
 
 class AbilityResultHandler
 {
