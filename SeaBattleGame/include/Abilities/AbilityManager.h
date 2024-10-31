@@ -16,8 +16,6 @@ class AbilityManager
 
     IAbility* buildAbility(IAbilitySettings* settings);
 public:
-    AbilityResultHandler mHandler;
-
     AbilityManager();
 
     bool empty() const noexcept;

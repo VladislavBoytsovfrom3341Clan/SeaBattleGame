@@ -49,6 +49,7 @@ int main()
     printShipsInManager(myManager);
     
     AbilityManager a_manager;
+    AbilityResultHandler a_handler;
 
     /**THIS THING WILL BE STORAGED IN PLAYER CLASS AS ONE OF
      * PLAYER CURRENT STATS
@@ -67,9 +68,9 @@ int main()
     }
     case AbilityType::Scanner:
     {
-        ScannerSettings scSettings(myField, {4, 2}, a_manager.mHandler);
+        ScannerSettings scSettings(myField, {4, 2}, a_handler);
         a_manager.castLastAbility(scSettings);
-        ScannerResult* res = static_cast<ScannerResult*>(a_manager.mHandler.getResult());
+        ScannerResult* res = static_cast<ScannerResult*>(a_handler.getResult());
         std::cout<<"Scanner casted, result: "<<res->getResult()<<"\n";
         break;
     }
