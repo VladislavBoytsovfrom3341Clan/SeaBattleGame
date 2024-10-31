@@ -2,6 +2,7 @@ set(ABILITIES_SOURCES
         AbilityManager.cpp
         AbilityFactory.cpp
         AbilitySettingsVisitor.cpp
+        AbilityResultHandler.cpp
         DoubleDamage.cpp
         Scanner.cpp
         Shelling.cpp)
@@ -17,6 +18,7 @@ set(ABILITIES_HEADERS
         ${ABILITIES_INCLUDE_DIR}/Abilities/IAbility.h
         ${ABILITIES_INCLUDE_DIR}/Abilities/IVisitor.h
         ${ABILITIES_INCLUDE_DIR}/Abilities/IAbilitySettings.h
+        ${ABILITIES_INCLUDE_DIR}/Abilities/AbilityResultHandler.h
         ${ABILITIES_INCLUDE_DIR}/Abilities/AbilitySettingsVisitor.h
         ${ABILITIES_INCLUDE_DIR}/Abilities/Scanner.h
         ${ABILITIES_INCLUDE_DIR}/Abilities/Shelling.h

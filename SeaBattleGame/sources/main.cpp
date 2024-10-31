@@ -5,7 +5,7 @@
 
 #include "AbilityManager.h"
 
-//no OOP only as debug func
+//no OOP only as DEBUG func
 void printShip(const Battleship& ship)
 {
     auto segments = ship.getShipCondition();
@@ -15,7 +15,7 @@ void printShip(const Battleship& ship)
     std::cout<<'\n';
 }
 
-//no OOP only as debug func
+//no OOP only as DEBUG func
 void printShipsInManager(const ShipManager& manager)
 {
     std::cout<<"Inactive ships in manager: "<<manager.getInactiveShipsNumber()<<'\n';
@@ -27,7 +27,7 @@ void printShipsInManager(const ShipManager& manager)
         printShip(manager.getActiveShip(i));
 }
 
-
+//WE USE MAIN AS DEBUGGING BASE
 int main()
 {
     ShipManager myManager({{4, 2}, {2, 3}, {1, 2}});
@@ -67,9 +67,10 @@ int main()
     }
     case AbilityType::Scanner:
     {
-        ScannerSettings scSettings(myField, {1, 2});
+        ScannerSettings scSettings(myField, {1, 2}, a_manager.mHandler);
         a_manager.castLastAbility(scSettings);
-        std::cout<<"Scanner casted\n";
+        ScannerResult* res = static_cast<ScannerResult*>(a_manager.mHandler.getResult());
+        std::cout<<"Scanner casted, result: "<<res->getResult()<<"\n";
         break;
     }
     case AbilityType::Shelling:

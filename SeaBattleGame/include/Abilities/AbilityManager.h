@@ -6,6 +6,7 @@
 #include "AbilityFactory.h"
 #include "IAbility.h"
 #include "AbilitySettingsVisitor.h"
+#include "AbilityResultHandler.h"
 
 class AbilityManager
 {
@@ -15,6 +16,8 @@ class AbilityManager
 
     IAbility* buildAbility(IAbilitySettings* settings);
 public:
+    AbilityResultHandler mHandler;
+
     AbilityManager();
 
     bool empty() const noexcept;

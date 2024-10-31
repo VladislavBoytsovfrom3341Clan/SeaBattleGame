@@ -17,5 +17,5 @@ void AbilityFactory::buildShelling(ShellingSettings* shSettings)
 
 void AbilityFactory::buildScanner(ScannerSettings* scSettings)
 {
-    mBuildedAbility = new Scanner(scSettings->mField, scSettings->mCoords);
+    mBuildedAbility = new Scanner(scSettings->mField, scSettings->mCoords, scSettings->mHandler);
 }

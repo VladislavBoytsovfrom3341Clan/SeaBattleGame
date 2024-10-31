@@ -17,4 +17,9 @@ public:
     virtual void acceptVisitor(IVisitor& visitor)=0;
 };
 
+class AbilityResult
+{
+
+};
+
 #endif

@@ -2,8 +2,8 @@
 
 #include<stdexcept>
 
-ScannerSettings::ScannerSettings(Battlefield& field, Coords coords):
-mField(field), mCoords(coords){}
+ScannerSettings::ScannerSettings(Battlefield& field, Coords coords, AbilityResultHandler& handler):
+mField(field), mCoords(coords), mHandler(handler){}
 
 AbilityType ScannerSettings::getType()
 {
@@ -15,43 +15,27 @@ void ScannerSettings::acceptVisitor(IVisitor& visitor)
     visitor.visit(this);
 }
 
-Scanner::Scanner(Battlefield& field, Coords coords):
-mField(field), mCoords(coords){}
-
-void Scanner::ResultScanner::setResult(int num) noexcept
+void ScannerResult::setResult(int num)
 {
-    mSegNumber=num;
+    mSegNum = num;
 }
 
-void Scanner::ResultScanner::add() noexcept
+int ScannerResult::getResult()
 {
-    mSegNumber++;
+    return mSegNum;
 }
 
-int Scanner::ResultScanner::getSegNumber() const noexcept
-{
-    return mSegNumber;
-}
-
-bool Scanner::ResultScanner::containShips() const noexcept
-{
-    return mSegNumber>0;
-}
+Scanner::Scanner(Battlefield& field, Coords coords, AbilityResultHandler& handler):
+mField(field), mCoords(coords), mHandler(handler){}
 
 void Scanner::cast()
 {
+    int mSegNum = 0;
     for(int i=mCoords.y; i<mCoords.y+scannerRange; i++)
         for(int j=mCoords.x; j<mCoords.x+scannerRange; j++)
             if(mField.hasShipAtCell(Coords{j ,i}))
-                result.add();
-}
-
-bool Scanner::containShips() const noexcept
-{
-    return result.containShips();
-}
-
-int Scanner::getSegNum() const noexcept
-{
-    return result.getSegNumber();
+                mSegNum++;
+    ScannerResult* result = new ScannerResult;
+    result->setResult(mSegNum);
+    mHandler.setResult<ScannerResult>(result);
 }
