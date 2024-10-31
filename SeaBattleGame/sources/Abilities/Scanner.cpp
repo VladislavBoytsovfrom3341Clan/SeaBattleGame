@@ -15,10 +15,8 @@ void ScannerSettings::acceptVisitor(IVisitor& visitor)
     visitor.visit(this);
 }
 
-void ScannerResult::setResult(int num)
-{
-    mSegNum = num;
-}
+ScannerResult::ScannerResult(int num):
+mSegNum(num){}
 
 int ScannerResult::getResult()
 {
@@ -35,7 +33,6 @@ void Scanner::cast()
         for(int j=mCoords.x; j<mCoords.x+scannerRange; j++)
             if(mField.hasShipAtCell(Coords{j ,i}))
                 mSegNum++;
-    ScannerResult* result = new ScannerResult;
-    result->setResult(mSegNum);
-    mHandler.setResult<ScannerResult>(result);
+    AbilityResult* result = new ScannerResult(mSegNum);
+    mHandler.setResult(result);
 }

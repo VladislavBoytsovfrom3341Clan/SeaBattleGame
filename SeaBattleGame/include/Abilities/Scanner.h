@@ -26,8 +26,7 @@ class ScannerResult: public AbilityResult
 {
     int mSegNum = 0;
 public:
-    
-    void setResult(int num);
+    ScannerResult(int num);
     int getResult();
 };
 

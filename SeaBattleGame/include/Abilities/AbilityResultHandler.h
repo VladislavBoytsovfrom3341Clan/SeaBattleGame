@@ -8,12 +8,7 @@ class AbilityResultHandler
     AbilityResult* mResult = nullptr;
 
 public:
-    template<typename R>
-    void setResult(R* result)
-    {
-        mResult = static_cast<AbilityResult*>(result);
-    }
-
+    void setResult(AbilityResult* result);
     AbilityResult* getResult();
 };
 

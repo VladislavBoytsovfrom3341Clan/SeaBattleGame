@@ -67,7 +67,7 @@ int main()
     }
     case AbilityType::Scanner:
     {
-        ScannerSettings scSettings(myField, {1, 2}, a_manager.mHandler);
+        ScannerSettings scSettings(myField, {4, 2}, a_manager.mHandler);
         a_manager.castLastAbility(scSettings);
         ScannerResult* res = static_cast<ScannerResult*>(a_manager.mHandler.getResult());
         std::cout<<"Scanner casted, result: "<<res->getResult()<<"\n";
