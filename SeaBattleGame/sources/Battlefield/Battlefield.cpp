@@ -1,4 +1,7 @@
 #include"Battlefield.h"
+#include "OutOfRangeAttackException.h"
+#include "ShipPlacementException.h"
+
 #include<iostream>
 
 //sets basic field size
@@ -67,7 +70,7 @@ void Battlefield::setShip(Battleship& ship, Coords coords, Orientation orientati
 
     //check if ship fits in the field
     if(x<0 or x>=mHorizontalSize-xOffset or y<0 or y>mVerticalSize-yOffset)
-        throw std::logic_error("Invalid ship coordinates");
+        throw ShipPlacementException(coords, "Out of map size");
     
     //collision check
     for(int j=y-1; j<=y+yOffset+1; j++)
@@ -76,7 +79,7 @@ void Battlefield::setShip(Battleship& ship, Coords coords, Orientation orientati
                 if(i>=0 and i<mHorizontalSize)
                 {
                     if(mBattlefieldArray[j][i].hasShip())
-                        throw std::logic_error("Intersection between ships occured");
+                        throw ShipPlacementException(coords, "Intersection between ships occured");
                 }
     //sets ship to the cells by segments
     int segmentIndex=0;
@@ -119,6 +122,8 @@ SegmentCondition Battlefield::getCellShipCondition(Coords coords) const
 
 void Battlefield::attackCell(Coords coords, int damage)
 {
+    if(coords.x>=mHorizontalSize or coords.y>=mVerticalSize)
+        throw OutOfRangeAttackException(coords, {mHorizontalSize, mVerticalSize});
     mBattlefieldArray[coords.y][coords.x].attackCell(damage);
 }
 

@@ -1,4 +1,5 @@
 #include "AbilityManager.h"
+#include "NoAbilityException.h"
 
 #include <vector>
 #include <cstdlib>
@@ -34,10 +35,12 @@ void AbilityManager::addRandomAbility()
         mAbilities.push(AbilityType::DoubleDamage);
         break;
     }
+    case 2:
     {
         mAbilities.push(AbilityType::Scanner);
         break;
     }
+    case 3:
     {
         mAbilities.push(AbilityType::Shelling);
         break;
@@ -55,6 +58,8 @@ IAbility* AbilityManager::buildAbility(IAbilitySettings* settings)
 
 void AbilityManager::castLastAbility(IAbilitySettings& settings)
 {
+    if (this->empty())
+        throw NoAbilityException();
     if(settings.getType() != mAbilities.front())
         throw std::logic_error("Invalid ability settings type");
     
@@ -76,7 +81,7 @@ bool AbilityManager::empty() const noexcept
 AbilityType AbilityManager::getFirstAbility() const
 {
     if (this->empty())
-        throw std::logic_error("No free abilities");
+        throw NoAbilityException();
     return mAbilities.front();
 }
 

@@ -8,7 +8,7 @@ set(ABILITIES_SOURCES
 
 set(ABILITIES_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 
-include_directories(${ABILITIES_INCLUDE_DIR}/Abilities ${ABILITIES_INCLUDE_DIR}/Battlefield ${ABILITIES_INCLUDE_DIR}/Battleship)
+include_directories(${ABILITIES_INCLUDE_DIR}/Abilities ${ABILITIES_INCLUDE_DIR}/Battlefield ${ABILITIES_INCLUDE_DIR}/Battleship ${ABILITIES_INCLUDE_DIR}/Exceptions)
 
 set(ABILITIES_HEADERS
         ${ABILITIES_INCLUDE_DIR}/Abilities/AbilityFactory.h
@@ -19,7 +19,8 @@ set(ABILITIES_HEADERS
         ${ABILITIES_INCLUDE_DIR}/Abilities/IAbilitySettings.h
         ${ABILITIES_INCLUDE_DIR}/Abilities/AbilitySettingsVisitor.h
         ${ABILITIES_INCLUDE_DIR}/Abilities/Scanner.h
-        ${ABILITIES_INCLUDE_DIR}/Abilities/Shelling.h)
+        ${ABILITIES_INCLUDE_DIR}/Abilities/Shelling.h
+        ${ABILITIES_INCLUDE_DIR}/Exceptions/NoAbilityException.h)
 
 add_library(AbilitiesLib OBJECT ${ABILITIES_SOURCES} ${ABILITIES_HEADERS})
 

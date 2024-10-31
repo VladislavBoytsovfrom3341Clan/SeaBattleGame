@@ -1,5 +1,7 @@
 #include"ShipManager.h"
 #include<iostream>
+#include"OutOfRangeAttackException.h"
+#include"ShipPlacementException.h"
 
 #include "AbilityManager.h"
 
@@ -33,6 +35,13 @@ int main()
 
     Battlefield myField(20, 15);
     myField.setShip(myManager.getInactiveShip(0), Coords{1, 2}, Orientation::horizontal);
+    try{
+    myField.setShip(myManager.getInactiveShip(0), Coords{100, 2}, Orientation::horizontal);
+    }
+    catch(const ShipPlacementException& e)
+    {
+        std::cout<<e.what();
+    }
     myField.setShip(myManager.getInactiveShip(1), Coords{5, 6}, Orientation::vertical);
     myManager.setShipActive(0);
     myManager.setShipActive(0);
@@ -74,6 +83,14 @@ int main()
         break;
     }
 
+    try
+    {
+        myField.attackCell({200,2}, damageMultiplier);
+    }
+    catch(const OutOfRangeAttackException& e)
+    {
+        std::cout << e.what() << '\n';
+    }
     myField.attackCell({2,2}, damageMultiplier);
     myField.display();
     printShipsInManager(myManager);

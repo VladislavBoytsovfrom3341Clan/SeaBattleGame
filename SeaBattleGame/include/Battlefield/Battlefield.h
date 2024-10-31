@@ -2,6 +2,7 @@
 #define BATTLEFIELD_H
 
 #include"Battleship.h"
+#include <string>
 
 constexpr int minimalFieldSize = minimalShipLength;
 constexpr int maximalFieldSize = 25;
@@ -25,6 +26,8 @@ struct Coords
 {
     int x;
     int y;
+
+    std::string toString() const;
 };
 
 /**
