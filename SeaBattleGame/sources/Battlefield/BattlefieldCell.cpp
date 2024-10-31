@@ -12,14 +12,20 @@ void Battlefield::BattlefieldCell::setShipSegment(Battleship& ship, const int sh
     mShipSegmentIndex = shipSegmentIndex;
 }
 
-void Battlefield::BattlefieldCell::attackCell(const int damage)
+bool Battlefield::BattlefieldCell::attackCell(const int damage)
 {
     if (mShipPointer == nullptr)
+    {
         mStatus = CellStatus::empty;
+        return false;
+    }
     else
     {
         mShipPointer->damageSegment(mShipSegmentIndex, damage);
         mStatus = CellStatus::shipped;
+        if(mShipPointer->isAlive())
+            return false;
+        return true;
     }
 }
 

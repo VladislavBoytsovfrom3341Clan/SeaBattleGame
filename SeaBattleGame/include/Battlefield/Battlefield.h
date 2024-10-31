@@ -69,7 +69,7 @@ class Battlefield
         void setShipSegment(Battleship& ship, const int shipSegmentIndex) noexcept;
 
         //method to damage a ship by the segment if there is a ship
-        void attackCell(const int damage);
+        bool attackCell(const int damage);
     };
 
     //sizes of the field
@@ -109,7 +109,7 @@ public:
     void display();
 
     //method for attacking a chosen cell
-    void attackCell(Coords coords, int damage=1);
+    bool attackCell(Coords coords, int damage=1);
 
     //WARNING: copy operator does not deep copy ships
     Battlefield& operator=(const Battlefield& copy);

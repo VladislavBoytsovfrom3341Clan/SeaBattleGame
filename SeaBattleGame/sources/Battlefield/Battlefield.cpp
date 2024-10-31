@@ -120,11 +120,11 @@ SegmentCondition Battlefield::getCellShipCondition(Coords coords) const
     return mBattlefieldArray[coords.y][coords.x].getSegmentCondition();
 }
 
-void Battlefield::attackCell(Coords coords, int damage)
+bool Battlefield::attackCell(Coords coords, int damage)
 {
     if(coords.x>=mHorizontalSize or coords.y>=mVerticalSize)
         throw OutOfRangeAttackException(coords, {mHorizontalSize, mVerticalSize});
-    mBattlefieldArray[coords.y][coords.x].attackCell(damage);
+    return mBattlefieldArray[coords.y][coords.x].attackCell(damage);
 }
 
 //DEBUG METHOD
