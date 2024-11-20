@@ -8,8 +8,8 @@
 Battlefield::Battlefield(const int horizontalSize, const int verticalSize):
 mHorizontalSize(horizontalSize), mVerticalSize(verticalSize)
 {
-    if(horizontalSize<minimalFieldSize or verticalSize<minimalFieldSize or 
-    horizontalSize>maximalFieldSize or verticalSize>maximalFieldSize)
+    if(horizontalSize<minimalFieldSize || verticalSize<minimalFieldSize || 
+    horizontalSize>maximalFieldSize || verticalSize>maximalFieldSize)
         throw std::logic_error("Invalid field size");
 
     //fulls field with empty cells
@@ -69,14 +69,14 @@ void Battlefield::setShip(Battleship& ship, Coords coords, Orientation orientati
     int y=coords.y;
 
     //check if ship fits in the field
-    if(x<0 or x>=mHorizontalSize-xOffset or y<0 or y>mVerticalSize-yOffset)
+    if(x<0 || x>=mHorizontalSize-xOffset || y<0 || y>mVerticalSize-yOffset)
         throw ShipPlacementException(coords, "Out of map size");
     
     //collision check
     for(int j=y-1; j<=y+yOffset+1; j++)
-        if(j>=0 and j<mVerticalSize)
+        if(j>=0 && j<mVerticalSize)
             for(int i=x-1; i<=x+xOffset+1; i++)
-                if(i>=0 and i<mHorizontalSize)
+                if(i>=0 && i<mHorizontalSize)
                 {
                     if(mBattlefieldArray[j][i].hasShip())
                         throw ShipPlacementException(coords, "Intersection between ships occured");
@@ -92,7 +92,7 @@ void Battlefield::setShip(Battleship& ship, Coords coords, Orientation orientati
 
 bool Battlefield::hasShipAtCell(Coords coords) const
 {
-    if(coords.x<0 or coords.x>=mHorizontalSize or coords.y<0 or coords.y>=mVerticalSize)
+    if(coords.x<0 || coords.x>=mHorizontalSize || coords.y<0 || coords.y>=mVerticalSize)
         throw std::invalid_argument("Invalid cell indexes");
 
     return mBattlefieldArray[coords.y][coords.x].hasShip();
@@ -105,7 +105,7 @@ Coords Battlefield::size() const noexcept
 
 CellStatus Battlefield::getCellStatus(Coords coords) const
 {
-    if(coords.x<0 or coords.x>=mHorizontalSize or coords.y<0 or coords.y>=mVerticalSize)
+    if(coords.x<0 || coords.x>=mHorizontalSize || coords.y<0 || coords.y>=mVerticalSize)
         throw std::invalid_argument("Invalid cell indexes");
     
     return mBattlefieldArray[coords.y][coords.x].getStatus();
@@ -113,7 +113,7 @@ CellStatus Battlefield::getCellStatus(Coords coords) const
 
 SegmentCondition Battlefield::getCellShipCondition(Coords coords) const
 {
-    if(coords.x<0 or coords.x>=mHorizontalSize or coords.y<0 or coords.y>=mVerticalSize)
+    if(coords.x<0 || coords.x>=mHorizontalSize || coords.y<0 || coords.y>=mVerticalSize)
         throw std::invalid_argument("Invalid cell indexes");
     
     //may throw an exception if there is no ship
@@ -122,7 +122,7 @@ SegmentCondition Battlefield::getCellShipCondition(Coords coords) const
 
 bool Battlefield::attackCell(Coords coords, int damage)
 {
-    if(coords.x>=mHorizontalSize or coords.y>=mVerticalSize)
+    if(coords.x>=mHorizontalSize || coords.y>=mVerticalSize)
         throw OutOfRangeAttackException(coords, {mHorizontalSize, mVerticalSize});
     return mBattlefieldArray[coords.y][coords.x].attackCell(damage);
 }
