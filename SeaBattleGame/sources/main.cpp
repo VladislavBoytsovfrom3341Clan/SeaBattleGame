@@ -1,7 +1,12 @@
 #include"ShipManager.h"
 #include<iostream>
+#include"OutOfRangeAttackException.h"
+#include"ShipPlacementException.h"
+#include"ScannerResult.h"
 
-//no OOP only as debug func
+#include "AbilityManager.h"
+
+//no OOP only as DEBUG func
 void printShip(const Battleship& ship)
 {
     auto segments = ship.getShipCondition();
@@ -11,7 +16,7 @@ void printShip(const Battleship& ship)
     std::cout<<'\n';
 }
 
-//no OOP only as debug func
+//no OOP only as DEBUG func
 void printShipsInManager(const ShipManager& manager)
 {
     std::cout<<"Inactive ships in manager: "<<manager.getInactiveShipsNumber()<<'\n';
@@ -23,23 +28,82 @@ void printShipsInManager(const ShipManager& manager)
         printShip(manager.getActiveShip(i));
 }
 
+//WE USE MAIN AS DEBUGGING BASE
 int main()
 {
     ShipManager myManager({{4, 2}, {2, 3}, {1, 2}});
     printShipsInManager(myManager);
 
     Battlefield myField(20, 15);
-    myManager.setShipToBattlefield(myField, 0, 1, 2, Orientation::horizontal);
-    myManager.setShipToBattlefield(myField, 0, 5, 6, Orientation::vertical);
+    myField.setShip(myManager.getInactiveShip(5), Coords{2, 2}, Orientation::horizontal);
+    try
+    {
+        myField.setShip(myManager.getInactiveShip(0), Coords{100, 2}, Orientation::horizontal);
+    }
+    catch(const ShipPlacementException& e)
+    {
+        std::cout<<e.what();
+    }
+
+    myField.setShip(myManager.getInactiveShip(1), Coords{5, 6}, Orientation::vertical);
+    myManager.setShipActive(5);
+    myManager.setShipActive(1);
+
     myField.display();
     printShipsInManager(myManager);
-    myField.attackCell(1, 1);
-    myField.attackCell(1, 2);
-    myField.attackCell(2, 2);
-    myField.attackCell(3, 2);
-    myField.attackCell(4, 2);
-    myField.attackCell(5, 6);
-    myField.attackCell(5, 8);
+    
+    AbilityManager a_manager;
+    AbilityResultHandler a_handler;
+
+    /**THIS THING WILL BE STORAGED IN PLAYER CLASS AS ONE OF
+     * PLAYER CURRENT STATS
+     * **/
+    int damageMultiplier=1;
+
+    while(!a_manager.empty())
+        switch (a_manager.getFirstAbility())
+        {
+            case AbilityType::DoubleDamage:
+            {
+                DoubleDamageSettings ddSettings(damageMultiplier);
+                a_manager.castLastAbility(ddSettings);
+                std::cout<<"DoubleDamage casted\n";
+                break;
+            }
+            case AbilityType::Scanner:
+            {
+                ScannerSettings scSettings(myField, {1, 1}, a_handler);
+                a_manager.castLastAbility(scSettings);
+                ScannerResult* res = static_cast<ScannerResult*>(a_handler.getResult());
+                std::cout<<"Scanner casted, result: "<<res->getResult()<<"\n";
+                break;
+            }
+            case AbilityType::Shelling:
+            {
+                ShellingSettings shSettings(myManager);
+                a_manager.castLastAbility(shSettings);
+                std::cout<<"Shelling casted\n";
+                break;
+            }
+            default:
+                break;
+        }
+
+    try
+    {
+        myField.attackCell({200,2}, damageMultiplier);
+    }
+    catch(const OutOfRangeAttackException& e)
+    {
+        std::cout << e.what() << '\n';
+    }
+
+    bool attackRes = myField.attackCell({2,2}, damageMultiplier);
+    if(attackRes == true)
+    {
+        a_manager.addRandomAbility();
+        std::cout<<"Added new ability\n";
+    }
     myField.display();
     printShipsInManager(myManager);
 

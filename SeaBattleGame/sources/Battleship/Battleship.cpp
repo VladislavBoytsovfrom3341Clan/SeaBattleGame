@@ -42,7 +42,7 @@ SegmentCondition Battleship::BattleshipSegment::getStatus() const noexcept
 
 Battleship::Battleship(int length):mLength(length)
 {
-    if(length<minimalShipLength or length>maximalShipLength)
+    if(length<minimalShipLength || length>maximalShipLength)
         throw std::logic_error("Invalid ship size");
     for(int i=0; i<mLength; i++)
         mSegments.emplace_back();
@@ -51,7 +51,7 @@ Battleship::Battleship(int length):mLength(length)
 bool Battleship::isAlive() const noexcept
 {
     //returns True if at least one segment is not destroyed
-    for(auto segment: mSegments)
+    for(auto& segment: mSegments)
         if(segment.getStatus()!=SegmentCondition::destroyed)
             return true;
     return false;
@@ -59,7 +59,7 @@ bool Battleship::isAlive() const noexcept
 
 SegmentCondition Battleship::getSegmentCondition(const int index) const
 {
-    if(index<0 or index>=mLength)
+    if(index<0 || index>=mLength)
         throw std::length_error("Invalid index");
     return mSegments[index].getStatus();
 }
@@ -71,7 +71,7 @@ int Battleship::getLength() const noexcept
 
 void Battleship::damageSegment(const int index, const int damage)
 {
-    if(index<0 or index>=mLength)
+    if(index<0 || index>=mLength)
     {
         throw std::length_error("Invalid segment index");
     }
@@ -80,7 +80,7 @@ void Battleship::damageSegment(const int index, const int damage)
 
 void Battleship::repairSegment(const int index, const int val)
 {
-    if(index<0 or index>=mLength)
+    if(index<0 || index>=mLength)
         throw std::length_error("Invalid segment index");
     mSegments[index].repair(val);
 }
@@ -88,7 +88,7 @@ void Battleship::repairSegment(const int index, const int val)
 std::vector<SegmentCondition> Battleship::getShipCondition() const
 {
     std::vector<SegmentCondition> segments;
-    for(auto segment: mSegments)
+    for(auto& segment: mSegments)
         segments.push_back(segment.getStatus());
     return segments;
 }

@@ -1,7 +1,8 @@
-#ifndef BATTLEFIELD
-#define BATTLEFIELD
+#ifndef BATTLEFIELD_H
+#define BATTLEFIELD_H
 
 #include"Battleship.h"
+#include <string>
 
 constexpr int minimalFieldSize = minimalShipLength;
 constexpr int maximalFieldSize = 25;
@@ -19,6 +20,14 @@ enum class Orientation
 {
     horizontal, 
     vertical
+};
+
+struct Coords
+{
+    int x;
+    int y;
+
+    std::string toString() const;
 };
 
 /**
@@ -57,10 +66,10 @@ class Battlefield
         bool hasShip() const;
 
         //sets ship segment to the cell, adding a pointer to ship
-        void setShipSegment(Battleship* const shipPointer, const int shipSegmentIndex) noexcept;
+        void setShipSegment(Battleship& ship, const int shipSegmentIndex) noexcept;
 
         //method to damage a ship by the segment if there is a ship
-        void attackCell(const int damage);
+        bool attackCell(const int damage);
     };
 
     //sizes of the field
@@ -79,32 +88,34 @@ public:
     Battlefield(const Battlefield& copy);
 
     //move constructor actually moves stuff
-    Battlefield(Battlefield&& moved);
+    Battlefield(Battlefield&& moved) noexcept;
 
     //set a ship to a shosen cell
-    void setShip(Battleship* ship, int x, int y, Orientation orientation);
+    void setShip(Battleship& ship, Coords coords, Orientation orientation);
 
     //checks if there if ship in cell at (x, y) 
-    bool hasShipAtCell(int x, int y) const;
+    bool hasShipAtCell(Coords coords) const;
+
+    Coords size() const noexcept;
 
     //gets a status of cell at (x, y)
-    CellStatus getCellStatus(int x, int y) const;
+    CellStatus getCellStatus(Coords coords) const;
 
     //gets a Condition of segment of ship if has one
     //may throw an exception if there is no ship
-    SegmentCondition getCellShipCondition(int x, int y) const;
+    SegmentCondition getCellShipCondition(Coords coords) const;
 
     //DEBUG method for displaying map to std::cout
     void display();
 
     //method for attacking a chosen cell
-    void attackCell(int x, int y, int damage=1);
+    bool attackCell(Coords coords, int damage=1);
 
     //WARNING: copy operator does not deep copy ships
     Battlefield& operator=(const Battlefield& copy);
 
     //move operator actually moves stuff
-    Battlefield& operator=(Battlefield&& moved);
+    Battlefield& operator=(Battlefield&& moved) noexcept;
 };
 
 #endif

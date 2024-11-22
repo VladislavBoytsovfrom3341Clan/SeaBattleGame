@@ -1,20 +1,31 @@
 #include"Battlefield.h"
 #include<stdexcept>
 
-void Battlefield::BattlefieldCell::setShipSegment(Battleship* const shipPointer, const int shipSegmentIndex) noexcept
+std::string Coords::toString() const
 {
-    mShipPointer = shipPointer;
+    return '(' + std::to_string(x) + " , " + std::to_string(y) + ')';
+}
+
+void Battlefield::BattlefieldCell::setShipSegment(Battleship& ship, const int shipSegmentIndex) noexcept
+{
+    mShipPointer = &ship;
     mShipSegmentIndex = shipSegmentIndex;
 }
 
-void Battlefield::BattlefieldCell::attackCell(const int damage)
+bool Battlefield::BattlefieldCell::attackCell(const int damage)
 {
     if (mShipPointer == nullptr)
+    {
         mStatus = CellStatus::empty;
+        return false;
+    }
     else
     {
         mShipPointer->damageSegment(mShipSegmentIndex, damage);
         mStatus = CellStatus::shipped;
+        if(mShipPointer->isAlive())
+            return false;
+        return true;
     }
 }
 

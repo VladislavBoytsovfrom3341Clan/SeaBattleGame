@@ -1,2 +1,5 @@
 main
 .vscode/
+/SeaBattleGame/out/build
+/.vs
+/SeaBattleGame/CMakeSettings.json
