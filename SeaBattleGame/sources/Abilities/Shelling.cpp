@@ -2,8 +2,8 @@
 #include<ctime>
 #include<iostream>
 
-Shelling::Shelling(ShipManager& manager):
-mShipManager(manager){}
+Shelling::Shelling(ShellingSettings* shSettings):
+mShipManager(shSettings->mManager){}
 
 void Shelling::cast()
 {

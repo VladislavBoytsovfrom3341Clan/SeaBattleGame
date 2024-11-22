@@ -14,9 +14,11 @@ public:
 
     IAbility* getAbility();
 
-    void buildDoubleDamage(DoubleDamageSettings* ddSettings);
-    void buildShelling(ShellingSettings* shSettings);
-    void buildScanner(ScannerSettings* scSettings);
+    template<typename SettingsType, typename AbilityType>
+    void build(SettingsType* settings)
+    {
+        mBuildedAbility = new AbilityType(settings);
+    }
 
     ~AbilityFactory() = default;
 };

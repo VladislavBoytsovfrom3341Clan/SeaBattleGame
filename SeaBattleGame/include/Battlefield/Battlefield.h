@@ -88,7 +88,7 @@ public:
     Battlefield(const Battlefield& copy);
 
     //move constructor actually moves stuff
-    Battlefield(Battlefield&& moved);
+    Battlefield(Battlefield&& moved) noexcept;
 
     //set a ship to a shosen cell
     void setShip(Battleship& ship, Coords coords, Orientation orientation);
@@ -115,7 +115,7 @@ public:
     Battlefield& operator=(const Battlefield& copy);
 
     //move operator actually moves stuff
-    Battlefield& operator=(Battlefield&& moved);
+    Battlefield& operator=(Battlefield&& moved) noexcept;
 };
 
 #endif

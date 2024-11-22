@@ -1,7 +1,7 @@
 #include"DoubleDamage.h"
 
-DoubleDamage::DoubleDamage(int& multiplier):
-mMultiplier(multiplier){}
+DoubleDamage::DoubleDamage(DoubleDamageSettings* ddSettings) :
+    mMultiplier(ddSettings->mMultiplier) {}
 
 void DoubleDamage::cast()
 {

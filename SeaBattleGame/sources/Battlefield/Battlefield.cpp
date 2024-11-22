@@ -40,7 +40,7 @@ Battlefield(copy.mHorizontalSize, copy.mVerticalSize)
 }
 
 //moves all stuff
-Battlefield::Battlefield(Battlefield&& moved)
+Battlefield::Battlefield(Battlefield&& moved) noexcept
 {
     mHorizontalSize=std::move(moved.mHorizontalSize);
     mVerticalSize=std::move(moved.mVerticalSize);
@@ -182,7 +182,7 @@ Battlefield& Battlefield::operator=(const Battlefield& copy)
     return *this;
 }
 
-Battlefield& Battlefield::operator=(Battlefield&& moved)
+Battlefield& Battlefield::operator=(Battlefield&& moved) noexcept
 {
     if(&moved!=this)
     {

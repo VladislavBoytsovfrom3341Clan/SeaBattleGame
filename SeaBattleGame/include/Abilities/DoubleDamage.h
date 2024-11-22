@@ -2,12 +2,13 @@
 #define DOUBLE_DAMAGE_H
 
 #include "IAbility.h"
+#include "DoubleDamageSettings.h"
 
 class DoubleDamage: public IAbility
 {
     int& mMultiplier;
 public:
-    DoubleDamage(int& multiplier);  
+    DoubleDamage(DoubleDamageSettings* ddSettings);  
     void cast() override;
 };
 

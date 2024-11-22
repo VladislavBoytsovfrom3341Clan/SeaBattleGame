@@ -1,8 +1,8 @@
 #include "Scanner.h"
 #include "ScannerResult.h"
 
-Scanner::Scanner(Battlefield& field, Coords coords, AbilityResultHandler& handler):
-mField(field), mCoords(coords), mHandler(handler){}
+Scanner::Scanner(ScannerSettings* scSettings):
+mField(scSettings->mField), mCoords(scSettings->mCoords), mHandler(scSettings->mHandler){}
 
 void Scanner::cast()
 {

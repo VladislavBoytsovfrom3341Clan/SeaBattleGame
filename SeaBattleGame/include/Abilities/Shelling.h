@@ -1,14 +1,15 @@
 #ifndef SHELLING_H
 #define SHELLING_H
 
-#include"IAbility.h"
-#include"ShipManager.h"
+#include "IAbility.h"
+#include "ShipManager.h"
+#include "ShellingSettings.h"
 
 class Shelling: public IAbility
 {
     ShipManager& mShipManager;
 public:
-    Shelling(ShipManager& manager);
+    Shelling(ShellingSettings* shSettings);
     void cast() override;
 };
 

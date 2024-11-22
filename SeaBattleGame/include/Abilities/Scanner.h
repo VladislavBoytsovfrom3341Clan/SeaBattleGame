@@ -1,9 +1,10 @@
 #ifndef SCANER_H
 #define SCANER_H
 
-#include"IAbility.h"
-#include"AbilityResultHandler.h"
-#include"Battlefield.h"
+#include "IAbility.h"
+#include "AbilityResultHandler.h"
+#include "Battlefield.h"
+#include "ScannerSettings.h"
 
 constexpr int scannerRange = 2;
 
@@ -13,7 +14,7 @@ class Scanner: public IAbility
     Coords mCoords;
     AbilityResultHandler& mHandler;
 public:
-    Scanner(Battlefield& field, Coords coords, AbilityResultHandler& handler);
+    Scanner(ScannerSettings* scSettings);
     void cast() override;
 };
 
