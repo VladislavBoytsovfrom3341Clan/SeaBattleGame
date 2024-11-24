@@ -66,7 +66,7 @@ Battleship& ShipManager::getInactiveShip(int index) const
 void ShipManager::setShipActive(int index)
 {
     if (index<0 || index>=mInactiveShipsArray.size())
-        std::invalid_argument("Invalid ship index");
+        throw std::invalid_argument("Invalid ship index");
     std::move(mInactiveShipsArray.begin()+index, mInactiveShipsArray.begin()+index+1, std::back_inserter(mActiveShipsArray));
     mInactiveShipsArray.erase(mInactiveShipsArray.begin()+index);
 }
@@ -74,7 +74,7 @@ void ShipManager::setShipActive(int index)
 void ShipManager::setShipInactive(int index)
 {
     if (index<0 || index>=mActiveShipsArray.size())
-        std::invalid_argument("Invalid ship index");
+        throw std::invalid_argument("Invalid ship index");
     std::move(mActiveShipsArray.begin()+index, mActiveShipsArray.begin()+index+1, std::back_inserter(mInactiveShipsArray));
     mActiveShipsArray.erase(mActiveShipsArray.begin()+index);
 }
