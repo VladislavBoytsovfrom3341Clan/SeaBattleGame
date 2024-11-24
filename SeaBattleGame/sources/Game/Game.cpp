@@ -1,6 +1,8 @@
 #include "Game.h"
 
 #include "ShipPlacementException.h"
+#include "Player.h"
+#include "Bot.h"
 
 #include <iostream>
 
@@ -23,8 +25,9 @@ bool Game::gameRoundCycle()
     while (mState->countAliveParticipants() > 1)
     {
         Participant* currentParticipant = mState->getCurrentParticipant(mMoveIndex);
-        Coords attack = { rand() % mState->getFieldSize().x, rand() % mState->getFieldSize().y};
-        mState->attackParticipant((mMoveIndex + 1) % mState->getParticipantsNumber(), attack.x, attack.y);
+        ICommand* command = currentParticipant->getAction();
+        command->execute(*mState);
+        delete command;
         mState->Display(mMoveIndex);
         mMoveIndex++;
     }

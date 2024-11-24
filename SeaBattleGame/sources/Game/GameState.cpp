@@ -1,6 +1,8 @@
 #include "GameState.h"
 
 #include "ShipPlacementException.h"
+#include "Player.h"
+#include "Bot.h"
 
 #include <iostream>
 #include <cstdlib>
@@ -63,9 +65,9 @@ int GameState::countAliveParticipants()
     return count;
 }
 
-void GameState::attackParticipant(int index, int x, int y)
+void GameState::attackParticipant(int index, Coords coords)
 {
-	mParticipants[index]->mField->attackCell({ x, y });
+	mParticipants[index]->mField->attackCell(coords);
 }
 
 int GameState::getParticipantsNumber()

@@ -1,6 +1,7 @@
 #include "Player.h"
 
 #include "ShipPlacementException.h"
+#include "AttackCommand.h"
 
 #include <iostream>
 
@@ -23,7 +24,11 @@ void Player::placeShips()
     }
 }
 
-int Player::getAction()
+ICommand* Player::getAction()
 {
-	return 123;
+    int index = rand() % 5;
+    Coords coords = { rand() % 5, rand() % 5 };
+    ICommand* command = new AttackCommand(index, coords);
+    std::cout << "\nPlayer made an attack command!\n";
+    return command;
 }

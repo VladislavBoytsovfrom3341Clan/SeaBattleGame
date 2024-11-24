@@ -1,10 +1,12 @@
 #ifndef GAME_STATE_H
 #define GAME_STATE_H
 
-#include "Player.h"
-#include "Bot.h"
+#include "Participant.h"
+#include "Battlefield.h"
 
 #include <vector>
+
+struct Participant;
 
 class GameState
 {
@@ -33,7 +35,7 @@ public:
 
 	int countAlivePlayers();
 
-	void attackParticipant(int index, int x, int y);
+	void attackParticipant(int index, Coords coords);
 
 	void Display(int moveIndex);
 };

@@ -4,8 +4,11 @@
 #include "Battlefield.h"
 #include "ShipManager.h"
 #include "AbilityManager.h"
+#include "ICommand.h"
 
 #include <vector>
+
+class ICommand;
 
 struct Participant
 {
@@ -19,6 +22,6 @@ struct Participant
 
 	virtual void placeShips() = 0;
 
-	virtual int getAction() = 0;
+	virtual ICommand* getAction() = 0;
 };
 #endif

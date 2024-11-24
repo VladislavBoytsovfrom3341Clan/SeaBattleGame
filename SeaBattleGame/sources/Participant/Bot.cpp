@@ -1,8 +1,10 @@
 #include "Bot.h"
 
 #include "ShipPlacementException.h"
+#include "AttackCommand.h"
 
 #include <iostream>
+#include <cstdlib>
 
 void Bot::placeShips()
 {
@@ -23,7 +25,11 @@ void Bot::placeShips()
     }
 }
 
-int Bot::getAction()
+ICommand* Bot::getAction()
 {
-	return 321;
+    int index = rand() % 5;
+    Coords coords = { rand() % 5, rand() % 5};
+    ICommand* command = new AttackCommand(index, coords);
+    std::cout << "\nBot made an attack command!\n";
+    return command;
 }

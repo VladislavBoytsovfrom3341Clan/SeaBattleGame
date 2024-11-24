@@ -16,7 +16,8 @@ include_directories(${INCLUDE_DIRECTORIES} ${INCLUDE_DIRECTORIES}/Battleship
         ${INCLUDE_DIRECTORIES}/Abilities 
         ${INCLUDE_DIRECTORIES}/Exceptions
         ${INCLUDE_DIRECTORIES}/Game
-        ${INCLUDE_DIRECTORIES}/Participant)
+        ${INCLUDE_DIRECTORIES}/Participant
+        ${INCLUDE_DIRECTORIES}/Commands)
 
 add_subdirectory(${SOURCE_DIR})
 
@@ -27,4 +28,4 @@ add_executable(main ${SOURCE_DIR}/main.cpp)
 target_include_directories(main PRIVATE ${INCLUDE_DIRECTORIES})
 
 #linking
-target_link_libraries(main PRIVATE AbilitiesLib BattlefieldLib BattleshipLib ExceptionsLib GameLib ParticipantLib)
+target_link_libraries(main PRIVATE AbilitiesLib BattlefieldLib BattleshipLib ExceptionsLib GameLib ParticipantLib CommandsLib)

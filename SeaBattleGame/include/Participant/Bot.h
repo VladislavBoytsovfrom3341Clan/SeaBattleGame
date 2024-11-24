@@ -8,5 +8,5 @@ struct Bot: public Participant
 
 	void placeShips() override;
 
-	int getAction() override;
+	class ICommand* getAction() override;
 };
