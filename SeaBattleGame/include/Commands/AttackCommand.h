@@ -2,7 +2,7 @@
 #define ATTACK_COMMAND_H
 
 #include "ICommand.h"
-#include "Battlefield.h"
+#include "Coords.h"
 
 class AttackCommand : public ICommand
 {
@@ -12,7 +12,7 @@ class AttackCommand : public ICommand
 public:
 	AttackCommand(int participantIndex, Coords targetCoords);
 
-	void execute(class GameState& gState) override;
+	void execute(class GameController& gameController) override;
 };
 
 #endif

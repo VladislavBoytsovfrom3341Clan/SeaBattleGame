@@ -5,22 +5,24 @@
 #include "ShipManager.h"
 #include "AbilityManager.h"
 #include "ICommand.h"
+//#include "GameController.h"
 
 #include <vector>
-
-class ICommand;
 
 struct Participant
 {
 	Battlefield* mField;
 	ShipManager* mShipManager;
 	AbilityManager* mAbilityManager;
+	class GameController* mController;
 
-	Participant(Coords fieldSize, std::initializer_list<std::pair<int, int>> shipList);
+	Participant(class GameController* controller, Coords fieldSize, std::initializer_list<std::pair<int, int>> shipList);
 
 	bool isAlive();
 
 	virtual void placeShips() = 0;
+
+	virtual void act() = 0;
 
 	virtual ICommand* getAction() = 0;
 };

@@ -2,6 +2,7 @@
 
 #include "ShipPlacementException.h"
 #include "AttackCommand.h"
+#include "GameController.h"
 
 #include <iostream>
 #include <cstdlib>
@@ -25,9 +26,14 @@ void Bot::placeShips()
     }
 }
 
+void Bot::act()
+{
+    mController->acceptCommand(this->getAction());
+}
+
 ICommand* Bot::getAction()
 {
-    int index = rand() % 5;
+    int index = 0;
     Coords coords = { rand() % 5, rand() % 5};
     ICommand* command = new AttackCommand(index, coords);
     std::cout << "\nBot made an attack command!\n";

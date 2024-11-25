@@ -2,11 +2,9 @@
 #define GAME_STATE_H
 
 #include "Participant.h"
-#include "Battlefield.h"
+#include "Coords.h"
 
 #include <vector>
-
-struct Participant;
 
 class GameState
 {
@@ -15,7 +13,9 @@ class GameState
 
 public:
 
-	GameState(int PlayersNumber, int BotsNumber);
+	GameState();
+
+	void acceptParticipant(Participant* participant);
 
 	Coords getFieldSize();
 

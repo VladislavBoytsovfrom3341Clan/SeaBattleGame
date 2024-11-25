@@ -2,11 +2,13 @@
 
 struct Bot: public Participant
 {
-	Bot(Coords fieldSize, std::initializer_list<std::pair<int, int>> shipList) :
-		Participant(fieldSize, shipList) {
+	Bot(GameController* controller, Coords fieldSize, std::initializer_list<std::pair<int, int>> shipList) :
+		Participant(controller, fieldSize, shipList) {
 	}
 
 	void placeShips() override;
+
+	void act() override;
 
 	class ICommand* getAction() override;
 };

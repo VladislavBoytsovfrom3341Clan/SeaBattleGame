@@ -2,7 +2,7 @@
 #define OUT_OF_RANGE_ATTACK_EXCEPTION_H
 
 #include <stdexcept>
-#include "Battlefield.h"
+#include "Coords.h"
 #include <string>
 
 class OutOfRangeAttackException

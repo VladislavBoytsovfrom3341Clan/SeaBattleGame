@@ -1,6 +1,7 @@
 #ifndef BATTLEFIELD_H
 #define BATTLEFIELD_H
 
+#include "Coords.h"
 #include"Battleship.h"
 #include <string>
 
@@ -20,14 +21,6 @@ enum class Orientation
 {
     horizontal, 
     vertical
-};
-
-struct Coords
-{
-    int x;
-    int y;
-
-    std::string toString() const;
 };
 
 /**

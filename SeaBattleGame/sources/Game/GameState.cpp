@@ -3,30 +3,35 @@
 #include "ShipPlacementException.h"
 #include "Player.h"
 #include "Bot.h"
+#include "GameController.h"
 
 #include <iostream>
 #include <cstdlib>
 
-GameState::GameState(int PlayersNumber, int BotsNumber)
+GameState::GameState()
 {
-	for (int i = 0; i < PlayersNumber; i++)
-		mParticipants.push_back(new Player(mFieldSize, { { 4, 1 }, { 3, 2 } }));
-	for (int i = 0; i < BotsNumber; i++)
-		mParticipants.push_back(new Bot(mFieldSize, { { 4, 1 }, { 3, 2 } }));
+    
+}
+
+void GameState::acceptParticipant(Participant* participant)
+{
+    mParticipants.push_back(participant);
 }
 
 void GameState::createBot(int index)
 {
     if (mParticipants[index] != nullptr)
         delete mParticipants[index];
-    mParticipants[index] = new Bot(mFieldSize, { { 4, 1 }, { 3, 2 } });
+    GameController* newController = new GameController(*this);
+    mParticipants[index] = new Bot(newController, mFieldSize, { { 1, 1 }});
 }
 
 void GameState::createPlayer(int index)
 {
     if (mParticipants[index] != nullptr)
         delete mParticipants[index];
-    mParticipants[index] = new Player(mFieldSize, { { 4, 1 }, { 3, 2 } });
+    GameController* newController = new GameController(*this);
+    mParticipants[index] = new Player(newController, mFieldSize, { { 1, 1 }});
 }
 
 Coords GameState::getFieldSize()
@@ -128,7 +133,6 @@ void GameState::Display(int moveIndex)
     for (int i = 0; i < mParticipants.size(); i++)
     {
         std::cout << "\nParticipant #" << i << '\n';
-        std::cout << mParticipants[i]->getAction() << '\n';
         printShipsInManager(*(mParticipants[i]->mShipManager));
         mParticipants[i]->mField->display();
     }

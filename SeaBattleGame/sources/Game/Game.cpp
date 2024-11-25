@@ -3,12 +3,25 @@
 #include "ShipPlacementException.h"
 #include "Player.h"
 #include "Bot.h"
+#include "GameController.h"
 
 #include <iostream>
 
 Game::Game(int playersNumber, int botsNumber)
 {
-	mState = new GameState(playersNumber, botsNumber);
+	mState = new GameState();
+    for (int i = 0; i < playersNumber; i++)
+    {
+        GameController* newController = new GameController(*mState);
+        Player* newPlayer = new Player(newController, {5, 5}, { {1, 1}});
+        mState->acceptParticipant(newPlayer);
+    }
+    for (int i = 0; i < botsNumber; i++)
+    {
+        GameController* newController = new GameController(*mState);
+        Bot* newBot = new Bot(newController, { 5, 5 }, { {1, 1}});
+        mState->acceptParticipant(newBot);
+    }
 }
 
 void Game::shipPositioning()
@@ -25,9 +38,7 @@ bool Game::gameRoundCycle()
     while (mState->countAliveParticipants() > 1)
     {
         Participant* currentParticipant = mState->getCurrentParticipant(mMoveIndex);
-        ICommand* command = currentParticipant->getAction();
-        command->execute(*mState);
-        delete command;
+        currentParticipant->act();
         mState->Display(mMoveIndex);
         mMoveIndex++;
     }
@@ -45,9 +56,10 @@ void Game::standartGameCycle()
         for (int i = 0; i < mState->getParticipantsNumber(); i++)
         {
             if (typeid(*(mState->getParticipant(i))) == typeid(Bot))
-               mState->createBot(i);
-            else if (!(mState->getParticipant(i)->isAlive()))
-               mState->createPlayer(i);
+            {
+                mState->createBot(i);
+                mState->getParticipant(i)->placeShips();
+            }
         }
         std::cout << "\nNew round has started!\n";
     }
