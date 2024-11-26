@@ -2,7 +2,6 @@
 #define SHIP_MANAGER
 
 #include<utility>          //for std::pair
-#include<initializer_list>
 #include"Battleship.h"
 #include"Battlefield.h"
 
@@ -21,7 +20,7 @@ class ShipManager
 public:
 
     //gets list of pairs <shipLength, amount>, places all to inactive ships
-    ShipManager(std::initializer_list<std::pair<int, int>> shipList);
+    ShipManager(std::vector<std::pair<int, int>> shipList);
 
     int getShipsNumber() const noexcept;
 

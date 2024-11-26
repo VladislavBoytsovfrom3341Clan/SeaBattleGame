@@ -3,7 +3,7 @@
 #include<iostream>
 
 //gets list of pairs <size, amount>
-ShipManager::ShipManager(std::initializer_list<std::pair<int, int>> shipList)
+ShipManager::ShipManager(std::vector<std::pair<int, int>> shipList)
 {
     for(auto& shipSeries: shipList)
     {

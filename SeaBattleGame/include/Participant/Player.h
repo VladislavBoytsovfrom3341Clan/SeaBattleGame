@@ -6,7 +6,7 @@ struct Player : public Participant
 {
 	CLIInput mInput;
 
-	Player(GameController* controller, Coords fieldSize, std::initializer_list<std::pair<int, int>> shipList) :
+	Player(GameController* controller, Coords fieldSize, std::vector<std::pair<int, int>> shipList) :
 		Participant(controller, fieldSize, shipList) {}
 
 	void placeShips() override;

@@ -1,7 +1,7 @@
 #include "Participant.h"
 
 
-Participant::Participant(GameController* controller, Coords fieldSize, std::initializer_list<std::pair<int, int>> shipList)
+Participant::Participant(GameController* controller, Coords fieldSize, std::vector<std::pair<int, int>> shipList)
 {
 	mController = controller;
 	mShipManager = new ShipManager(shipList);

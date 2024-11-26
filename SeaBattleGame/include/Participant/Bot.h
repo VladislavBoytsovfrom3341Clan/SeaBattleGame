@@ -2,7 +2,7 @@
 
 struct Bot: public Participant
 {
-	Bot(GameController* controller, Coords fieldSize, std::initializer_list<std::pair<int, int>> shipList) :
+	Bot(GameController* controller, Coords fieldSize, std::vector<std::pair<int, int>> shipList) :
 		Participant(controller, fieldSize, shipList) {
 	}
 

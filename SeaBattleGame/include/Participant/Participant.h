@@ -16,7 +16,7 @@ struct Participant
 	AbilityManager* mAbilityManager;
 	class GameController* mController;
 
-	Participant(class GameController* controller, Coords fieldSize, std::initializer_list<std::pair<int, int>> shipList);
+	Participant(class GameController* controller, Coords fieldSize, std::vector<std::pair<int, int>> shipList);
 
 	bool isAlive();
 

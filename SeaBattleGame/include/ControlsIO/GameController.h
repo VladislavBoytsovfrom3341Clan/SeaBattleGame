@@ -7,11 +7,11 @@
 
 class GameController
 {
-	class GameState& mGState;
+	class Game* mGame;
 
 public:
 
-	GameController(class GameState& gState) : mGState(gState) {}
+	GameController(class Game* game) : mGame(game) {}
 
 	void acceptCommand(ICommand* command);
 
