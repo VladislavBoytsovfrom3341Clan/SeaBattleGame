@@ -16,13 +16,6 @@ enum class CellStatus
     shipped
 };
 
-//enum for ships orientation on the map
-enum class Orientation
-{
-    horizontal, 
-    vertical
-};
-
 /**
  * Class contains Cells, which have pointers to placed ships
  * if it were placed (for better accessebility),

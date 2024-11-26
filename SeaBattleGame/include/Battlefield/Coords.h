@@ -3,6 +3,13 @@
 
 #include <string>
 
+//enum for ships orientation on the map
+enum class Orientation
+{
+    horizontal,
+    vertical
+};
+
 struct Coords
 {
     int x;

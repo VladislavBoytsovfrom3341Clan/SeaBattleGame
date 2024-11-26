@@ -1,26 +1,28 @@
 #include "Game.h"
 
+#include "ShipPosState.h"
+#include "AttackState.h"
+#include "AttackNAbilityState.h"
 #include "ShipPlacementException.h"
 #include "Player.h"
 #include "Bot.h"
 
 #include <iostream>
 
-Game::Game(Coords fieldSize)
+Game::Game(Coords fieldSize, int botsNumber)
 {
+    mBotsNumber = botsNumber;
+    mParticipantsNumber = mBotsNumber + mPlayersNumber;
     mFieldSize = fieldSize;
-    mState = new GameState;
     Participant* player = new Player(mFieldSize, mDefaultShips);
     mParticipants.push_back(player);
-    player->placeShips();
+    mState = new ShipPosState(mParticipants);
     mParticipantsNumber++;
     mPlayersNumber++;
 }
 
 void Game::generateBots(int number)
 {
-    mBotsNumber = number;
-    mParticipantsNumber = number + mPlayersNumber;
     for (int i = 0; i < mBotsNumber; i++)
     {
         Bot* newBot = new Bot(mFieldSize, mDefaultShips);
@@ -29,17 +31,14 @@ void Game::generateBots(int number)
     }
 }
 
-bool Game::attackParticipant(int index, Coords coords)
+void Game::placeShip(int playerIndex, int shipIndex, Coords coords, Orientation orientation)
 {
-    return mParticipants[index]->mField->attackCell(coords);
+    mState->placeShip(playerIndex, shipIndex, coords, orientation);
 }
 
-void Game::shipPositioning()
+void Game::attack(int index, Coords coords)
 {
-    for (int i = 0; i < mParticipantsNumber; i++)
-    {
-        mParticipants[i]->placeShips();
-    }
+    mState->attack(index, coords);
 }
 
 void Game::regenerateBots()
@@ -63,9 +62,19 @@ void Game::newMove()
 
 void Game::newRound()
 {
+    mState = new ShipPosState(mParticipants);
+    if (mRoundCount == 0)
+        this->generateBots(mBotsNumber);
+    else
+        this->regenerateBots();
     mMoveIndex = 0;
     mRoundCount++;
-    this->regenerateBots();
+    mState = new AttackState(mParticipants);
+}
+
+Participant* Game::getParticipant(int index)
+{
+    return mParticipants[index];
 }
 
 Participant* Game::getCurrentParticipant()

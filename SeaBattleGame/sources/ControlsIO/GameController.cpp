@@ -7,7 +7,7 @@
 
 void GameController::runRoundCycle()
 {
-	while (mGame->countAliveParticipants() > 1)
+	while (mGame->countAlivePlayers() >= 1)
 	{
 		Participant* currentParticipant = mGame->getCurrentParticipant();
 		ICommand* command = currentParticipant->getAction();
@@ -20,12 +20,17 @@ void GameController::runRoundCycle()
 
 void GameController::runGameCycle()
 {
-	mGame->generateBots(2);
+	Participant* player = mGame->getParticipant(0);
+	while (player->mShipManager->getInactiveShipsNumber() > 0)
+	{
+		ICommand* command = player->getAction();
+		command->execute(*mGame);
+	}
 	while (mGame->countAlivePlayers() > 0)
 	{
+		mGame->newRound();
 		std::cout << "\nNew round has started!\n";
 		this->runRoundCycle();
-		mGame->newRound();
 	}
 	std::cout << "\nGame ended!\n";
 }

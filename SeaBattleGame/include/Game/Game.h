@@ -7,7 +7,7 @@
 class Game
 {
 	std::vector<Participant*> mParticipants;
-	GameState* mState;
+	GameState* mState = nullptr;
 	int mMoveIndex = 0;
 	int mRoundCount = 0;
 	int mBotsNumber = 0;
@@ -20,23 +20,25 @@ class Game
 
 public:
 	
-	Game(Coords fieldSize);
+	Game(Coords fieldSize, int botsNumber);
 
 	void generateBots(int number);
 
 	void regenerateBots();
 
-	void shipPositioning();
-
 	void newMove();
 
 	void newRound();
 
-	bool attackParticipant(int index, Coords coords);
+	void placeShip(int playerIndex, int shipIndex, Coords coords, Orientation orientation);
+
+	void attack(int index, Coords coords);
 
 //	void addAbilityToParticipant(int index);
 
 //  castAbility???\
+
+	Participant* getParticipant(int index);
 
 	Participant* getCurrentParticipant();
 

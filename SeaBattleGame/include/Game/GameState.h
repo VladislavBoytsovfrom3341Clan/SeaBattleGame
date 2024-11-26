@@ -8,10 +8,11 @@
 
 class GameState
 {
-
 public:
 
-	GameState();
+	virtual void placeShip(int playerIndex, int shipIndex, Coords coords, Orientation orientation) = 0;
+
+	virtual void attack(int index, Coords coords) = 0;
 
 };
 

@@ -8,6 +8,6 @@ AttackCommand::AttackCommand(int participantIndex, Coords targetCoords) :
 
 void AttackCommand::execute(class Game& game)
 {
-	game.attackParticipant(mAttackedParticipantIndex, mTargetCoords);
+	game.attack(mAttackedParticipantIndex, mTargetCoords);
 	std::cout << "\nAttacked\n";
 }
