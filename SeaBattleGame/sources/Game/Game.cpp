@@ -3,7 +3,6 @@
 #include "ShipPlacementException.h"
 #include "Player.h"
 #include "Bot.h"
-#include "GameController.h"
 
 #include <iostream>
 
@@ -11,21 +10,23 @@ Game::Game(Coords fieldSize)
 {
     mFieldSize = fieldSize;
     mState = new GameState;
-}
-
-void Game::addPlayerByController(GameController& controller)
-{
-    Player* newPlayer = new Player(&controller, mFieldSize, mDefaultShips);
-    mParticipants.push_back(newPlayer);
-    newPlayer->placeShips();
-    mPlayersNumber++;
+    Participant* player = new Player(mFieldSize, mDefaultShips);
+    mParticipants.push_back(player);
+    player->placeShips();
     mParticipantsNumber++;
+    mPlayersNumber++;
 }
 
-void Game::setBotsNumber(int number)
+void Game::generateBots(int number)
 {
     mBotsNumber = number;
     mParticipantsNumber = number + mPlayersNumber;
+    for (int i = 0; i < mBotsNumber; i++)
+    {
+        Bot* newBot = new Bot(mFieldSize, mDefaultShips);
+        mParticipants.push_back(newBot);
+        newBot->placeShips();
+    }
 }
 
 bool Game::attackParticipant(int index, Coords coords)
@@ -49,59 +50,31 @@ void Game::regenerateBots()
         {
             std::cout << "regenerating bot " << i << '\n';
             delete mParticipants[i];
-            GameController* newController = new GameController(this);
-            mParticipants[i] = new Bot(newController, mFieldSize, mDefaultShips);
+            mParticipants[i] = new Bot(mFieldSize, mDefaultShips);
             mParticipants[i]->placeShips();
         }
     }
 }
 
-//returns True, if there are alive players, otherwise False
-bool Game::gameRoundCycle()
+void Game::newMove()
 {
-    while (this->countAliveParticipants() > 1)
-    {
-        Participant* currentParticipant = this->getCurrentParticipant();
-        currentParticipant->act();
-        this->Display();
-        mMoveIndex++;
-    }
-    std::cout << "Round " << mRoundCount + 1 << " finished!\n";
-    mRoundCount++;
-    if (this->countAlivePlayers())
-        return true;
-    return false;
+    mMoveIndex++;
 }
 
-void Game::standartGameCycle()
+void Game::newRound()
 {
-    for (int i = 0; i < mBotsNumber; i++)
-    {
-        GameController* newController = new GameController(this);
-        Bot* newBot = new Bot(newController, mFieldSize, mDefaultShips);
-        mParticipants.push_back(newBot);
-        newBot->placeShips();
-    }
-    while (this->countAlivePlayers() > 0)
-    {
-        std::cout << "\nNew round has started!\n";
-        this->gameRoundCycle();
-        this->regenerateBots();
-    }
-    std::cout << "Game Over!\n";
+    mMoveIndex = 0;
+    mRoundCount++;
+    this->regenerateBots();
 }
 
 Participant* Game::getCurrentParticipant()
 {
-    int curIndex = mMoveIndex % mParticipantsNumber;
-    int startIndex = curIndex;
-    Participant* currentParticipant;
-    do
-    {
-        currentParticipant = mParticipants[curIndex];
-        curIndex = (++curIndex) % mParticipantsNumber;
-    } while (!(currentParticipant->isAlive()) && curIndex != startIndex);
-    if (startIndex == curIndex)
+    int endIndex = mMoveIndex + mParticipantsNumber;
+    Participant* currentParticipant = mParticipants[mMoveIndex % mParticipantsNumber];
+    while (!(currentParticipant->isAlive()) && mMoveIndex < endIndex)
+        currentParticipant = mParticipants[(++mMoveIndex) % mParticipantsNumber];
+    if (endIndex == mMoveIndex)
         throw std::logic_error("No Alive Participants");
     return currentParticipant;
 }

@@ -26,11 +26,6 @@ void Bot::placeShips()
     }
 }
 
-void Bot::act()
-{
-    mController->acceptCommand(this->getAction());
-}
-
 ICommand* Bot::getAction()
 {
     int index = 0;

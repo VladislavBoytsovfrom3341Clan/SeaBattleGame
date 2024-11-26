@@ -13,9 +13,11 @@ public:
 
 	GameController(class Game* game) : mGame(game) {}
 
-	void acceptCommand(ICommand* command);
+	void runRoundCycle();
 
-	void attackParticipant(int participantIndex, Coords coords);
+	void runGameCycle();
+
+	void startGame();
 };
 
 #endif

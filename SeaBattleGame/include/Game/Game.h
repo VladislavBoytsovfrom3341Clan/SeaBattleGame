@@ -10,27 +10,27 @@ class Game
 	GameState* mState;
 	int mMoveIndex = 0;
 	int mRoundCount = 0;
-	int mBotsNumber = 1;
+	int mBotsNumber = 0;
 	int mPlayersNumber = 0;
-	int mParticipantsNumber = 1;
+	int mParticipantsNumber = 0;
 	Coords mFieldSize = { 5, 5 };
 	std::vector<std::pair<int, int>> mDefaultShips{ {1, 1} };
 
 	bool gameRoundCycle();
 
-	void regenerateBots();
-
 public:
 	
 	Game(Coords fieldSize);
 
-	void addPlayerByController(class GameController& controller);
+	void generateBots(int number);
 
-	void setBotsNumber(int number);
+	void regenerateBots();
 
 	void shipPositioning();
 
-	void standartGameCycle();
+	void newMove();
+
+	void newRound();
 
 	bool attackParticipant(int index, Coords coords);
 
@@ -51,8 +51,6 @@ public:
 	int countAliveBots();
 
 	int countAlivePlayers();
-
-
 
 	void Display();
 };

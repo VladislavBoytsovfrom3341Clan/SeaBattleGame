@@ -1,13 +1,13 @@
 #include "AttackCommand.h"
 
-#include "GameController.h"
+#include "Game.h"
 #include <iostream>
 
 AttackCommand::AttackCommand(int participantIndex, Coords targetCoords) :
 	mAttackedParticipantIndex(participantIndex), mTargetCoords(targetCoords) {}
 
-void AttackCommand::execute(GameController& gameController)
+void AttackCommand::execute(class Game& game)
 {
-	gameController.attackParticipant(mAttackedParticipantIndex, mTargetCoords);
-	std::cout << "\nA\n";
+	game.attackParticipant(mAttackedParticipantIndex, mTargetCoords);
+	std::cout << "\nAttacked\n";
 }

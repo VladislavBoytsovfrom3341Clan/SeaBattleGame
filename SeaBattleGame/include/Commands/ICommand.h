@@ -5,7 +5,7 @@
 class ICommand
 {
 public:
-	virtual void execute(class GameController& gameController) = 0;
+	virtual void execute(class Game& game) = 0;
 };
 
 #endif

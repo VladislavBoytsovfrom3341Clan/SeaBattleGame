@@ -12,4 +12,4 @@ ICommand* CLIInput::readCommand()
 	Coords coords(x, y);
 	ICommand* newCommand = new AttackCommand(index, coords);
 	return newCommand;
-}
+} 

@@ -14,15 +14,12 @@ struct Participant
 	Battlefield* mField;
 	ShipManager* mShipManager;
 	AbilityManager* mAbilityManager;
-	class GameController* mController;
 
-	Participant(class GameController* controller, Coords fieldSize, std::vector<std::pair<int, int>> shipList);
+	Participant(Coords fieldSize, std::vector<std::pair<int, int>> shipList);
 
 	bool isAlive();
 
 	virtual void placeShips() = 0;
-
-	virtual void act() = 0;
 
 	virtual ICommand* getAction() = 0;
 };

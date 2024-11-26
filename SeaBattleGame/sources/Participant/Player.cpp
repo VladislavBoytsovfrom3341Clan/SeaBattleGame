@@ -25,11 +25,6 @@ void Player::placeShips()
     }
 }
 
-void Player::act()
-{
-    mController->acceptCommand(this->getAction());
-}
-
 ICommand* Player::getAction()
 {
     return mInput.readCommand();

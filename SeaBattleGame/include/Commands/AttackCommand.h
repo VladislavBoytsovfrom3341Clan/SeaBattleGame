@@ -12,7 +12,7 @@ class AttackCommand : public ICommand
 public:
 	AttackCommand(int participantIndex, Coords targetCoords);
 
-	void execute(class GameController& gameController) override;
+	void execute(class Game& game) override;
 };
 
 #endif
