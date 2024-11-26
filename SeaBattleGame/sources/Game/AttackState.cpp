@@ -9,7 +9,7 @@ void AttackState::placeShip(int playerIndex, int shipIndex, Coords coords, Orien
 
 void AttackState::attack(int index, Coords coords)
 {
-	mParticipants[index]->mField->attackCell(coords);
+	mParticipants[index]->mField.attackCell(coords);
 }
 
 

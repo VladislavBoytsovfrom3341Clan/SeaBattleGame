@@ -11,9 +11,9 @@
 
 struct Participant
 {
-	Battlefield* mField;
-	ShipManager* mShipManager;
-	AbilityManager* mAbilityManager;
+	Battlefield mField;
+	ShipManager mShipManager;
+	AbilityManager mAbilityManager;
 
 	Participant(Coords fieldSize, std::vector<std::pair<int, int>> shipList);
 

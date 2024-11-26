@@ -7,11 +7,11 @@
 
 class GameController
 {
-	class Game* mGame;
+	class Game& mGame;
 
 public:
 
-	GameController(class Game* game) : mGame(game) {}
+	GameController(class Game& game) : mGame(game) {}
 
 	void runRoundCycle();
 

@@ -167,7 +167,7 @@ void Game::Display()
     for (int i = 0; i < mParticipants.size(); i++)
     {
         std::cout << "\nParticipant #" << i << '\n';
-        printShipsInManager(*(mParticipants[i]->mShipManager));
-        mParticipants[i]->mField->display();
+        printShipsInManager(mParticipants[i]->mShipManager);
+        mParticipants[i]->mField.display();
     }
 }

@@ -7,6 +7,6 @@
 int main()
 {
     Game my_game({5, 5}, 2);
-    GameController myController(&my_game);
+    GameController myController(my_game);
     myController.startGame();
 }
