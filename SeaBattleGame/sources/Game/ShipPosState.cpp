@@ -1,7 +1,16 @@
 #include "ShipPosState.h"
 
+#include "Participant.h"
+
 ShipPosState::ShipPosState(std::vector<Participant*>& participants) :
 	mParticipants(participants) {}
+
+bool ShipPosState::participantMayAct(int index)
+{
+	if (mParticipants[index]->mShipManager.getInactiveShipsNumber() > 0)
+		return true;
+	return false;
+}
 
 void ShipPosState::placeShip(int playerIndex, int shipIndex, Coords coords, Orientation orientation)
 {

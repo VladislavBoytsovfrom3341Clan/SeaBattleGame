@@ -1,5 +1,6 @@
 #include "GameController.h"
 
+#include "Participant.h"
 #include "Game.h"
 #include "ICommand.h"
 
@@ -20,10 +21,9 @@ void GameController::runRoundCycle()
 
 void GameController::runGameCycle()
 {
-	Participant* player = mGame.getParticipant(0);
-	while (player->mShipManager.getInactiveShipsNumber() > 0)
+	while (mGame.participantMayAct())
 	{
-		ICommand* command = player->getAction();
+		ICommand* command = mGame.getCurrentParticipant()->getAction();
 		command->execute(mGame);
 	}
 	while (mGame.countAlivePlayers() > 0)

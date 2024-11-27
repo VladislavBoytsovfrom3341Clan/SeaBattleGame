@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include "GameState.h"
+#include "Participant.h"
 #include "Coords.h"
 
 class Game
@@ -30,6 +31,8 @@ public:
 
 	void newRound();
 
+	bool participantMayAct();
+
 	void placeShip(int playerIndex, int shipIndex, Coords coords, Orientation orientation);
 
 	void attack(int index, Coords coords);
@@ -41,12 +44,6 @@ public:
 	Participant* getParticipant(int index);
 
 	Participant* getCurrentParticipant();
-
-	void createBot(int index);
-
-	void createPlayer(int index);
-
-	void removeParticipant(int index);
 
 	int countAliveParticipants();
 

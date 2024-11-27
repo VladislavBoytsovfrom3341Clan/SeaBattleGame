@@ -5,7 +5,6 @@
 #include "ShipManager.h"
 #include "AbilityManager.h"
 #include "ICommand.h"
-//#include "GameController.h"
 
 #include <vector>
 

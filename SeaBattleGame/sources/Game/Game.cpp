@@ -31,6 +31,11 @@ void Game::generateBots(int number)
     }
 }
 
+bool Game::participantMayAct()
+{
+    return mState->participantMayAct(mMoveIndex % mParticipantsNumber);
+}
+
 void Game::placeShip(int playerIndex, int shipIndex, Coords coords, Orientation orientation)
 {
     mState->placeShip(playerIndex, shipIndex, coords, orientation);
@@ -57,6 +62,7 @@ void Game::regenerateBots()
 
 void Game::newMove()
 {
+    mState = new AttackState(mParticipants);
     mMoveIndex++;
 }
 
@@ -86,15 +92,6 @@ Participant* Game::getCurrentParticipant()
     if (endIndex == mMoveIndex)
         throw std::logic_error("No Alive Participants");
     return currentParticipant;
-}
-
-void createBot(int index);
-
-void createPlayer(int index);
-
-void Game::removeParticipant(int index)
-{
-    mParticipants.erase(mParticipants.begin() + index);
 }
 
 int Game::countAliveParticipants()
