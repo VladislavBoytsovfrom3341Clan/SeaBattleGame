@@ -2,15 +2,8 @@
 
 #include "Participant.h"
 
-ShipPosState::ShipPosState(std::vector<Participant*>& participants) :
-	mParticipants(participants) {}
-
-bool ShipPosState::participantMayAct(int index)
-{
-	if (mParticipants[index]->mShipManager.getInactiveShipsNumber() > 0)
-		return true;
-	return false;
-}
+ShipPosState::ShipPosState(std::vector<Participant*>& participants, int& moveIndex, int& participantsNumber) :
+	mParticipants(participants), mMoveIndex(moveIndex), mParticipantsNumber(participantsNumber) {}
 
 void ShipPosState::placeShip(int playerIndex, int shipIndex, Coords coords, Orientation orientation)
 {
@@ -19,6 +12,10 @@ void ShipPosState::placeShip(int playerIndex, int shipIndex, Coords coords, Orie
 	mParticipants[playerIndex]->mShipManager.setShipActive(shipIndex);
 }
 
-void ShipPosState::attack(int index, Coords coords)
+void ShipPosState::castAbility(IAbilitySettings* settings)
+{
+}
+
+void ShipPosState::attack(int index, Coords coords, int damage)
 {
 }

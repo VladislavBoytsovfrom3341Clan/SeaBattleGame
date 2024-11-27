@@ -13,6 +13,7 @@ struct Participant
 	Battlefield mField;
 	ShipManager mShipManager;
 	AbilityManager mAbilityManager;
+	int mDamageMultiplier = 1;
 
 	Participant(Coords fieldSize, std::vector<std::pair<int, int>> shipList);
 

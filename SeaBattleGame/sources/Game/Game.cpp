@@ -2,7 +2,6 @@
 
 #include "ShipPosState.h"
 #include "AttackState.h"
-#include "AttackNAbilityState.h"
 #include "ShipPlacementException.h"
 #include "Player.h"
 #include "Bot.h"
@@ -16,7 +15,7 @@ Game::Game(Coords fieldSize, int botsNumber)
     mFieldSize = fieldSize;
     Participant* player = new Player(mFieldSize, mDefaultShips);
     mParticipants.push_back(player);
-    mState = new ShipPosState(mParticipants);
+    mState = new ShipPosState(mParticipants, mMoveIndex, mParticipantsNumber);
     mParticipantsNumber++;
     mPlayersNumber++;
 }
@@ -31,11 +30,6 @@ void Game::generateBots(int number)
     }
 }
 
-bool Game::participantMayAct()
-{
-    return mState->participantMayAct(mMoveIndex % mParticipantsNumber);
-}
-
 void Game::placeShip(int playerIndex, int shipIndex, Coords coords, Orientation orientation)
 {
     mState->placeShip(playerIndex, shipIndex, coords, orientation);
@@ -43,7 +37,13 @@ void Game::placeShip(int playerIndex, int shipIndex, Coords coords, Orientation 
 
 void Game::attack(int index, Coords coords)
 {
-    mState->attack(index, coords);
+    int damage = this->getCurrentParticipant()->mDamageMultiplier;
+    mState->attack(index, coords, damage);
+}
+
+void Game::castAbility(IAbilitySettings* settings)
+{
+    mState->castAbility(settings);
 }
 
 void Game::regenerateBots()
@@ -62,20 +62,20 @@ void Game::regenerateBots()
 
 void Game::newMove()
 {
-    mState = new AttackState(mParticipants);
+    mState = new AttackState(mParticipants, mMoveIndex, mParticipantsNumber);
     mMoveIndex++;
 }
 
 void Game::newRound()
 {
-    mState = new ShipPosState(mParticipants);
+    mState = new ShipPosState(mParticipants, mMoveIndex, mParticipantsNumber);
     if (mRoundCount == 0)
         this->generateBots(mBotsNumber);
     else
         this->regenerateBots();
     mMoveIndex = 0;
     mRoundCount++;
-    mState = new AttackState(mParticipants);
+    mState = new AttackState(mParticipants, mMoveIndex, mParticipantsNumber);
 }
 
 Participant* Game::getParticipant(int index)
@@ -134,7 +134,23 @@ int Game::countAlivePlayers()
 
 
 
+#include "AbilityManager.h"
+#include "AbilityType.h"
 
+void printAbility(AbilityType t)
+{
+    switch (t)
+    {
+    case AbilityType::DoubleDamage:
+        std::cout << "DoubleDamage\n";
+        break;
+    case AbilityType::Scanner:
+        std::cout << "Scanner\n";
+        break;
+    case AbilityType::Shelling:
+        std::cout << "Shelling\n";
+    }
+}
 
 //no OOP only as DEBUG func
 void printShip(const Battleship& ship)
@@ -164,6 +180,8 @@ void Game::Display()
     for (int i = 0; i < mParticipants.size(); i++)
     {
         std::cout << "\nParticipant #" << i << '\n';
+        if(!(mParticipants[i]->mAbilityManager.empty()))
+            printAbility(mParticipants[i]->mAbilityManager.getFirstAbility());
         printShipsInManager(mParticipants[i]->mShipManager);
         mParticipants[i]->mField.display();
     }

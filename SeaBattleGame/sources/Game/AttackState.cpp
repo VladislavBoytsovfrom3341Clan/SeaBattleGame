@@ -2,22 +2,26 @@
 
 #include "Participant.h"
 
-AttackState::AttackState(std::vector<Participant*>& participants) :
-	mParticipants(participants) {}
+#include <iostream>
 
-bool AttackState::participantMayAct(int index)
-{
-	return mHasAnAttack;
-}
+AttackState::AttackState(std::vector<Participant*>& participants, int& moveIndex, int& participantsNumber) :
+	mParticipants(participants), mMoveIndex(moveIndex), mParticipantsNumber(participantsNumber) {}
 
 void AttackState::placeShip(int playerIndex, int shipIndex, Coords coords, Orientation orientation)
 {
 }
 
-void AttackState::attack(int index, Coords coords)
+void AttackState::castAbility(IAbilitySettings* settings)
 {
-	mParticipants[index]->mField.attackCell(coords);
-	mHasAnAttack = false;
+	mParticipants[mMoveIndex % mParticipantsNumber]->mAbilityManager.castLastAbility(*settings);
+}
+
+void AttackState::attack(int index, Coords coords, int damage)
+{
+	mParticipants[index]->mField.attackCell(coords, damage);
+	mParticipants[index % mParticipantsNumber]->mDamageMultiplier = 1;
+	mMoveIndex++;
+	//std::cout << "Gribuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu " << mMoveIndex << '\n';
 }
 
 

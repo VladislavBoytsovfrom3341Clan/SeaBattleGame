@@ -1,4 +1,7 @@
-set(COMMANDS_SOURCES 
+set(COMMANDS_SOURCES
+    DoubleDamageCommand.cpp
+    ScannerCommand.cpp
+    ShellingCommand.cpp
     PlaceShipCommand.cpp
     AttackCommand.cpp)
 
@@ -8,6 +11,9 @@ include_directories(${COMMANDS_INCLUDE_DIR}/Commands)
 
 set(COMMANDS_HEADERS
         ${COMMANDS_INCLUDE_DIR}/Commands/ICommand.h
+        ${COMMANDS_INCLUDE_DIR}/Commands/DoubleDamageCommand.h
+        ${COMMANDS_INCLUDE_DIR}/Commands/ScannerCommand.h
+        ${COMMANDS_INCLUDE_DIR}/Commands/ShellingCommand.h
         ${COMMANDS_INCLUDE_DIR}/Commands/PlaceShipCommand.h
         ${COMMANDS_INCLUDE_DIR}/Commands/AttackCommand.h)
 

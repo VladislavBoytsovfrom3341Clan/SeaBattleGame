@@ -8,17 +8,18 @@
 class AttackState : public GameState
 {
 	std::vector<Participant*>& mParticipants;
-	bool mHasAnAttack = true;
+	int& mMoveIndex;
+	int& mParticipantsNumber;
 
 public:
 
-	AttackState(std::vector<Participant*>& participants);
-
-	bool participantMayAct(int index) override;
+	AttackState(std::vector<Participant*>& participants, int& moveIndex, int& participantsNumber);
 
 	void placeShip(int playerIndex, int shipIndex, Coords coords, Orientation orientation) override;
 
-	void attack(int index, Coords coords) override;
+	void castAbility(IAbilitySettings* settings) override;
+
+	void attack(int index, Coords coords, int damage) override;
 };
 
 #endif

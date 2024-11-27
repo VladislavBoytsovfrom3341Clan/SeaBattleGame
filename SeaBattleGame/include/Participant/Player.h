@@ -1,5 +1,6 @@
 #include "Participant.h"
 
+#include "ScannerResult.h"
 #include "CLIInput.h"
 
 struct Player : public Participant

@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "IAbilitySettings.h"
 #include "GameState.h"
 #include "Participant.h"
 #include "Coords.h"
@@ -36,6 +37,8 @@ public:
 	void placeShip(int playerIndex, int shipIndex, Coords coords, Orientation orientation);
 
 	void attack(int index, Coords coords);
+
+	void castAbility(IAbilitySettings* settings);
 
 //	void addAbilityToParticipant(int index);
 

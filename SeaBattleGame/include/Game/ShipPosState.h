@@ -8,16 +8,18 @@
 class ShipPosState : public GameState
 {
 	std::vector<Participant*>& mParticipants;
+	int& mMoveIndex;
+	int& mParticipantsNumber;
 
 public:
 
-	ShipPosState(std::vector<Participant*>& participants);
-
-	bool participantMayAct(int index) override;
+	ShipPosState(std::vector<Participant*>& participants, int& moveIndex, int& participantsNumber);
 
 	void placeShip(int playerIndex, int shipIndex, Coords coords, Orientation orientation) override;
 
-	void attack(int index, Coords coords) override;
+	void castAbility(IAbilitySettings* settings) override;
+
+	void attack(int index, Coords coords, int damage) override;
 };
 
 #endif

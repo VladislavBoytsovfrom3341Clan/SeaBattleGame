@@ -15,13 +15,13 @@ void GameController::runRoundCycle()
 		command->execute(mGame);
 		delete command;
 		mGame.Display();
-		mGame.newMove();
+		//mGame.newMove();
 	}
 }
 
 void GameController::runGameCycle()
 {
-	while (mGame.participantMayAct())
+	while (mGame.getParticipant(0)->mShipManager.getInactiveShipsNumber() > 0)
 	{
 		ICommand* command = mGame.getCurrentParticipant()->getAction();
 		command->execute(mGame);
