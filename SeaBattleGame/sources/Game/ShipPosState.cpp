@@ -7,9 +7,9 @@ ShipPosState::ShipPosState(std::vector<Participant*>& participants, int& moveInd
 
 void ShipPosState::placeShip(int playerIndex, int shipIndex, Coords coords, Orientation orientation)
 {
-	Battleship& ship = mParticipants[playerIndex]->mShipManager.getInactiveShip(shipIndex);
-	mParticipants[playerIndex]->mField.setShip(ship, coords, orientation);
-	mParticipants[playerIndex]->mShipManager.setShipActive(shipIndex);
+	Battleship& ship = mParticipants.at(playerIndex)->mShipManager.getInactiveShip(shipIndex);
+	mParticipants.at(playerIndex)->mField.setShip(ship, coords, orientation);
+	mParticipants.at(playerIndex)->mShipManager.setShipActive(shipIndex);
 }
 
 void ShipPosState::castAbility(IAbilitySettings* settings)

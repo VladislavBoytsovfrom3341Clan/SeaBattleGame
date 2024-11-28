@@ -1,7 +1,6 @@
 #include "AttackCommand.h"
 
 #include "Game.h"
-#include <iostream>
 
 AttackCommand::AttackCommand(int participantIndex, Coords targetCoords) :
 	mAttackedParticipantIndex(participantIndex), mTargetCoords(targetCoords) {}
@@ -9,5 +8,4 @@ AttackCommand::AttackCommand(int participantIndex, Coords targetCoords) :
 void AttackCommand::execute(class Game& game)
 {
 	game.attack(mAttackedParticipantIndex, mTargetCoords);
-	std::cout << "\nAttacked\n";
 }

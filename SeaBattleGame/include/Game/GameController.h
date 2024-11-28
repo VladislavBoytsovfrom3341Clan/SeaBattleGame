@@ -5,6 +5,7 @@
 #include "ParticipantController.h"
 #include "PlayerController.h"
 #include "GameSettings.h"
+#include "ICommand.h"
 
 #include <vector>
 
@@ -15,6 +16,8 @@ class GameController
 	GameSettings mSettings;
 
 	std::vector<ParticipantController*> mControllers;
+
+	void acceptCommand(ICommand* command);
 
 public:
 

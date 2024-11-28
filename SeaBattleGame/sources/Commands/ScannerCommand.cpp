@@ -15,5 +15,6 @@ void ScannerCommand::execute(Game& game)
 	AbilityResultHandler handler;
 	ScannerSettings scSettings(game.getParticipant(mParticipantIndex)->mField, mCoords, handler);
 	game.castAbility(&scSettings);
-	std::cout << dynamic_cast<ScannerResult*>(handler.getResult())->getResult();
+	if(handler.getResult() != nullptr)
+		std::cout << dynamic_cast<ScannerResult*>(handler.getResult())->getResult();
 }

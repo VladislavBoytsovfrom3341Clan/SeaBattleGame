@@ -8,7 +8,12 @@
 #include "Game.h"
 #include "ICommand.h"
 #include "GameSettings.h"
+#include "NoAbilityException.h"
+#include "OutOfRangeAttackException.h"
+#include "ShipPlacementException.h"
 
+#include <exception>
+#include <stdexcept>
 #include <iostream>
 
 GameController::GameController(Game& game, GameSettings& settings) :
@@ -34,6 +39,32 @@ void GameController::addBots(int number)
 	}
 }
 
+void GameController::acceptCommand(ICommand* command)
+{
+	try
+	{
+		if (command != nullptr)
+			command->execute(mGame);
+	}
+	catch (const NoAbilityException& na)
+	{
+		std::cout << na.what();
+	}
+	catch (const OutOfRangeAttackException& ora)
+	{
+		std::cout << ora.what();
+	}
+	catch(const ShipPlacementException& sp)
+	{
+		std::cout << sp.what();
+	}
+	catch (const std::exception& e)
+	{
+		std::cout << e.what();
+	}
+	delete command;
+}
+
 void GameController::runRoundCycle()
 {
 	while (mGame.countAlivePlayers() >= 1 && mGame.countAliveParticipants()>1)
@@ -41,8 +72,7 @@ void GameController::runRoundCycle()
 		mGame.newMove();
 		mGame.Display();
 		ICommand* command = mControllers[mGame.getCurrentParticipantIndex()]->getAction();
-		command->execute(mGame);
-		delete command;
+		this->acceptCommand(command);
 	}
 }
 
@@ -57,8 +87,7 @@ void GameController::resetBots()
 		while (!(mControllers[i]->isReady()))
 		{
 			ICommand* command = mControllers[i]->getAction();
-			command->execute(mGame);
-			delete command;
+			this->acceptCommand(command);
 		}
 	}
 }
@@ -66,17 +95,16 @@ void GameController::resetBots()
 void GameController::runGameCycle()
 {
 	mGame.newRound();
+	std::cout << "Started ship placing phase\n";
 	for (ParticipantController* controller : mControllers)
 	{
 		while (!(controller->isReady()))
 		{
 			ICommand* command = controller->getAction();
-			command->execute(mGame);
-			delete command;
+			this->acceptCommand(command);
 		}
 	}
 	std::cout << "Ended ship placing phase\n";
-	mGame.Display();
 	while (mGame.countAlivePlayers() > 0)
 	{
 		std::cout << "\nNew round has started!\n";

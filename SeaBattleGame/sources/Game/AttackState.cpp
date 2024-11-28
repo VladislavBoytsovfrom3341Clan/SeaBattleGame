@@ -13,15 +13,14 @@ void AttackState::placeShip(int playerIndex, int shipIndex, Coords coords, Orien
 
 void AttackState::castAbility(IAbilitySettings* settings)
 {
-	mParticipants[mMoveIndex % mParticipantsNumber]->mAbilityManager.castLastAbility(*settings);
+	mParticipants.at(mMoveIndex % mParticipantsNumber)->mAbilityManager.castLastAbility(*settings);
 }
 
 void AttackState::attack(int index, Coords coords, int damage)
 {
-	mParticipants[index]->mField.attackCell(coords, damage);
-	mParticipants[index % mParticipantsNumber]->mDamageMultiplier = 1;
+	mParticipants.at(index)->mField.attackCell(coords, damage);
+	mParticipants.at(index % mParticipantsNumber)->mDamageMultiplier = 1;
 	mMoveIndex++;
-	//std::cout << "Gribuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu " << mMoveIndex << '\n';
 }
 
 

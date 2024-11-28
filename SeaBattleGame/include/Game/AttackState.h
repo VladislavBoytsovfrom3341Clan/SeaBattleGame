@@ -10,6 +10,7 @@ class AttackState : public GameState
 	std::vector<Participant*>& mParticipants;
 	int& mMoveIndex;
 	int& mParticipantsNumber;
+	bool usedAbility = false;
 
 public:
 

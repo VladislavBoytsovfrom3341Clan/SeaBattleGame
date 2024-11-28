@@ -7,6 +7,7 @@
 #include "ShellingCommand.h"
 #include "ScannerCommand.h"
 
+#include <exception>
 #include <iostream>
 
 ICommand* CLIInput::readCommand()
@@ -16,52 +17,60 @@ ICommand* CLIInput::readCommand()
 	char key;
 	int playerIndex = 0;
 	std::cin >> key;
-	switch (key)
+	try
 	{
-	case 'f':
-	{
-		Coords coords;
-		int index;
-		std::cin >> index >> coords.x >> coords.y;
-		newCommand = new AttackCommand(index, coords);
-		break;
+		switch (key)
+		{
+		case 'f':
+		{
+			Coords coords;
+			int index;
+			std::cin >> index >> coords.x >> coords.y;
+			newCommand = new AttackCommand(index, coords);
+			break;
+		}
+		case 'r':
+		{
+			int shipIndex;
+			Coords coords;
+			std::cin >> shipIndex >> coords.x >> coords.y;
+			Orientation orientation = Orientation::vertical;
+			char ornt;
+			std::cin >> ornt;
+			if (ornt == 'v')
+				orientation = Orientation::vertical;
+			else if (ornt == 'h')
+				orientation = Orientation::horizontal;
+			newCommand = new PlaceShipCommand(playerIndex, shipIndex, coords, orientation);
+			break;
+		}
+		case 'q':
+		{
+			newCommand = new DoubleDamageCommand();
+			break;
+		}
+		case 'w':
+		{
+			int index;
+			std::cin >> index;
+			newCommand = new ShellingCommand(index);
+			break;
+		}
+		case 'e':
+		{
+			int index;
+			Coords coords;
+			std::cin >> index >> coords.x >> coords.y;
+			newCommand = new ScannerCommand(index, coords);
+		}
+		default:
+			newCommand = nullptr;
+			break;
+		}
 	}
-	case 'r':
+	catch (std::exception& e)
 	{
-		int shipIndex;
-		Coords coords;
-		std::cin >> shipIndex >> coords.x >> coords.y;
-		Orientation orientation = Orientation::vertical;
-		char ornt;
-		std::cin >> ornt;
-		if (ornt == 'v')
-			orientation = Orientation::vertical;
-		else if (ornt == 'h')
-			orientation = Orientation::horizontal;
-		newCommand = new PlaceShipCommand(playerIndex, shipIndex, coords, orientation);
-		break;
-	}
-	case 'q':
-	{
-		newCommand = new DoubleDamageCommand();
-		break;
-	}
-	case 'w':
-	{
-		int index;
-		std::cin >> index;
-		newCommand = new ShellingCommand(index);
-		break;
-	}
-	case 'e':
-	{
-		int index;
-		Coords coords;
-		std::cin >> index >> coords.x >> coords.y;
-		newCommand = new ScannerCommand(index, coords);
-	}
-	default:
-		break;
+		newCommand = nullptr;
 	}
 	return newCommand;
 }
