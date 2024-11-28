@@ -1,5 +1,6 @@
 set(GAME_SOURCES  
     Game.cpp
+    GameController.cpp
     AttackState.cpp
     ShipPosState.cpp)
 
@@ -9,6 +10,8 @@ include_directories(${GAME_INCLUDE_DIR}/Game)
 
 set(GAME_HEADERS
         ${GAME_INCLUDE_DIR}/Game/Game.h
+        ${GAME_INCLUDE_DIR}/Game/GameSettings.h
+        ${GAME_INCLUDE_DIR}/Game/GameController.h
         ${GAME_INCLUDE_DIR}/Game/GameState.h
         ${GAME_INCLUDE_DIR}/Game/AttackState.h
         ${GAME_INCLUDE_DIR}/Game/ShipPosState.h)

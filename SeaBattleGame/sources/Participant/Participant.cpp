@@ -6,5 +6,10 @@ Participant::Participant(Coords fieldSize, std::vector<std::pair<int, int>> ship
 
 bool Participant::isAlive()
 {
-	return (mShipManager.getAliveShipsNumber() != 0);
+	return (mShipManager.getAliveShipsNumber() > 0);
+}
+
+bool Participant::isReady()
+{
+	return mShipManager.getInactiveShipsNumber() == 0;
 }

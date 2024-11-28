@@ -4,7 +4,6 @@
 #include "Battlefield.h"
 #include "ShipManager.h"
 #include "AbilityManager.h"
-//#include "ICommand.h"
 
 #include <vector>
 
@@ -19,8 +18,6 @@ struct Participant
 
 	bool isAlive();
 
-	virtual void placeShips() = 0;
-
-	virtual class ICommand* getAction() = 0;
+	virtual bool isReady();
 };
 #endif

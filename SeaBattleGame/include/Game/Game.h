@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "GameSettings.h"
 #include "IAbilitySettings.h"
 #include "GameState.h"
 #include "Participant.h"
@@ -15,24 +16,21 @@ class Game
 	int mBotsNumber = 0;
 	int mPlayersNumber = 0;
 	int mParticipantsNumber = 0;
-	Coords mFieldSize = { 5, 5 };
-	std::vector<std::pair<int, int>> mDefaultShips{ {1, 1} };
-
-	bool gameRoundCycle();
+	GameSettings& mSettings;
 
 public:
 	
-	Game(Coords fieldSize, int botsNumber);
+	Game(GameSettings& settings);
 
-	void generateBots(int number);
+	void addParticipant(Participant* participant);
 
-	void regenerateBots();
+	Participant* resetPlayer(int index);
+
+	Participant* resetBot(int index);
 
 	void newMove();
 
 	void newRound();
-
-	bool participantMayAct();
 
 	void placeShip(int playerIndex, int shipIndex, Coords coords, Orientation orientation);
 
@@ -44,9 +42,11 @@ public:
 
 //  castAbility???\
 
+	Participant* getCurrentParticipant();
+
 	Participant* getParticipant(int index);
 
-	Participant* getCurrentParticipant();
+	int getCurrentParticipantIndex();
 
 	int countAliveParticipants();
 

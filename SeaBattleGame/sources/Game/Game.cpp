@@ -8,26 +8,30 @@
 
 #include <iostream>
 
-Game::Game(Coords fieldSize, int botsNumber)
+Game::Game(GameSettings& settings):
+    mSettings(settings)
 {
-    mBotsNumber = botsNumber;
-    mParticipantsNumber = mBotsNumber + mPlayersNumber;
-    mFieldSize = fieldSize;
-    Participant* player = new Player(mFieldSize, mDefaultShips);
-    mParticipants.push_back(player);
     mState = new ShipPosState(mParticipants, mMoveIndex, mParticipantsNumber);
-    mParticipantsNumber++;
-    mPlayersNumber++;
 }
 
-void Game::generateBots(int number)
+void Game::addParticipant(Participant* participant)
 {
-    for (int i = 0; i < mBotsNumber; i++)
-    {
-        Bot* newBot = new Bot(mFieldSize, mDefaultShips);
-        mParticipants.push_back(newBot);
-        newBot->placeShips();
-    }
+    mParticipants.push_back(participant);
+    mParticipantsNumber++;
+}
+
+Participant* Game::resetPlayer(int index)
+{
+    delete mParticipants[index];
+    mParticipants[index] = new Player(mSettings.mFieldSize, mSettings.mDefaultShips);
+    return mParticipants[index];
+}
+
+Participant* Game::resetBot(int index)
+{
+    delete mParticipants[index];
+    mParticipants[index] = new Bot(mSettings.mFieldSize, mSettings.mDefaultShips);
+    return mParticipants[index];
 }
 
 void Game::placeShip(int playerIndex, int shipIndex, Coords coords, Orientation orientation)
@@ -37,7 +41,7 @@ void Game::placeShip(int playerIndex, int shipIndex, Coords coords, Orientation 
 
 void Game::attack(int index, Coords coords)
 {
-    int damage = this->getCurrentParticipant()->mDamageMultiplier;
+    int damage = mParticipants[this->getCurrentParticipantIndex()]->mDamageMultiplier;
     mState->attack(index, coords, damage);
 }
 
@@ -46,44 +50,19 @@ void Game::castAbility(IAbilitySettings* settings)
     mState->castAbility(settings);
 }
 
-void Game::regenerateBots()
-{
-    for (int i = 0; i < mBotsNumber + mPlayersNumber; i++)
-    {
-        if (typeid(*(mParticipants[i])) == typeid(Bot))
-        {
-            std::cout << "regenerating bot " << i << '\n';
-            delete mParticipants[i];
-            mParticipants[i] = new Bot(mFieldSize, mDefaultShips);
-            mParticipants[i]->placeShips();
-        }
-    }
-}
-
 void Game::newMove()
 {
     mState = new AttackState(mParticipants, mMoveIndex, mParticipantsNumber);
-    mMoveIndex++;
 }
 
 void Game::newRound()
 {
     mState = new ShipPosState(mParticipants, mMoveIndex, mParticipantsNumber);
-    if (mRoundCount == 0)
-        this->generateBots(mBotsNumber);
-    else
-        this->regenerateBots();
     mMoveIndex = 0;
     mRoundCount++;
-    mState = new AttackState(mParticipants, mMoveIndex, mParticipantsNumber);
 }
 
-Participant* Game::getParticipant(int index)
-{
-    return mParticipants[index];
-}
-
-Participant* Game::getCurrentParticipant()
+int Game::getCurrentParticipantIndex()
 {
     int endIndex = mMoveIndex + mParticipantsNumber;
     Participant* currentParticipant = mParticipants[mMoveIndex % mParticipantsNumber];
@@ -91,15 +70,28 @@ Participant* Game::getCurrentParticipant()
         currentParticipant = mParticipants[(++mMoveIndex) % mParticipantsNumber];
     if (endIndex == mMoveIndex)
         throw std::logic_error("No Alive Participants");
-    return currentParticipant;
+    return mMoveIndex % mParticipantsNumber;
+}
+
+Participant* Game::getCurrentParticipant()
+{
+    return mParticipants[this->getCurrentParticipantIndex()];
+}
+
+Participant* Game::getParticipant(int index)
+{
+    return mParticipants[index];
 }
 
 int Game::countAliveParticipants()
 {
     int count = 0;
+
     for (Participant* participant : mParticipants)
+    {
         if (participant->isAlive())
             count++;
+    }
     return count;
 }
 
@@ -121,8 +113,10 @@ int Game::countAlivePlayers()
     for (Participant* i : mParticipants)
     {
         if (typeid(*i) == typeid(Player))
+        {
             if (i->isAlive())
                 count++;
+        }
     }
     return count;
 }
@@ -179,7 +173,7 @@ void Game::Display()
     std::cout << "\nMove " << mMoveIndex << '\n';
     for (int i = 0; i < mParticipants.size(); i++)
     {
-        std::cout << "\nParticipant #" << i << '\n';
+        std::cout << "\nParticipant #" << i <<"   " << mParticipants[i]->isAlive() << '\n';
         if(!(mParticipants[i]->mAbilityManager.empty()))
             printAbility(mParticipants[i]->mAbilityManager.getFirstAbility());
         printShipsInManager(mParticipants[i]->mShipManager);
