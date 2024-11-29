@@ -9,7 +9,6 @@
 class AttackState : public GameState
 {
 	GameInfo& mInfo;
-	bool usedAbility = false;
 
 public:
 

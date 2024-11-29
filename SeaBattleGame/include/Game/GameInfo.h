@@ -13,6 +13,7 @@ struct GameInfo
 	int mBotsNumber = 0;
 	int mPlayersNumber = 0;
 	int mParticipantsNumber = 0;
+	bool mUsedAbility = false;
 };
 
 #endif
