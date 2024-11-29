@@ -92,6 +92,7 @@ void GameController::resetBots()
 	}
 }
 
+//all COUTs is ONLY for DUBUG time
 void GameController::runGameCycle()
 {
 	mGame.newRound();

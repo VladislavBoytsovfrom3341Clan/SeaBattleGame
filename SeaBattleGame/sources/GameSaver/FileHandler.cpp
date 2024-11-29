@@ -11,6 +11,8 @@ FileHandler::FileHandler(std::string name)
 	mName = name;
 }
 
+
+//all COUTs is ONLY for DUBUG time
 void FileHandler::openRead()
 {
 	mInFile.open(mName);
