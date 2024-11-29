@@ -4,6 +4,16 @@
 Participant::Participant(Coords fieldSize, std::vector<std::pair<int, int>> shipList) :
 	mShipManager(shipList), mField(fieldSize.x, fieldSize.y) {}
 
+Participant::Participant(const Participant& copy)
+{
+	mField = copy.mField;
+	mShipManager = copy.mShipManager;
+	mDamageMultiplier = copy.mDamageMultiplier;
+}
+
+Participant::Participant(Battlefield field, std::vector<Battleship*> inactive, std::vector<Battleship*> active) :
+	mField(field), mShipManager(inactive, active) {}
+
 bool Participant::isAlive()
 {
 	return (mShipManager.getAliveShipsNumber() > 0);

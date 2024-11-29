@@ -9,29 +9,29 @@
 #include <iostream>
 
 Game::Game(GameSettings& settings):
-    mSettings(settings)
+    mSettings(settings), mSaver(mInfo)
 {
-    mState = new ShipPosState(mParticipants, mMoveIndex, mParticipantsNumber);
+    mState = new ShipPosState(mInfo);
 }
 
 void Game::addParticipant(Participant* participant)
 {
-    mParticipants.push_back(participant);
-    mParticipantsNumber++;
+    mInfo.mParticipants.push_back(participant);
+    mInfo.mParticipantsNumber++;
 }
 
 Participant* Game::resetPlayer(int index)
 {
-    delete mParticipants[index];
-    mParticipants[index] = new Player(mSettings.mFieldSize, mSettings.mDefaultShips);
-    return mParticipants[index];
+    delete mInfo.mParticipants[index];
+    mInfo.mParticipants[index] = new Player(mSettings.mFieldSize, mSettings.mDefaultShips);
+    return mInfo.mParticipants[index];
 }
 
 Participant* Game::resetBot(int index)
 {
-    delete mParticipants[index];
-    mParticipants[index] = new Bot(mSettings.mFieldSize, mSettings.mDefaultShips);
-    return mParticipants[index];
+    delete mInfo.mParticipants[index];
+    mInfo.mParticipants[index] = new Bot(mSettings.mFieldSize, mSettings.mDefaultShips);
+    return mInfo.mParticipants[index];
 }
 
 void Game::placeShip(int playerIndex, int shipIndex, Coords coords, Orientation orientation)
@@ -41,7 +41,7 @@ void Game::placeShip(int playerIndex, int shipIndex, Coords coords, Orientation 
 
 void Game::attack(int index, Coords coords)
 {
-    int damage = mParticipants[this->getCurrentParticipantIndex()]->mDamageMultiplier;
+    int damage = mInfo.mParticipants[this->getCurrentParticipantIndex()]->mDamageMultiplier;
     mState->attack(index, coords, damage);
 }
 
@@ -52,42 +52,42 @@ void Game::castAbility(IAbilitySettings* settings)
 
 void Game::newMove()
 {
-    mState = new AttackState(mParticipants, mMoveIndex, mParticipantsNumber);
+    mState = new AttackState(mInfo);
 }
 
 void Game::newRound()
 {
-    mState = new ShipPosState(mParticipants, mMoveIndex, mParticipantsNumber);
-    mMoveIndex = 0;
-    mRoundCount++;
+    mState = new ShipPosState(mInfo);
+    mInfo.mMoveIndex = 0;
+    mInfo.mRoundCount++;
 }
 
 int Game::getCurrentParticipantIndex()
 {
-    int endIndex = mMoveIndex + mParticipantsNumber;
-    Participant* currentParticipant = mParticipants[mMoveIndex % mParticipantsNumber];
-    while (!(currentParticipant->isAlive()) && mMoveIndex < endIndex)
-        currentParticipant = mParticipants[(++mMoveIndex) % mParticipantsNumber];
-    if (endIndex == mMoveIndex)
+    int endIndex = mInfo.mMoveIndex + mInfo.mParticipantsNumber;
+    Participant* currentParticipant = mInfo.mParticipants[mInfo.mMoveIndex % mInfo.mParticipantsNumber];
+    while (!(currentParticipant->isAlive()) && mInfo.mMoveIndex < endIndex)
+        currentParticipant = mInfo.mParticipants[(++mInfo.mMoveIndex) % mInfo.mParticipantsNumber];
+    if (endIndex == mInfo.mMoveIndex)
         throw std::logic_error("No Alive Participants");
-    return mMoveIndex % mParticipantsNumber;
+    return mInfo.mMoveIndex % mInfo.mParticipantsNumber;
 }
 
 Participant* Game::getCurrentParticipant()
 {
-    return mParticipants[this->getCurrentParticipantIndex()];
+    return mInfo.mParticipants[this->getCurrentParticipantIndex()];
 }
 
 Participant* Game::getParticipant(int index)
 {
-    return mParticipants[index];
+    return mInfo.mParticipants[index];
 }
 
 int Game::countAliveParticipants()
 {
     int count = 0;
 
-    for (Participant* participant : mParticipants)
+    for (Participant* participant : mInfo.mParticipants)
     {
         if (participant->isAlive())
             count++;
@@ -98,7 +98,7 @@ int Game::countAliveParticipants()
 int Game::countAliveBots()
 {
     int count = 0;
-    for (Participant* i : mParticipants)
+    for (Participant* i : mInfo.mParticipants)
     {
         if (typeid(*i) == typeid(Bot))
             if (i->isAlive())
@@ -110,7 +110,7 @@ int Game::countAliveBots()
 int Game::countAlivePlayers()
 {
     int count = 0;
-    for (Participant* i : mParticipants)
+    for (Participant* i : mInfo.mParticipants)
     {
         if (typeid(*i) == typeid(Player))
         {
@@ -121,9 +121,23 @@ int Game::countAlivePlayers()
     return count;
 }
 
+void Game::save()
+{
+    std::cout << "+Game start\n";
+    mHandler.openWrite();
+    mHandler.write(mSaver);
+    mHandler.closeWrite();
+    std::cout << "+Game End\n";
+}
 
-
-
+void Game::load()
+{
+    std::cout << "+Game start\n";
+    mHandler.openRead();
+    mHandler.read(mSaver);
+    mHandler.closeRead();
+    std::cout << "+Game End\n";
+}
 
 
 
@@ -147,17 +161,17 @@ void printAbility(AbilityType t)
 }
 
 //no OOP only as DEBUG func
-void printShip(const Battleship& ship)
+void printShip(Battleship& ship)
 {
     auto segments = ship.getShipCondition();
-    std::cout << "Ship " << ship.getLength() << " condition:\n\t";
+    std::cout << "Ship " << ship.getPosition().toString() << " condition:\n\t";
     for (auto segment : segments)
         std::cout << int(segment) << ' ';
     std::cout << '\n';
 }
 
 //no OOP only as DEBUG func
-void printShipsInManager(const ShipManager& manager)
+void printShipsInManager(ShipManager& manager)
 {
     std::cout << "Inactive ships in manager: " << manager.getInactiveShipsNumber() << '\n';
     for (int i = 0; i < manager.getInactiveShipsNumber(); i++)
@@ -170,13 +184,13 @@ void printShipsInManager(const ShipManager& manager)
 
 void Game::Display()
 {
-    std::cout << "\nMove " << mMoveIndex << '\n';
-    for (int i = 0; i < mParticipants.size(); i++)
+    std::cout << "\nMove " << mInfo.mMoveIndex << '\n';
+    for (int i = 0; i < mInfo.mParticipants.size(); i++)
     {
-        std::cout << "\nParticipant #" << i <<"   " << mParticipants[i]->isAlive() << '\n';
-        if(!(mParticipants[i]->mAbilityManager.empty()))
-            printAbility(mParticipants[i]->mAbilityManager.getFirstAbility());
-        printShipsInManager(mParticipants[i]->mShipManager);
-        mParticipants[i]->mField.display();
+        std::cout << "\nParticipant #" << i <<"   " << mInfo.mParticipants[i]->isAlive() << '\n';
+        if(!(mInfo.mParticipants[i]->mAbilityManager.empty()))
+            printAbility(mInfo.mParticipants[i]->mAbilityManager.getFirstAbility());
+        printShipsInManager(mInfo.mParticipants[i]->mShipManager);
+        mInfo.mParticipants[i]->mField.display();
     }
 }

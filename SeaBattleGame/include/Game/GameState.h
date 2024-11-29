@@ -2,6 +2,7 @@
 #define GAME_STATE_H
 
 #include "Coords.h"
+#include "GameInfo.h"
 #include "IAbilitySettings.h"
 
 #include <vector>

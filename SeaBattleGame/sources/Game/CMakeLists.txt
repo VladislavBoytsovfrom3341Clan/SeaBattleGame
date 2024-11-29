@@ -10,6 +10,7 @@ include_directories(${GAME_INCLUDE_DIR}/Game)
 
 set(GAME_HEADERS
         ${GAME_INCLUDE_DIR}/Game/Game.h
+        ${GAME_INCLUDE_DIR}/Game/GameInfo.h
         ${GAME_INCLUDE_DIR}/Game/GameSettings.h
         ${GAME_INCLUDE_DIR}/Game/GameController.h
         ${GAME_INCLUDE_DIR}/Game/GameState.h

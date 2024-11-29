@@ -3,17 +3,16 @@
 
 #include "GameState.h"
 
+#include "GameInfo.h"
 #include "Participant.h"
 
 class ShipPosState : public GameState
 {
-	std::vector<Participant*>& mParticipants;
-	int& mMoveIndex;
-	int& mParticipantsNumber;
+	GameInfo& mInfo;
 
 public:
 
-	ShipPosState(std::vector<Participant*>& participants, int& moveIndex, int& participantsNumber);
+	ShipPosState(GameInfo& info);
 
 	void placeShip(int playerIndex, int shipIndex, Coords coords, Orientation orientation) override;
 

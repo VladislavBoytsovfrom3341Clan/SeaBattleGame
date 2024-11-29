@@ -3,6 +3,10 @@
 
 #include<vector>
 
+#include <iostream>
+#include <fstream>
+#include "Coords.h"
+
 constexpr int minimalShipLength = 1;
 constexpr int maximalShipLength = 4;
 
@@ -10,11 +14,11 @@ constexpr int maximalShipLength = 4;
  * enum, describing current condition of 
  * particular ship segment
 **/
-enum class SegmentCondition
+enum SegmentCondition
 {
-    destroyed,
-    damaged,
-    intact
+    destroyed = 0,
+    damaged = 1,
+    intact = 2
 };
 
 /**
@@ -32,6 +36,10 @@ class Battleship
     public:
         BattleshipSegment();
 
+        BattleshipSegment(SegmentCondition s);
+
+        void setCondition(int i);
+
         //method to take positive damage for segment
         void takeDamage(const int damage) noexcept;
 
@@ -42,12 +50,23 @@ class Battleship
         SegmentCondition getStatus() const noexcept;
     };
 
-    int mLength;
+    int mLength = 0;
     std::vector<BattleshipSegment> mSegments;
+    Coords mPosition = {-1, -1};
+    Orientation mOrnt = Orientation::horizontal;
+    
 
 public:
     Battleship() = default;
     explicit Battleship(int length);
+
+    Battleship(Coords coords, Orientation ornt, std::vector<int> init);
+
+    void setPosition(Coords coords, Orientation ornt);
+
+    Coords getPosition();
+
+    Orientation getOrientation();
 
     //checks if there are not destroyed segments
     bool isAlive() const noexcept;
@@ -66,6 +85,10 @@ public:
 
     //repairs ship <index> segment by <val>
     void repairSegment(const int index, const int val);
+
+    friend std::istream& operator>>(std::istream& is, Battleship& ship);
+
+    friend std::ostream& operator<<(std::ostream& os, Battleship& ship);
     
     ~Battleship() = default;
 };

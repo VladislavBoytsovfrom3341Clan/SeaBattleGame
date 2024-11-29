@@ -20,6 +20,18 @@ ShipManager::ShipManager(std::vector<std::pair<int, int>> shipList)
     }
 }
 
+ShipManager::ShipManager(std::vector<Battleship*> inactive, std::vector<Battleship*> active)
+{
+    mInactiveShipsArray = inactive;
+    mActiveShipsArray = active;
+}
+
+ShipManager::ShipManager(const ShipManager& copy)
+{
+    mActiveShipsArray = copy.mActiveShipsArray;
+    mInactiveShipsArray = copy.mInactiveShipsArray;
+}
+
 int ShipManager::getShipsNumber() const noexcept
 {
     return mInactiveShipsArray.size() + mActiveShipsArray.size();

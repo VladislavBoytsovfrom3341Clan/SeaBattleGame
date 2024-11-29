@@ -33,6 +33,6 @@ ICommand* BotController::getAction()
     int index = 0;
     Coords coords = { rand() % 5, rand() % 5 };
     ICommand* command = new AttackCommand(index, coords);
-    std::cout << "\nBot made an attack command!\n";
+   //std::cout << "\nBot made an attack command!\n";
     return command;
 }

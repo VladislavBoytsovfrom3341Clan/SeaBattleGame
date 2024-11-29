@@ -6,6 +6,8 @@
 #include "DoubleDamageCommand.h"
 #include "ShellingCommand.h"
 #include "ScannerCommand.h"
+#include "SaveCommand.h"
+#include "LoadCommand.h"
 
 #include <exception>
 #include <iostream>
@@ -62,6 +64,17 @@ ICommand* CLIInput::readCommand()
 			Coords coords;
 			std::cin >> index >> coords.x >> coords.y;
 			newCommand = new ScannerCommand(index, coords);
+			break;
+		}
+		case 's':
+		{
+			newCommand = new SaveCommand();
+			break;
+		}
+		case 'l':
+		{
+			newCommand = new LoadCommand();
+			break;
 		}
 		default:
 			newCommand = nullptr;

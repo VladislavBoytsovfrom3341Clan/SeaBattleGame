@@ -4,19 +4,19 @@
 #include "GameSettings.h"
 #include "IAbilitySettings.h"
 #include "GameState.h"
+#include "GameInfo.h"
 #include "Participant.h"
 #include "Coords.h"
+#include "GameSaver.h"
+#include "FileHandler.h"
 
 class Game
 {
-	std::vector<Participant*> mParticipants;
+	GameInfo mInfo;
 	GameState* mState = nullptr;
-	int mMoveIndex = 0;
-	int mRoundCount = 0;
-	int mBotsNumber = 0;
-	int mPlayersNumber = 0;
-	int mParticipantsNumber = 0;
 	GameSettings& mSettings;
+	GameSaver mSaver;
+	FileHandler mHandler;
 
 public:
 	
@@ -38,9 +38,9 @@ public:
 
 	void castAbility(IAbilitySettings* settings);
 
-//	void addAbilityToParticipant(int index);
+	void save();
 
-//  castAbility???\
+	void load();
 
 	Participant* getCurrentParticipant();
 

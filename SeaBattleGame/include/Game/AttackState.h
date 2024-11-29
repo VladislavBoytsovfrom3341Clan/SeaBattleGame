@@ -3,18 +3,17 @@
 
 #include "GameState.h"
 
+#include "GameInfo.h"
 #include "Participant.h"
 
 class AttackState : public GameState
 {
-	std::vector<Participant*>& mParticipants;
-	int& mMoveIndex;
-	int& mParticipantsNumber;
+	GameInfo& mInfo;
 	bool usedAbility = false;
 
 public:
 
-	AttackState(std::vector<Participant*>& participants, int& moveIndex, int& participantsNumber);
+	AttackState(GameInfo& info);
 
 	void placeShip(int playerIndex, int shipIndex, Coords coords, Orientation orientation) override;
 
