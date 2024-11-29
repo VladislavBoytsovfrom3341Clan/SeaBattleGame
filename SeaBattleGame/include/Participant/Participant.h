@@ -18,8 +18,6 @@ struct Participant
 
 	Participant(Battlefield field, std::vector<Battleship*> inactive, std::vector<Battleship*> active);
 
-	Participant(const Participant& copy);
-
 	Participant(Coords fieldSize, std::vector<std::pair<int, int>> shipList);
 
 	bool isAlive();

@@ -5,8 +5,6 @@
 
 struct Bot: public Participant
 {
-	Bot(const Bot& copy);
-
 	Bot(Battlefield field, std::vector<Battleship*> inactive, std::vector<Battleship*> active);
 
 	Bot(Coords fieldSize, std::vector<std::pair<int, int>> shipList);

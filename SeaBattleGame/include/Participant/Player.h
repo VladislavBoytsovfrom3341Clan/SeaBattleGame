@@ -7,10 +7,6 @@
 
 struct Player : public Participant
 {
-	//AbilityManager mAbilityManager;
-
-	Player(const Player& copy);
-
 	Player(Battlefield field, std::vector<Battleship*> inactive, std::vector<Battleship*> active);
 
 	Player(Coords fieldSize, std::vector<std::pair<int, int>> shipList);

@@ -18,8 +18,10 @@ void AttackState::castAbility(IAbilitySettings* settings)
 
 void AttackState::attack(int index, Coords coords, int damage)
 {
-	mInfo.mParticipants.at(index)->mField.attackCell(coords, damage);
-	mInfo.mParticipants.at(index % mInfo.mParticipantsNumber)->mDamageMultiplier = 1;
+	bool destroyed = mInfo.mParticipants.at(index)->mField.attackCell(coords, damage);
+	mInfo.mParticipants.at(mInfo.mMoveIndex % mInfo.mParticipantsNumber)->mDamageMultiplier = 1;
+	if (destroyed)
+		mInfo.mParticipants.at(mInfo.mMoveIndex % mInfo.mParticipantsNumber)->mAbilityManager.addRandomAbility();
 	mInfo.mMoveIndex++;
 }
 
