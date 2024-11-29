@@ -6,25 +6,20 @@
 #include <stdexcept>
 #include <iostream>
 
-FileHandler::FileHandler(std::string name)
+FileHandler::FileHandler(std::string name, bool writeMode)
 {
-	mName = name;
-}
-
-
-//all COUTs is ONLY for DUBUG time
-void FileHandler::openRead()
-{
-	mInFile.open(mName);
-	if (!(mInFile.is_open()))
-		throw std::runtime_error("error in opening Input stream");
-}
-
-void FileHandler::openWrite()
-{
-	mOutFile.open(mName);
-	if (!(mOutFile.is_open()))
-		throw std::runtime_error("error in opening Output stream");
+	if (writeMode)
+	{
+		mOutFile.open(name);
+		if (!(mOutFile.is_open()))
+			throw std::runtime_error("error in opening Output stream");
+	}
+	else
+	{
+		mInFile.open(name);
+		if (!(mInFile.is_open()))
+			throw std::runtime_error("error in opening Input stream");
+	}
 }
 
 void FileHandler::write(GameSaver& state)
@@ -39,14 +34,10 @@ void FileHandler::read(GameSaver& state)
 	mInFile >> state;
 }
 
-void FileHandler::closeRead()
+FileHandler::~FileHandler()
 {
 	if (mInFile.is_open())
-		mInFile.close();
-}
-
-void FileHandler::closeWrite()
-{
+		mInFile.close(); 
 	if (mOutFile.is_open())
 		mOutFile.close();
 }

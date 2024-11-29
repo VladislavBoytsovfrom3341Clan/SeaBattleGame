@@ -8,22 +8,16 @@
 
 class FileHandler
 {
-    std::string mName;
     std::ifstream mInFile;
     std::ofstream mOutFile;
 
 public:
-    FileHandler(std::string name = "testsave.txt");
-
-    void openRead();
-    void openWrite();
+    FileHandler(std::string name = "testsave.txt", bool writeMode = true);
 
     void write(GameSaver& state);
     void read(GameSaver& state);
 
-
-    void closeRead();
-    void closeWrite();
+    ~FileHandler();
 };
 
 #endif

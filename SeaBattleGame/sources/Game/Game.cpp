@@ -9,7 +9,7 @@
 #include <iostream>
 
 Game::Game(GameSettings& settings):
-    mSettings(settings), mSaver(mInfo)
+    mSettings(settings)
 {
     mState = new ShipPosState(mInfo);
 }
@@ -124,18 +124,18 @@ int Game::countAlivePlayers()
 void Game::save()
 {
     std::cout << "+Game start\n";
-    mHandler.openWrite();
+    GameSaver mSaver(mInfo);
+    FileHandler mHandler("testsave.txt", true);
     mHandler.write(mSaver);
-    mHandler.closeWrite();
     std::cout << "+Game End\n";
 }
 
 void Game::load()
 {
     std::cout << "+Game start\n";
-    mHandler.openRead();
+    GameSaver mSaver(mInfo);
+    FileHandler mHandler("testsave.txt", false);
     mHandler.read(mSaver);
-    mHandler.closeRead();
     std::cout << "+Game End\n";
 }
 

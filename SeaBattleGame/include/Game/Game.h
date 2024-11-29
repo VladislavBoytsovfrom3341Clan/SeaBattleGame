@@ -15,8 +15,6 @@ class Game
 	GameInfo mInfo;
 	GameState* mState = nullptr;
 	GameSettings& mSettings;
-	GameSaver mSaver;
-	FileHandler mHandler;
 
 public:
 	
