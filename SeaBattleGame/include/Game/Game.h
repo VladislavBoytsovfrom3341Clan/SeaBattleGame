@@ -40,6 +40,8 @@ public:
 
 	void load();
 
+	GameInfo& getInfo();
+
 	Participant* getCurrentParticipant();
 
 	Participant* getParticipant(int index);
@@ -51,8 +53,6 @@ public:
 	int countAliveBots();
 
 	int countAlivePlayers();
-
-	void Display();
 };
 
 #endif

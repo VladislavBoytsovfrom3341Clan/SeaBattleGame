@@ -101,9 +101,6 @@ public:
     //may throw an exception if there is no ship
     SegmentCondition getCellShipCondition(Coords coords) const;
 
-    //DEBUG method for displaying map to std::cout
-    void display();
-
     //method for attacking a chosen cell
     bool attackCell(Coords coords, int damage=1);
 

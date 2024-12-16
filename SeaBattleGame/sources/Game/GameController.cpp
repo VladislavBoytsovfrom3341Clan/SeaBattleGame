@@ -65,12 +65,18 @@ void GameController::acceptCommand(ICommand* command)
 	delete command;
 }
 
+void GameController::observeGame()
+{
+	for (int i = 0; i < mControllers.size(); i++)
+		mControllers[i]->observe(mGame.getInfo(), i);
+}
+
 void GameController::runRoundCycle()
 {
 	while (mGame.countAlivePlayers() >= 1 && mGame.countAliveParticipants()>1)
 	{
 		mGame.newMove();
-		mGame.Display();
+		this->observeGame();
 		ICommand* command = mControllers[mGame.getCurrentParticipantIndex()]->getAction();
 		this->acceptCommand(command);
 	}
@@ -97,10 +103,12 @@ void GameController::runGameCycle()
 {
 	mGame.newRound();
 	std::cout << "Started ship placing phase\n";
-	for (ParticipantController* controller : mControllers)
+	for (int i=0; i<mControllers.size(); i++)
 	{
+		ParticipantController* controller = mControllers[i];
 		while (!(controller->isReady()))
 		{
+			controller->observe(mGame.getInfo(), i);
 			ICommand* command = controller->getAction();
 			this->acceptCommand(command);
 		}

@@ -142,40 +142,6 @@ bool Battlefield::attackCell(Coords coords, int damage)
     return mBattlefieldArray[coords.y][coords.x].attackCell(damage);
 }
 
-//DEBUG METHOD
-void Battlefield::display()
-{
-    /**
-     *  - stays for unknown,
-     *  * stays for empty,
-     *  0 stays for shipped,
-     *  x stays for damaged,
-     *  X stays for destroyed
-    */
-    std::cout<<"\n";
-    for(int y=0; y<mVerticalSize; y++)
-    {
-        for(int x=0; x<mHorizontalSize; x++)
-        {
-            if (mBattlefieldArray[y][x].getStatus() == CellStatus::unknown)
-                std::cout<<"-";
-            else if(mBattlefieldArray[y][x].getStatus() == CellStatus::empty)
-                std::cout<<"*";
-            else if(mBattlefieldArray[y][x].getStatus() == CellStatus::shipped)
-            {
-                if(mBattlefieldArray[y][x].hasShip() == false || mBattlefieldArray[y][x].getSegmentCondition() == SegmentCondition::intact)
-                    std::cout<<"0";
-                else if(mBattlefieldArray[y][x].getSegmentCondition() == SegmentCondition::damaged)
-                    std::cout<<"x";
-                else
-                    std::cout<<"X";
-            }
-        }
-        std::cout<<"\n";
-    }
-    std::cout<<"\n";
-}
-
 //ship poiners are copied, not ships
 Battlefield& Battlefield::operator=(const Battlefield& copy)
 {

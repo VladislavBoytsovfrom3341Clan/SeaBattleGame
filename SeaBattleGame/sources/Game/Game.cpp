@@ -121,6 +121,11 @@ int Game::countAlivePlayers()
     return count;
 }
 
+GameInfo& Game::getInfo()
+{
+    return mInfo;
+}
+
 void Game::save()
 {
     std::cout << "+Game start\n";
@@ -137,60 +142,4 @@ void Game::load()
     FileHandler mHandler("testsave.txt", false);
     mHandler.read(mSaver);
     std::cout << "+Game End\n";
-}
-
-
-//FOR DEBUG ONLY
-
-#include "AbilityManager.h"
-#include "AbilityType.h"
-
-void printAbility(AbilityType t)
-{
-    switch (t)
-    {
-    case AbilityType::DoubleDamage:
-        std::cout << "DoubleDamage\n";
-        break;
-    case AbilityType::Scanner:
-        std::cout << "Scanner\n";
-        break;
-    case AbilityType::Shelling:
-        std::cout << "Shelling\n";
-    }
-}
-
-//no OOP only as DEBUG func
-void printShip(Battleship& ship)
-{
-    auto segments = ship.getShipCondition();
-    std::cout << "Ship " << ship.getPosition().toString() << " condition:\n\t";
-    for (auto segment : segments)
-        std::cout << int(segment) << ' ';
-    std::cout << '\n';
-}
-
-//no OOP only as DEBUG func
-void printShipsInManager(ShipManager& manager)
-{
-    std::cout << "Inactive ships in manager: " << manager.getInactiveShipsNumber() << '\n';
-    for (int i = 0; i < manager.getInactiveShipsNumber(); i++)
-        printShip(manager.getInactiveShip(i));
-
-    std::cout << "Active ships in manager: " << manager.getActiveShipsNumber() << '\n';
-    for (int i = 0; i < manager.getActiveShipsNumber(); i++)
-        printShip(manager.getActiveShip(i));
-}
-
-void Game::Display()
-{
-    std::cout << "\nMove " << mInfo.mMoveIndex << '\n';
-    for (int i = 0; i < mInfo.mParticipants.size(); i++)
-    {
-        std::cout << "\nParticipant #" << i <<"   " << mInfo.mParticipants[i]->isAlive() << '\n';
-        if(!(mInfo.mParticipants[i]->mAbilityManager.empty()))
-            printAbility(mInfo.mParticipants[i]->mAbilityManager.getFirstAbility());
-        printShipsInManager(mInfo.mParticipants[i]->mShipManager);
-        mInfo.mParticipants[i]->mField.display();
-    }
 }

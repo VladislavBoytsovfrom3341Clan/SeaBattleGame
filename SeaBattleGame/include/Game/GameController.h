@@ -19,6 +19,8 @@ class GameController
 
 	void acceptCommand(ICommand* command);
 
+	void observeGame();
+
 public:
 
 	GameController(class Game& game, GameSettings& settings);

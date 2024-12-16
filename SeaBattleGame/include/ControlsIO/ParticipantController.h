@@ -3,11 +3,13 @@
 
 #include "ICommand.h"
 #include "Participant.h"
+#include "GameObserver.h"
 
 class ParticipantController
 {
 protected:
 	Participant* mParticipant;
+	GameObserver mObserver;
 public:
 
 	virtual ICommand* getAction() = 0;
@@ -15,6 +17,8 @@ public:
 	void setParticipant(Participant* participant);
 
 	bool isReady();
+
+	virtual void observe(GameInfo& gInfo, int pIndex);
 };
 
 #endif
