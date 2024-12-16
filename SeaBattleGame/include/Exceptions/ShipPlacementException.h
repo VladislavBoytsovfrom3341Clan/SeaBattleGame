@@ -1,7 +1,7 @@
 #ifndef SHIP_PLACEMENT_EXCEPTION_H
 #define SHIP_PLACEMENT_EXCEPTION_H
 
-#include "Battlefield.h"
+#include "Coords.h"
 
 #include <string>
 

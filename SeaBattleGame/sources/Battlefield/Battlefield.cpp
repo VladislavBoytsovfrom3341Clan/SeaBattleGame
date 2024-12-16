@@ -24,6 +24,15 @@ mHorizontalSize(horizontalSize), mVerticalSize(verticalSize)
     }
 }
 
+Battlefield::Battlefield(std::vector<std::vector<CellStatus>> init)
+{
+    mVerticalSize = init.size();
+    mHorizontalSize = init[0].size();
+    for (int y = 0; y < mVerticalSize; y++)
+        for (int x = 0; x < mHorizontalSize; x++)
+            mBattlefieldArray[y][x].setStatus(init[y][x]);
+}
+
 //ship poiners are copied, not ships
 Battlefield::Battlefield(const Battlefield& copy):
 Battlefield(copy.mHorizontalSize, copy.mVerticalSize)
@@ -87,6 +96,7 @@ void Battlefield::setShip(Battleship& ship, Coords coords, Orientation orientati
         for(int i=x; i<=x+xOffset; i++)
         {
             mBattlefieldArray[j][i].setShipSegment(ship, segmentIndex++);
+            ship.setPosition(coords, orientation);
         }
 }
 
@@ -96,6 +106,11 @@ bool Battlefield::hasShipAtCell(Coords coords) const
         throw std::invalid_argument("Invalid cell indexes");
 
     return mBattlefieldArray[coords.y][coords.x].hasShip();
+}
+
+Battleship& Battlefield::getShip(Coords coords)
+{
+    return mBattlefieldArray[coords.y][coords.x].getShip();
 }
 
 Coords Battlefield::size() const noexcept
@@ -148,7 +163,7 @@ void Battlefield::display()
                 std::cout<<"*";
             else if(mBattlefieldArray[y][x].getStatus() == CellStatus::shipped)
             {
-                if(mBattlefieldArray[y][x].getSegmentCondition() == SegmentCondition::intact)
+                if(mBattlefieldArray[y][x].hasShip() == false || mBattlefieldArray[y][x].getSegmentCondition() == SegmentCondition::intact)
                     std::cout<<"0";
                 else if(mBattlefieldArray[y][x].getSegmentCondition() == SegmentCondition::damaged)
                     std::cout<<"x";
@@ -191,4 +206,74 @@ Battlefield& Battlefield::operator=(Battlefield&& moved) noexcept
         mBattlefieldArray=std::move(moved.mBattlefieldArray);
     }
     return *this;
+}
+
+long long Battlefield::calculateControlSum()
+{
+    long long sum = 0;
+    for(int y=0; y<mVerticalSize; y++)
+        for (int x = 0; x < mHorizontalSize; x++)
+        {
+            switch (mBattlefieldArray[y][x].getStatus())
+            {
+            case CellStatus::unknown:
+                sum += 17 * y * x;
+                break;
+            case CellStatus::empty:
+                sum += 19 * y * x;
+                break;
+            case CellStatus::shipped:
+                sum += 23 * y * x;
+                break;
+            default:
+                break;
+            }
+        }
+    return sum;
+}
+
+std::istream& operator>>(std::istream& is, Battlefield& field)
+{
+    long long readSum = 0;
+    is >> readSum;
+    is >> field.mHorizontalSize >> field.mVerticalSize;
+    field.mBattlefieldArray.resize(field.mVerticalSize);
+    for (int y = 0; y < field.mVerticalSize; y++)
+    {
+        field.mBattlefieldArray[y].resize(field.mHorizontalSize);
+        for (int x = 0; x < field.mHorizontalSize; x++)
+        {
+            char buf;
+            is >> buf;
+            if (buf == '-')
+                field.mBattlefieldArray[y][x].setStatus(CellStatus::unknown);
+            else if(buf == '*')
+                field.mBattlefieldArray[y][x].setStatus(CellStatus::empty);
+            else
+                field.mBattlefieldArray[y][x].setStatus(CellStatus::shipped);
+        }
+    }
+    if (readSum != field.calculateControlSum())
+        throw std::runtime_error("File reading error: invalid battlefield control sum\n");
+    return is;
+}
+
+std::ostream& operator<<(std::ostream& os, Battlefield& field)
+{
+    os << field.calculateControlSum() << '\n';
+    os << field.mHorizontalSize << ' ' << field.mVerticalSize << '\n';
+    for (int y = 0; y < field.mVerticalSize; y++)
+    {
+        for (int x = 0; x < field.mHorizontalSize; x++)
+        {
+            if (field.mBattlefieldArray[y][x].getStatus() == CellStatus::unknown)
+                os << "-";
+            else if (field.mBattlefieldArray[y][x].getStatus() == CellStatus::empty)
+                os << "*";
+            else
+                os << "0";
+        }
+        os << "\n";
+    }
+    return os;
 }

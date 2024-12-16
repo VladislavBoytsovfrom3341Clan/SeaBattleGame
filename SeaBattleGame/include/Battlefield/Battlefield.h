@@ -1,6 +1,7 @@
 #ifndef BATTLEFIELD_H
 #define BATTLEFIELD_H
 
+#include "Coords.h"
 #include"Battleship.h"
 #include <string>
 
@@ -13,21 +14,6 @@ enum class CellStatus
     unknown,
     empty,
     shipped
-};
-
-//enum for ships orientation on the map
-enum class Orientation
-{
-    horizontal, 
-    vertical
-};
-
-struct Coords
-{
-    int x;
-    int y;
-
-    std::string toString() const;
 };
 
 /**
@@ -62,8 +48,12 @@ class Battlefield
 
         SegmentCondition getSegmentCondition() const;
 
+        void setStatus(CellStatus st);
+
         //returns True if there is a ship in cell
         bool hasShip() const;
+
+        Battleship& getShip();
 
         //sets ship segment to the cell, adding a pointer to ship
         void setShipSegment(Battleship& ship, const int shipSegmentIndex) noexcept;
@@ -79,10 +69,14 @@ class Battlefield
     //field itself
     std::vector<std::vector<BattlefieldCell>> mBattlefieldArray;
 
+    long long calculateControlSum();
+
 public:
     Battlefield() = default;
 
     Battlefield(const int horizontalSize, const int verticalSize);
+
+    Battlefield(std::vector<std::vector<CellStatus>> init);
 
     //WARNING: copy constructor does not deep copy ships 
     Battlefield(const Battlefield& copy);
@@ -95,6 +89,8 @@ public:
 
     //checks if there if ship in cell at (x, y) 
     bool hasShipAtCell(Coords coords) const;
+
+    Battleship& getShip(Coords coords);
 
     Coords size() const noexcept;
 
@@ -116,6 +112,10 @@ public:
 
     //move operator actually moves stuff
     Battlefield& operator=(Battlefield&& moved) noexcept;
+
+    friend std::istream& operator>>(std::istream& is, Battlefield& field);
+
+    friend std::ostream& operator<<(std::ostream& os, Battlefield& field);
 };
 
 #endif

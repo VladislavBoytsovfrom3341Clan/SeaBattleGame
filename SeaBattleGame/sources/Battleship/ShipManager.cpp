@@ -3,7 +3,7 @@
 #include<iostream>
 
 //gets list of pairs <size, amount>
-ShipManager::ShipManager(std::initializer_list<std::pair<int, int>> shipList)
+ShipManager::ShipManager(std::vector<std::pair<int, int>> shipList)
 {
     for(auto& shipSeries: shipList)
     {
@@ -18,6 +18,18 @@ ShipManager::ShipManager(std::initializer_list<std::pair<int, int>> shipList)
             mInactiveShipsArray.push_back(newShip);
         }
     }
+}
+
+ShipManager::ShipManager(std::vector<Battleship*> inactive, std::vector<Battleship*> active)
+{
+    mInactiveShipsArray = inactive;
+    mActiveShipsArray = active;
+}
+
+ShipManager::ShipManager(const ShipManager& copy)
+{
+    mActiveShipsArray = copy.mActiveShipsArray;
+    mInactiveShipsArray = copy.mInactiveShipsArray;
 }
 
 int ShipManager::getShipsNumber() const noexcept
@@ -66,7 +78,7 @@ Battleship& ShipManager::getInactiveShip(int index) const
 void ShipManager::setShipActive(int index)
 {
     if (index<0 || index>=mInactiveShipsArray.size())
-        std::invalid_argument("Invalid ship index");
+        throw std::invalid_argument("Invalid ship index");
     std::move(mInactiveShipsArray.begin()+index, mInactiveShipsArray.begin()+index+1, std::back_inserter(mActiveShipsArray));
     mInactiveShipsArray.erase(mInactiveShipsArray.begin()+index);
 }
@@ -74,7 +86,7 @@ void ShipManager::setShipActive(int index)
 void ShipManager::setShipInactive(int index)
 {
     if (index<0 || index>=mActiveShipsArray.size())
-        std::invalid_argument("Invalid ship index");
+        throw std::invalid_argument("Invalid ship index");
     std::move(mActiveShipsArray.begin()+index, mActiveShipsArray.begin()+index+1, std::back_inserter(mInactiveShipsArray));
     mActiveShipsArray.erase(mActiveShipsArray.begin()+index);
 }

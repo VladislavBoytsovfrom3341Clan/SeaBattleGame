@@ -1,11 +1,6 @@
 #include"Battlefield.h"
 #include<stdexcept>
 
-std::string Coords::toString() const
-{
-    return '(' + std::to_string(x) + " , " + std::to_string(y) + ')';
-}
-
 void Battlefield::BattlefieldCell::setShipSegment(Battleship& ship, const int shipSegmentIndex) noexcept
 {
     mShipPointer = &ship;
@@ -34,6 +29,11 @@ CellStatus Battlefield::BattlefieldCell::getStatus() const noexcept
     return mStatus;
 }
 
+void Battlefield::BattlefieldCell::setStatus(CellStatus st)
+{
+    mStatus = st;
+}
+
 SegmentCondition Battlefield::BattlefieldCell::getSegmentCondition() const
 {
     if (mShipPointer == nullptr)
@@ -44,4 +44,9 @@ SegmentCondition Battlefield::BattlefieldCell::getSegmentCondition() const
 bool Battlefield::BattlefieldCell::hasShip() const
 {
     return mShipPointer != nullptr;
+}
+
+Battleship& Battlefield::BattlefieldCell::getShip()
+{
+    return *mShipPointer;
 }

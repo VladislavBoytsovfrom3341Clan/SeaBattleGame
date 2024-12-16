@@ -10,6 +10,8 @@ class ScannerResult: public AbilityResult
 public:
     ScannerResult(int num);
 
+    ScannerResult(const ScannerResult& copy);
+
     int getResult();
     
     AbilityType getType() override;
