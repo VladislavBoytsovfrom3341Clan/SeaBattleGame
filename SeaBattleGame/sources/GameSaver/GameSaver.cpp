@@ -23,6 +23,8 @@ std::ifstream& operator>>(std::ifstream& is, GameSaver& state)
 		is >> index;
 		int entity;
 		is >> entity;
+		AbilityManager aManager;
+		is >> aManager;
 		int activeShipsNumber;
 		is >> activeShipsNumber;
 		std::vector<Battleship*> activeShips(activeShipsNumber);
@@ -40,7 +42,7 @@ std::ifstream& operator>>(std::ifstream& is, GameSaver& state)
 		if (entity == 0)
 			state.mInfo.mParticipants[i] = new Bot(field, {}, activeShips);
 		else
-			state.mInfo.mParticipants[i] = new Player(field, {}, activeShips);
+			state.mInfo.mParticipants[i] = new Player(field, {}, activeShips, aManager);
 	}
 	return is;
 }
@@ -62,7 +64,7 @@ std::ofstream& operator<<(std::ofstream& os, GameSaver& state)
 			os << 0 << '\n';
 		else
 			os << 1 << '\n';
-
+		os << state.mInfo.mParticipants[i]->mAbilityManager;
 		int activeShipsNum = state.mInfo.mParticipants[i]->mShipManager.getActiveShipsNumber();
 		os << activeShipsNum <<'\n';
 		for (int j = 0; j < activeShipsNum; j++)
