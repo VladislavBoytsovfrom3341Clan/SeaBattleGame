@@ -3,7 +3,7 @@
 #include "Participant.h"
 #include "Player.h"
 #include "Bot.h"
-#include "PlayerController.h"
+#include "PlayerController.hpp"
 #include "BotController.h"
 #include "Game.h"
 #include "ICommand.h"
@@ -19,7 +19,7 @@
 GameController::GameController(Game& game, GameSettings& settings) :
 	mGame(game), mSettings(settings) {}
 
-void GameController::addPlayerController(PlayerController& controller)
+void GameController::addPlayerController(ParticipantController& controller)
 {
 	Player* newPlayer = new Player(mSettings.mFieldSize, mSettings.mDefaultShips);
 	controller.setParticipant(newPlayer);

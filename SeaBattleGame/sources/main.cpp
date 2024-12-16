@@ -3,7 +3,7 @@
 #include "Game.h"
 #include "GameController.h"
 #include "GameSettings.h"
-#include "PlayerController.h"
+#include "PlayerController.hpp"
 #include "FileHandler.h"
 
 
@@ -22,7 +22,7 @@ int main()
     GameSettings sts = { {10, 10}, {{4, 1}}};
     Game my_game(sts);
     GameController myController(my_game, sts);
-    PlayerController plC;
+    PlayerController<CLIInput> plC;
     myController.addPlayerController(plC);
     myController.addBots(2);
     myController.startGame();

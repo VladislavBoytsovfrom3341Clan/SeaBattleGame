@@ -6,15 +6,19 @@
 #include "Player.h"
 #include "CLIInput.h"
 
+template <typename Input>
 class PlayerController : public ParticipantController
 {
-	CLIInput mInput;
+	Input mInput;
 
 public:
 
 	PlayerController() = default;
 
-	ICommand* getAction() override;
+	ICommand* getAction() override
+	{
+		return mInput.readCommand();
+	}
 };
 
 #endif

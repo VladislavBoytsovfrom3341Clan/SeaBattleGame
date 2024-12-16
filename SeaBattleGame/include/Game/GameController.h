@@ -3,7 +3,7 @@
 
 #include "Coords.h"
 #include "ParticipantController.h"
-#include "PlayerController.h"
+#include "PlayerController.hpp"
 #include "GameSettings.h"
 #include "ICommand.h"
 
@@ -23,7 +23,8 @@ public:
 
 	GameController(class Game& game, GameSettings& settings);
 
-	void addPlayerController(PlayerController& controller);
+	
+	void addPlayerController(ParticipantController& controller);
 
 	void addBots(int number);
 
