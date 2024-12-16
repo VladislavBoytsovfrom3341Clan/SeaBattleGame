@@ -208,8 +208,34 @@ Battlefield& Battlefield::operator=(Battlefield&& moved) noexcept
     return *this;
 }
 
+long long Battlefield::calculateControlSum()
+{
+    long long sum = 0;
+    for(int y=0; y<mVerticalSize; y++)
+        for (int x = 0; x < mHorizontalSize; x++)
+        {
+            switch (mBattlefieldArray[y][x].getStatus())
+            {
+            case CellStatus::unknown:
+                sum += 17 * y * x;
+                break;
+            case CellStatus::empty:
+                sum += 19 * y * x;
+                break;
+            case CellStatus::shipped:
+                sum += 23 * y * x;
+                break;
+            default:
+                break;
+            }
+        }
+    return sum;
+}
+
 std::istream& operator>>(std::istream& is, Battlefield& field)
 {
+    long long readSum = 0;
+    is >> readSum;
     is >> field.mHorizontalSize >> field.mVerticalSize;
     field.mBattlefieldArray.resize(field.mVerticalSize);
     for (int y = 0; y < field.mVerticalSize; y++)
@@ -227,11 +253,14 @@ std::istream& operator>>(std::istream& is, Battlefield& field)
                 field.mBattlefieldArray[y][x].setStatus(CellStatus::shipped);
         }
     }
+    if (readSum != field.calculateControlSum())
+        throw std::runtime_error("File reading error: invalid battlefield control sum\n");
     return is;
 }
 
 std::ostream& operator<<(std::ostream& os, Battlefield& field)
 {
+    os << field.calculateControlSum() << '\n';
     os << field.mHorizontalSize << ' ' << field.mVerticalSize << '\n';
     for (int y = 0; y < field.mVerticalSize; y++)
     {

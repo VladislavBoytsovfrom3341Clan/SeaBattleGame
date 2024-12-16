@@ -97,6 +97,11 @@ std::istream& operator>>(std::istream& is, AbilityManager& manager)
 {
     int n = 0;
     is >> n;
+    if (n == 0)
+    {
+        manager.mAbilities.clear();
+        return is;
+    }
     std::string buf;
     is >> buf;
     if (buf.size() != n)

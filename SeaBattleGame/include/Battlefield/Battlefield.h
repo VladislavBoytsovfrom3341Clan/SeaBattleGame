@@ -69,6 +69,8 @@ class Battlefield
     //field itself
     std::vector<std::vector<BattlefieldCell>> mBattlefieldArray;
 
+    long long calculateControlSum();
+
 public:
     Battlefield() = default;
 

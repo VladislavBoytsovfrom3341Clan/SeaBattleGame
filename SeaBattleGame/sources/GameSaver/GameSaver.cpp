@@ -16,7 +16,8 @@ std::ifstream& operator>>(std::ifstream& is, GameSaver& state)
 	is >> state.mInfo.mParticipantsNumber;
 	is >> state.mInfo.mPlayersNumber;
 	is >> state.mInfo.mBotsNumber;
-	state.mInfo.mParticipants.resize(state.mInfo.mParticipantsNumber);
+
+	std::vector<Participant*> tempParticipants(state.mInfo.mParticipantsNumber);
 	for (int i = 0; i < state.mInfo.mParticipantsNumber; i++)
 	{
 		int index;
@@ -40,9 +41,14 @@ std::ifstream& operator>>(std::ifstream& is, GameSaver& state)
 			field.setShip(*ship, ship->getPosition(), ship->getOrientation());
 		}
 		if (entity == 0)
-			state.mInfo.mParticipants[i] = new Bot(field, {}, activeShips);
+			tempParticipants[i] = new Bot(field, {}, activeShips);
 		else
-			state.mInfo.mParticipants[i] = new Player(field, {}, activeShips, aManager);
+			tempParticipants[i] = new Player(field, {}, activeShips, aManager);
+	}
+	state.mInfo.mParticipants.resize(state.mInfo.mParticipantsNumber);
+	for (int i=0; i<state.mInfo.mParticipantsNumber; i++)
+	{
+		state.mInfo.mParticipants[i] = tempParticipants[i];
 	}
 	return is;
 }

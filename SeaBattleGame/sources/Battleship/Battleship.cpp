@@ -47,6 +47,22 @@ SegmentCondition Battleship::BattleshipSegment::getStatus() const noexcept
     return mSegmentCondition;
 }
 
+//uses 11, 13 and 17 as prime numbers
+long Battleship::BattleshipSegment::calculateControlSum()
+{
+    switch (mSegmentCondition)
+    {
+    case destroyed:
+        return 11;
+        break;
+    case damaged:
+        return 13;
+        break;
+    case intact:
+        return 17;
+        break;
+    }
+}
 
 Battleship::Battleship(int length):mLength(length)
 {
@@ -138,8 +154,26 @@ void Battleship::BattleshipSegment::setCondition(int i)
         mSegmentCondition = SegmentCondition::intact;
 }
 
+//all magic number are prime numbers used for coding
+long Battleship::calculateControlSum()
+{
+    long sum = 0;
+    for (int i=0; i<mSegments.size(); i++)
+    {
+        sum += (i + 1) * mSegments[i].calculateControlSum();
+    }
+    if (mOrnt == Orientation::horizontal)
+        sum += 23;
+    else
+        sum += 29;
+    sum += mPosition.x * 5 + mPosition.y * 7;
+    return sum;
+}
+
 std::istream& operator>>(std::istream& is, Battleship& ship)
 {
+    long readSum = 0;
+    is >> readSum;
     int orientation;
     is >> orientation;
     if (orientation == 0)
@@ -154,11 +188,14 @@ std::istream& operator>>(std::istream& is, Battleship& ship)
         is >> seg;
         ship.mSegments[i].setCondition(seg);
     }
+    if (readSum != ship.calculateControlSum())
+        throw std::runtime_error("File reading error: invalid ship control sum\n");
     return is;
 }
 
 std::ostream& operator<<(std::ostream& os, Battleship& ship)
 {
+    os << ship.calculateControlSum()<<'\n';
     if (ship.mOrnt == Orientation::horizontal)
         os << 0;
     else

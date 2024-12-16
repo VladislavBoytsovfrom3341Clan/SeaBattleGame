@@ -48,6 +48,8 @@ class Battleship
 
         //returns condition of the segment
         SegmentCondition getStatus() const noexcept;
+
+        long calculateControlSum();
     };
 
     int mLength = 0;
@@ -55,6 +57,7 @@ class Battleship
     Coords mPosition = {-1, -1};
     Orientation mOrnt = Orientation::horizontal;
     
+    long calculateControlSum();
 
 public:
     Battleship() = default;
