@@ -3,6 +3,7 @@
 
 #include "ParticipantController.h"
 #include "IGameDisplayer.h"
+#include "InputHandler.hpp"
 
 #include "Player.h"
 #include "CLIInput.h"
@@ -11,6 +12,7 @@ template <typename Input>
 class PlayerController : public ParticipantController
 {
 	Input mInput;
+	InputHandler mInputHandler;
 
 public:
 
