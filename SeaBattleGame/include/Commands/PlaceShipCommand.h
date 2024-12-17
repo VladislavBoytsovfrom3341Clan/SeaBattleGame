@@ -6,14 +6,13 @@
 
 class PlaceShipCommand : public ICommand
 {
-	int mPlayerIndex;
 	int mShipIndex;
 	Coords mCoords;
 	Orientation mOrientation;
 
 public:
 
-	PlaceShipCommand(int playerIndex, int shipIndex, Coords coords, Orientation orientation);
+	PlaceShipCommand(int shipIndex, Coords coords, Orientation orientation);
 
 	void execute(class Game& game) override;
 };

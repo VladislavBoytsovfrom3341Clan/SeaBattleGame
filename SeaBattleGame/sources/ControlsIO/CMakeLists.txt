@@ -3,7 +3,6 @@ set(CONTROLS_IO_SOURCES
     BotController.cpp
     ConsoleDisplayer.cpp
     GameObserver.cpp
-    InputHandler.cpp
     CLIInput.cpp)
 
 set(CONTROLS_IO_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
@@ -18,7 +17,6 @@ set(CONTROLS_IO_HEADERS
         ${CONTROLS_IO_INCLUDE_DIR}/ControlsIO/ConsoleDisplayer.h
         ${CONTROLS_IO_INCLUDE_DIR}/ControlsIO/IGameDisplayer.h
         ${CONTROLS_IO_INCLUDE_DIR}/ControlsIO/ConcreteGameDisplayer.hpp
-        ${CONTROLS_IO_INCLUDE_DIR}/ControlsIO/InputHandler.hpp
         ${CONTROLS_IO_INCLUDE_DIR}/ControlsIO/CLIInput.h)
 
 add_library(ControlsIOLib OBJECT ${CONTROLS_IO_SOURCES} ${CONTROLS_IO_HEADERS})

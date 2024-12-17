@@ -26,12 +26,12 @@ CLIInput::CLIInput()
 
 	mCommandsParser =
 	{
-		{"AttackCommand", [&]() {return new AttackCommand(readIndex("target player"), readCoords()); }},
+		{"AttackCommand", [&]() {int i = readIndex("target player"); return new AttackCommand(i, readCoords()); }},
 		{"DoubleDamageCommand", [&]() {return new DoubleDamageCommand(); }},
 		{"LoadCommand", [&]() {return new LoadCommand(); }},
-		{"PlaceShipCommand", [&]() {return new PlaceShipCommand(0, readIndex("ship"), readCoords(), readOrientation()); }},
+		{"PlaceShipCommand", [&]() {int i = readIndex("ship"); Coords cords = readCoords(); return new PlaceShipCommand(i, cords, readOrientation()); }},
 		{"SaveCommand", [&]() {return new SaveCommand(); }},
-		{"ScannerCommand", [&]() {return new ScannerCommand(readIndex("target player"), readCoords()); }},
+		{"ScannerCommand", [&]() {int i = readIndex("target player"); return new ScannerCommand(i, readCoords()); }},
 		{"ShellingCommand", [&]() {return new ShellingCommand(readIndex("target player")); }}
 	};
 }
