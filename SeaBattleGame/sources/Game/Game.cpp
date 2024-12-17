@@ -126,6 +126,11 @@ GameInfo& Game::getInfo()
     return mInfo;
 }
 
+GameState& Game::getState()
+{
+    return *mState;
+}
+
 void Game::save()
 {
     std::cout << "+Game start\n";

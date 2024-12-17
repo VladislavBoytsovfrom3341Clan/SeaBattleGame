@@ -8,10 +8,9 @@
 #include "ConcreteGameDisplayer.hpp"
 #include "ConsoleDisplayer.h"
 
-//WE USE MAIN AS DEBUGGING BASE
 int main()
 {
-    GameSettings sts = { {10, 10}, {{4, 1}}};
+    GameSettings sts = { {10, 10}, {{4, 2}}};
     Game my_game(sts);
     GameController myController(my_game, sts);
 

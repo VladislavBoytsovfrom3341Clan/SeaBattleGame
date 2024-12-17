@@ -42,6 +42,8 @@ public:
 
 	GameInfo& getInfo();
 
+	GameState& getState();
+
 	Participant* getCurrentParticipant();
 
 	Participant* getParticipant(int index);

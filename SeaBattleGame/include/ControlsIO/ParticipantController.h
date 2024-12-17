@@ -18,7 +18,7 @@ public:
 
 	bool isReady();
 
-	virtual void observe(GameInfo& gInfo, int pIndex);
+	virtual void observe(Game& game, int pIndex);
 };
 
 #endif

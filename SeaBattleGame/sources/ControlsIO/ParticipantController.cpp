@@ -10,7 +10,7 @@ bool ParticipantController::isReady()
 	return mParticipant->isReady();
 }
 
-void ParticipantController::observe(GameInfo& gInfo, int pIndex)
+void ParticipantController::observe(Game& game, int pIndex)
 {
-	mObserver.track(gInfo, pIndex);
+	mObserver.track(game, pIndex);
 }

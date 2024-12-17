@@ -68,7 +68,7 @@ void GameController::acceptCommand(ICommand* command)
 void GameController::observeGame()
 {
 	for (int i = 0; i < mControllers.size(); i++)
-		mControllers[i]->observe(mGame.getInfo(), i);
+		mControllers[i]->observe(mGame, i);
 }
 
 void GameController::runRoundCycle()
@@ -108,7 +108,7 @@ void GameController::runGameCycle()
 		ParticipantController* controller = mControllers[i];
 		while (!(controller->isReady()))
 		{
-			controller->observe(mGame.getInfo(), i);
+			controller->observe(mGame, i);
 			ICommand* command = controller->getAction();
 			this->acceptCommand(command);
 		}

@@ -5,6 +5,12 @@
 
 class ConsoleDisplayer
 {
+public:
+
+	ConsoleDisplayer() = default;
+
+	void display(GameInfo& gInfo, int pIndex);
+
 	void printShip(Battleship& ship);
 
 	void printShipsInManager(ShipManager& manager);
@@ -14,12 +20,6 @@ class ConsoleDisplayer
 	void drawFriendField(Battlefield& field);
 
 	void drawEnemyField(Battlefield& field);
-
-public:
-
-	ConsoleDisplayer() = default;
-
-	void display(GameInfo& gInfo, int pIndex);
 };
 
 #endif

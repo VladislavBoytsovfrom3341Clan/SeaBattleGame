@@ -1,7 +1,7 @@
 #ifndef GAME_OBSERVER_H
 #define GAME_OBSERVER_H
 
-#include "GameInfo.h"
+#include "Game.h"
 #include "IGameDisplayer.h"
 
 class GameObserver
@@ -14,7 +14,7 @@ public:
 
 	void changeDisplayer(IGameDisplayer* displayer);
 
-	void track(GameInfo& gInfo, int pIndex);
+	void track(Game& game, int pIndex);
 };
 
 #endif
