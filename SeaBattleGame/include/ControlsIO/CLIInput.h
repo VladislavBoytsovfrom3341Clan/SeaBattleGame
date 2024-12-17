@@ -24,6 +24,8 @@ public:
 	CLIInput();
 
 	ICommand* readCommand();
+
+	void rebindKeysFromFile(std::string fileName = "key_binds.txt");
 };
 
 #endif

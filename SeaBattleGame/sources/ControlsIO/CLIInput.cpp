@@ -10,6 +10,7 @@
 
 #include <exception>
 #include <iostream>
+#include <fstream>
 
 CLIInput::CLIInput()
 {
@@ -130,5 +131,52 @@ int CLIInput::readIndex(std::string message)
 			std::cout << "\nIndex reading error. Try again in format <i>\n";
 		}
 	}
-	
+}
+
+void CLIInput::rebindKeysFromFile(std::string fileName)
+{
+	std::ifstream iFile;
+	iFile.open(fileName);
+	if (iFile.is_open())
+	{
+		std::unordered_map<char, std::string> newBinds;
+		while (!iFile.eof())
+		{
+			char key;
+			std::string command;
+			if (iFile >> key >> command)
+			{
+				if (mCommandsParser.find(command) == mCommandsParser.end())
+				{
+					std::cout << "\nError: Command '" << command << "' is not recognized.\n";
+					iFile.close();
+					return;
+				}
+				if (!newBinds.insert({ key, command }).second)
+				{
+					std::cout << "\nTrying to bind two keys to one command!\n";
+					iFile.close();
+					return;
+				}
+			}
+			else
+			{
+				std::cout << "\nError while reading file\n";
+				iFile.close();
+				return;
+			}
+		}
+		if (newBinds.size() == mBindedKeys.size())
+		{
+			mBindedKeys = newBinds;
+			std::cout << "Key bindings updated successfully.\n";
+		}
+		else
+		{
+			std::cout << "Error: Incomplete or incorrect key bindings.\n";
+		}
+		iFile.close();
+	}
+	else
+		std::cout << "\nUnable to open requested file\n";
 }

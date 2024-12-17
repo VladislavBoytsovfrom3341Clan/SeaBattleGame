@@ -24,6 +24,7 @@ template<typename Input>
 inline PlayerController<Input>::PlayerController(IGameDisplayer* displayer)
 {
 	mObserver.changeDisplayer(displayer);
+	mInput.rebindKeysFromFile();
 }
 
 template<typename Input>
