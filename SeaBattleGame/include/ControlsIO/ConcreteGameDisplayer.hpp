@@ -3,6 +3,8 @@
 
 #include "IGameDisplayer.h"
 
+#include "ScannerResult.h"
+
 template<typename Displayer>
 class ConcreteGameDisplayer : public IGameDisplayer
 {
@@ -12,6 +14,8 @@ public:
 	void display(GameInfo& gInfo, int pIndex) override;
 
 	void displayShipPositioning(GameInfo& gInfo, int pIndex) override;
+
+	void displayAbilityResultResult(AbilityResult& result) override;
 };
 
 template<typename Displayer>
@@ -19,6 +23,7 @@ inline void ConcreteGameDisplayer<Displayer>::display(GameInfo& gInfo, int pInde
 {
 	mDisplayer.display(gInfo, pIndex);
 }
+
 template<typename Displayer>
 inline void ConcreteGameDisplayer<Displayer>::displayShipPositioning(GameInfo& gInfo, int pIndex)
 {
@@ -26,4 +31,12 @@ inline void ConcreteGameDisplayer<Displayer>::displayShipPositioning(GameInfo& g
 	mDisplayer.drawFriendField(gInfo.mParticipants[pIndex]->mField);
 }
 
+#include<iostream>
+
+template<typename Displayer>
+inline void ConcreteGameDisplayer<Displayer>::displayAbilityResultResult(AbilityResult& result)
+{
+	if (result.getType() == AbilityType::Scanner)
+		mDisplayer.printScannerResult(dynamic_cast<ScannerResult&>(result));
+}
 #endif

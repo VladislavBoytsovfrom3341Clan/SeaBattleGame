@@ -12,8 +12,8 @@ AbilityManager::AbilityManager():
 mVisitor(mFactory)
 {
     mAbilitiesVector =
-        {AbilityType::DoubleDamage, AbilityType::Scanner, AbilityType::Shelling};
-
+    //    {AbilityType::DoubleDamage, AbilityType::Scanner, AbilityType::Shelling};
+    {AbilityType::Scanner};
     auto rng = std::default_random_engine {};
     std::shuffle(mAbilitiesVector.begin(), mAbilitiesVector.end(), rng);
     

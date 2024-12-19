@@ -130,3 +130,8 @@ void ConsoleDisplayer::display(GameInfo& gInfo, int pIndex)
 		}
 	}
 }
+
+void ConsoleDisplayer::printScannerResult(ScannerResult& scRes)
+{
+	std::cout << "\nScanner found " << scRes.getResult() << " ship segments in the area!\n";
+}

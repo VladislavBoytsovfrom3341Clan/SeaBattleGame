@@ -92,7 +92,6 @@ Coords CLIInput::readCoords(std::string message)
 			std::cout << "\nCoordinates reading error. Try again in format: <x y>\n";
 		}
 	}
-	
 }
 
 Orientation CLIInput::readOrientation()

@@ -12,6 +12,7 @@ struct Participant
 	Battlefield mField;
 	ShipManager mShipManager;
 	AbilityManager mAbilityManager;
+	AbilityResultHandler mHandler;
 	int mDamageMultiplier = 1;
 
 	Participant() = default;

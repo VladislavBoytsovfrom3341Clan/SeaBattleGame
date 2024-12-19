@@ -39,6 +39,7 @@ void GameController::addBots(int number)
 	}
 }
 
+//DELETE COUTS
 void GameController::acceptCommand(ICommand* command)
 {
 	try
@@ -79,6 +80,7 @@ void GameController::runRoundCycle()
 		this->observeGame();
 		ICommand* command = mControllers[mGame.getCurrentParticipantIndex()]->getAction();
 		this->acceptCommand(command);
+		this->observeGame();
 	}
 }
 
@@ -102,7 +104,7 @@ void GameController::resetBots()
 void GameController::runGameCycle()
 {
 	mGame.newRound();
-	std::cout << "Started ship placing phase\n";
+	//std::cout << "Started ship placing phase\n";
 	for (int i=0; i<mControllers.size(); i++)
 	{
 		ParticipantController* controller = mControllers[i];
@@ -113,15 +115,16 @@ void GameController::runGameCycle()
 			this->acceptCommand(command);
 		}
 	}
-	std::cout << "Ended ship placing phase\n";
+	//std::cout << "Ended ship placing phase\n";
 	while (mGame.countAlivePlayers() > 0)
 	{
-		std::cout << "\nNew round has started!\n";
+		//std::cout << "\nNew round has started!\n";
+		this->observeGame();
 		this->runRoundCycle();
 		mGame.newRound();
 		this->resetBots();
 	}
-	std::cout << "\nGame ended!\n";
+	//std::cout << "\nGame ended!\n";
 }
 
 void GameController::startGame()

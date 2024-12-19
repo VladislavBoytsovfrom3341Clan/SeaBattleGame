@@ -2,6 +2,8 @@
 #define CONSOLE_DISPLAYER_H
 
 #include "GameInfo.h"
+#include "ScannerResult.h"
+#include "Player.h"
 
 class ConsoleDisplayer
 {
@@ -20,6 +22,8 @@ public:
 	void drawFriendField(Battlefield& field);
 
 	void drawEnemyField(Battlefield& field);
+
+	void printScannerResult(ScannerResult& scRes);
 };
 
 #endif
