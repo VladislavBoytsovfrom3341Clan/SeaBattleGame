@@ -13,7 +13,7 @@ class BotController : public ParticipantController
 
 public:
 
-	BotController(Game& game);
+	BotController(Game& game, int index);
 
 	ICommand* getAction() override;
 };

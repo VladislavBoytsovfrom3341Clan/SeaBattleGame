@@ -1,7 +1,7 @@
 #include "ParticipantController.h"
 
-ParticipantController::ParticipantController(Game& game) :
-	mObserver(game) {
+ParticipantController::ParticipantController(Game& game, int index) :
+	mObserver(game), mIndex(index) {
 }
 
 void ParticipantController::setParticipant(Participant* participant)

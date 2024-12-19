@@ -15,15 +15,15 @@ class PlayerController : public ParticipantController
 
 public:
 
-	PlayerController(Game& game, IGameDisplayer* displayer);
+	PlayerController(Game& game, int index, IGameDisplayer* displayer);
 
 	ICommand* getAction() override;
 	
 };
 
 template<typename Input>
-inline PlayerController<Input>::PlayerController(Game& game, IGameDisplayer* displayer):
-	ParticipantController(game)
+inline PlayerController<Input>::PlayerController(Game& game, int index, IGameDisplayer* displayer):
+	ParticipantController(game, index)
 {
 	mObserver.changeDisplayer(displayer);
 	mInput.rebindKeysFromFile();

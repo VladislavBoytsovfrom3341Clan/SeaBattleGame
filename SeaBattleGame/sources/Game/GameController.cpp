@@ -31,7 +31,7 @@ void GameController::addBots(int number)
 	for (int i = 0; i < number; i++)
 	{
 		Bot* newBot = new Bot(mSettings.mFieldSize, mSettings.mDefaultShips);
-		BotController* controller = new BotController(mGame);
+		BotController* controller = new BotController(mGame, mControllers.size() + i);
 		controller->setParticipant(newBot);
 		mControllers.push_back(controller);
 		mGame.addParticipant(newBot);

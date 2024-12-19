@@ -11,10 +11,11 @@
 class ParticipantController
 {
 protected:
+	int mIndex = 0;
 	Participant* mParticipant = nullptr;
 	GameObserver mObserver;
 public:
-	ParticipantController(Game& game);
+	ParticipantController(Game& game, int index);
 
 	virtual ICommand* getAction() = 0;
 

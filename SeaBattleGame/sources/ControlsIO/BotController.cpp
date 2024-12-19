@@ -4,8 +4,8 @@
 #include "AttackCommand.h"
 
 
-BotController::BotController(Game& game) :
-    ParticipantController(game) {
+BotController::BotController(Game& game, int index) :
+    ParticipantController(game, index) {
 }
 
 void BotController::placeShips()

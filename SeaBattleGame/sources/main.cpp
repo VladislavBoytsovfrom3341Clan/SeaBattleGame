@@ -12,7 +12,7 @@ int main()
     GameController myController(my_game, sts);
 
     ConcreteGameDisplayer<ConsoleDisplayer> playerDisplayer;
-    PlayerController<CLIInput> plC(my_game, &playerDisplayer);
+    PlayerController<CLIInput> plC(my_game, 0, &playerDisplayer);
     myController.addPlayerController(plC);
     myController.addBots(1);
     myController.startGame();
