@@ -7,12 +7,12 @@ Participant::Participant(Coords fieldSize, std::vector<std::pair<int, int>> ship
 Participant::Participant(Battlefield field, std::vector<Battleship*> inactive, std::vector<Battleship*> active) :
 	mField(field), mShipManager(inactive, active) {}
 
-bool Participant::isAlive()
+bool Participant::isAlive() const
 {
 	return (mShipManager.getAliveShipsNumber() > 0);
 }
 
-bool Participant::isReady()
+bool Participant::isReady() const
 {
 	return mShipManager.getInactiveShipsNumber() == 0;
 }

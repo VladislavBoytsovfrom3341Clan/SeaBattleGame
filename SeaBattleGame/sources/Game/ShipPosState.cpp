@@ -20,7 +20,7 @@ void ShipPosState::attack(int index, Coords coords, int damage)
 {
 }
 
-int ShipPosState::getCurrentParticipantIndex()
+int ShipPosState::getCurrentParticipantIndex() const
 {
 	for (int i = 0; i < mInfo.mParticipantsNumber; i++)
 		if (!mInfo.mParticipants.at(i)->isReady())

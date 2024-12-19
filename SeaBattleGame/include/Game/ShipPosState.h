@@ -20,7 +20,7 @@ public:
 
 	void attack(int index, Coords coords, int damage) override;
 
-	int getCurrentParticipantIndex() override;
+	int getCurrentParticipantIndex() const override;
 };
 
 #endif

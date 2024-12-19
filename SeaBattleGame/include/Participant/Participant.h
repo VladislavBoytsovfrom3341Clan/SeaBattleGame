@@ -21,8 +21,8 @@ struct Participant
 
 	Participant(Coords fieldSize, std::vector<std::pair<int, int>> shipList);
 
-	bool isAlive();
+	bool isAlive() const;
 
-	virtual bool isReady();
+	virtual bool isReady() const;
 };
 #endif

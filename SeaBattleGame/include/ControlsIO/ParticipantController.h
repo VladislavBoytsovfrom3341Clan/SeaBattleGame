@@ -21,7 +21,7 @@ public:
 
 	void setParticipant(Participant* participant);
 
-	bool isReady();
+	bool isReady() const;
 
 	void handleException(std::exception& exp);
 

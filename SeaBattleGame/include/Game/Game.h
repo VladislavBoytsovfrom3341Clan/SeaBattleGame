@@ -52,19 +52,19 @@ public:
 
 	const GameInfo& getInfo();
 
-	Participant* getCurrentParticipant();
+	Participant* getCurrentParticipant() const;
 
-	Participant* getParticipant(int index);
+	Participant* getParticipant(int index) const;
 
-	int getCurrentParticipantIndex();
+	int getCurrentParticipantIndex() const;
 
 	//methods for game end control
 
-	int countAliveParticipants();
+	int countAliveParticipants() const;
 
-	int countAliveBots();
+	int countAliveBots() const;
 
-	int countAlivePlayers();
+	int countAlivePlayers() const;
 };
 
 #endif

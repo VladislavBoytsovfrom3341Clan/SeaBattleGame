@@ -17,7 +17,7 @@ public:
 
 	virtual void castAbility(IAbilitySettings* settings) = 0;
 
-	virtual int getCurrentParticipantIndex() = 0;
+	virtual int getCurrentParticipantIndex() const = 0;
 };
 
 #endif

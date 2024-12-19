@@ -28,7 +28,7 @@ void AttackState::attack(int index, Coords coords, int damage)
 	mInfo.mUsedAbility = false;
 }
 
-int AttackState::getCurrentParticipantIndex()
+int AttackState::getCurrentParticipantIndex() const
 {
 	int endIndex = mInfo.mMoveIndex + mInfo.mParticipantsNumber;
 	Participant* currentParticipant = mInfo.mParticipants[mInfo.mMoveIndex % mInfo.mParticipantsNumber];

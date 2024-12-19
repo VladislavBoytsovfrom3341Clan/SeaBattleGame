@@ -68,22 +68,22 @@ void Game::newGame()
     mInfo.mRoundCount = 1;
 }
 
-int Game::getCurrentParticipantIndex()
+int Game::getCurrentParticipantIndex() const
 {
     return mState->getCurrentParticipantIndex();
 }
 
-Participant* Game::getCurrentParticipant()
+Participant* Game::getCurrentParticipant() const
 {
     return mInfo.mParticipants[this->getCurrentParticipantIndex()];
 }
 
-Participant* Game::getParticipant(int index)
+Participant* Game::getParticipant(int index) const
 {
-    return mInfo.mParticipants[index];
+    return mInfo.mParticipants.at(index);
 }
 
-int Game::countAliveParticipants()
+int Game::countAliveParticipants() const
 {
     int count = 0;
 
@@ -95,7 +95,7 @@ int Game::countAliveParticipants()
     return count;
 }
 
-int Game::countAliveBots()
+int Game::countAliveBots() const
 {
     int count = 0;
     for (Participant* i : mInfo.mParticipants)
@@ -107,7 +107,7 @@ int Game::countAliveBots()
     return count;
 }
 
-int Game::countAlivePlayers()
+int Game::countAlivePlayers() const
 {
     int count = 0;
     for (Participant* i : mInfo.mParticipants)

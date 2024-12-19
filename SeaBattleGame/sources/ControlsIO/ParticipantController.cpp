@@ -9,7 +9,7 @@ void ParticipantController::setParticipant(Participant* participant)
 	mParticipant = participant;
 }
 
-bool ParticipantController::isReady()
+bool ParticipantController::isReady() const
 {
 	return mParticipant->isReady();
 }
