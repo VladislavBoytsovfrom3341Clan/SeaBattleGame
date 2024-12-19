@@ -77,11 +77,11 @@ void GameController::resetBots()
 		if (typeid(*(mControllers[i])) == typeid(BotController))
 		{
 			mControllers[i]->setParticipant(mGame.resetBot(i));
-		}
-		while (!(mControllers[i]->isReady()))
-		{
-			ICommand* command = mControllers[i]->getAction();
-			this->acceptCommand(command);
+			while (!(mControllers[i]->isReady()))
+			{
+				ICommand* command = mControllers[i]->getAction();
+				this->acceptCommand(command);
+			}
 		}
 	}
 }

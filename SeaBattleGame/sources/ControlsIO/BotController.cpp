@@ -20,6 +20,7 @@ ICommand* BotController::getAction()
 {
     if (mParticipant->mShipManager.getInactiveShipsNumber() > 0)
         return this->placeShip();
+    lastStand = { 0, 0 };
     int index = 0;
     Coords enemyFieldSize = mObserver.getFieldSize(index);
     Coords coords = { rand() % enemyFieldSize.x, rand() % enemyFieldSize.y };
