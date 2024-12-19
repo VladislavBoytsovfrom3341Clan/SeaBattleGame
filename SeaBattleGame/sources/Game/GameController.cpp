@@ -14,7 +14,6 @@
 
 #include <exception>
 #include <stdexcept>
-#include <iostream>
 
 GameController::GameController(Game& game, GameSettings& settings) :
 	mGame(game), mSettings(settings) {}

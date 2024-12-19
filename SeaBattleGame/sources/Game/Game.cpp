@@ -6,7 +6,6 @@
 #include "Player.h"
 #include "Bot.h"
 
-#include <iostream>
 
 Game::Game(GameSettings& settings):
     mSettings(settings)
@@ -140,18 +139,14 @@ GameState& Game::getState()
 
 void Game::save()
 {
-    std::cout << "+Game start\n";
     GameSaver mSaver(mInfo);
     FileHandler mHandler("testsave.txt", true);
     mHandler.write(mSaver);
-    std::cout << "+Game End\n";
 }
 
 void Game::load()
 {
-    std::cout << "+Game start\n";
     GameSaver mSaver(mInfo);
     FileHandler mHandler("testsave.txt", false);
     mHandler.read(mSaver);
-    std::cout << "+Game End\n";
 }
