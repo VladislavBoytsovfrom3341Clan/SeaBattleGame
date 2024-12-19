@@ -13,25 +13,25 @@ public:
 
 	ConsoleDisplayer() = default;
 
-	void display(GameInfo& gInfo, int pIndex);
+	void display(const GameInfo& gInfo, int pIndex) const;
 
-	void printShip(Battleship& ship);
+	void printShip(const Battleship& ship) const;
 
-	void printShipsInManager(ShipManager& manager);
+	void printShipsInManager(const ShipManager& manager) const;
 
-	void printAbilityManager(AbilityManager& aManager);
+	void printAbilityManager(const AbilityManager& aManager) const;
 
-	void drawFriendField(Battlefield& field);
+	void drawFriendField(const Battlefield& field) const;
 
-	void drawEnemyField(Battlefield& field);
+	void drawEnemyField(const Battlefield& field) const;
 
-	void printScannerResult(ScannerResult& scRes);
+	void printScannerResult(const ScannerResult& scRes) const;
 
-	void printNewRound();
+	void printNewRound() const;
 
-	void printNewGame();
+	void printNewGame() const;
 
-	void printErrorMessage(const char* str);
+	void printErrorMessage(const char* str) const;
 };
 
 #endif

@@ -11,11 +11,11 @@ class ConcreteGameDisplayer : public IGameDisplayer
 	Displayer mDisplayer;
 public:
 
-	void display(GameInfo& gInfo, int pIndex) override;
+	void display(const GameInfo& gInfo, int pIndex) override;
 
-	void displayShipPositioning(GameInfo& gInfo, int pIndex) override;
+	void displayShipPositioning(const GameInfo& gInfo, int pIndex) override;
 
-	void displayAbilityResult(AbilityResult& result) override;
+	void displayAbilityResult(const AbilityResult& result) override;
 
 	void informNewRound() override;
 
@@ -25,23 +25,23 @@ public:
 };
 
 template<typename Displayer>
-inline void ConcreteGameDisplayer<Displayer>::display(GameInfo& gInfo, int pIndex)
+inline void ConcreteGameDisplayer<Displayer>::display(const GameInfo& gInfo, int pIndex)
 {
 	mDisplayer.display(gInfo, pIndex);
 }
 
 template<typename Displayer>
-inline void ConcreteGameDisplayer<Displayer>::displayShipPositioning(GameInfo& gInfo, int pIndex)
+inline void ConcreteGameDisplayer<Displayer>::displayShipPositioning(const GameInfo& gInfo, int pIndex)
 {
 	mDisplayer.printShipsInManager(gInfo.mParticipants[pIndex]->mShipManager);
 	mDisplayer.drawFriendField(gInfo.mParticipants[pIndex]->mField);
 }
 
 template<typename Displayer>
-inline void ConcreteGameDisplayer<Displayer>::displayAbilityResult(AbilityResult& result)
+inline void ConcreteGameDisplayer<Displayer>::displayAbilityResult(const AbilityResult& result)
 {
 	if (result.getType() == AbilityType::Scanner)
-		mDisplayer.printScannerResult(dynamic_cast<ScannerResult&>(result));
+		mDisplayer.printScannerResult(dynamic_cast<const ScannerResult&>(result));
 }
 
 template<typename Displayer>

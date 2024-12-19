@@ -9,11 +9,11 @@
 class IGameDisplayer
 {
 public:
-	virtual void display(GameInfo& gInfo, int pIndex) = 0;
+	virtual void display(const GameInfo& gInfo, int pIndex) = 0;
 
-	virtual void displayShipPositioning(GameInfo& gInfo, int pIndex) = 0;
+	virtual void displayShipPositioning(const GameInfo& gInfo, int pIndex) = 0;
 
-	virtual void displayAbilityResult(AbilityResult& result) = 0;
+	virtual void displayAbilityResult(const AbilityResult& result) = 0;
 
 	virtual void informNewRound() = 0;
 

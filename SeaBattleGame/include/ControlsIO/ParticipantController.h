@@ -11,7 +11,7 @@
 class ParticipantController
 {
 protected:
-	Participant* mParticipant;
+	Participant* mParticipant = nullptr;
 	GameObserver mObserver;
 public:
 	ParticipantController(Game& game);

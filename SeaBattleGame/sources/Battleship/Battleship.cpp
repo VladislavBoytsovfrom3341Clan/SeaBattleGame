@@ -61,6 +61,8 @@ long Battleship::BattleshipSegment::calculateControlSum()
     case intact:
         return 17;
         break;
+    default:
+        return 1;
     }
 }
 
@@ -89,12 +91,12 @@ void Battleship::setPosition(Coords coords, Orientation ornt)
     mOrnt = ornt;
 }
 
-Coords Battleship::getPosition()
+Coords Battleship::getPosition() const noexcept
 {
     return mPosition;
 }
 
-Orientation Battleship::getOrientation()
+Orientation Battleship::getOrientation() const noexcept
 {
     return mOrnt;
 }

@@ -127,14 +127,9 @@ int Game::countAlivePlayers()
     return count;
 }
 
-GameInfo& Game::getInfo()
+const GameInfo& Game::getInfo()
 {
     return mInfo;
-}
-
-GameState& Game::getState()
-{
-    return *mState;
 }
 
 void Game::save()

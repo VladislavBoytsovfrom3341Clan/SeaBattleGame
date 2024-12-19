@@ -8,12 +8,12 @@ ScannerResult::ScannerResult(const ScannerResult& copy)
     mSegNum = copy.mSegNum;
 }
 
-int ScannerResult::getResult()
+int ScannerResult::getResult() const
 {
     return mSegNum;
 }
 
-AbilityType ScannerResult::getType()
+AbilityType ScannerResult::getType() const
 {
     return AbilityType::Scanner;
 }

@@ -1,7 +1,7 @@
 #include "ConsoleDisplayer.h"
 
 
-void ConsoleDisplayer::printShip(Battleship& ship)
+void ConsoleDisplayer::printShip(const Battleship& ship) const
 {
 	auto segments = ship.getShipCondition();
 	std::cout << "Ship " << ship.getPosition().toString() << " condition:\n\t";
@@ -10,7 +10,7 @@ void ConsoleDisplayer::printShip(Battleship& ship)
 	std::cout << '\n';
 }
 
-void ConsoleDisplayer::printShipsInManager(ShipManager& manager)
+void ConsoleDisplayer::printShipsInManager(const ShipManager& manager) const
 {
 	std::cout << "Inactive ships in manager: " << manager.getInactiveShipsNumber() << '\n';
 	for (int i = 0; i < manager.getInactiveShipsNumber(); i++)
@@ -21,7 +21,7 @@ void ConsoleDisplayer::printShipsInManager(ShipManager& manager)
 		printShip(manager.getActiveShip(i));
 }
 
-void ConsoleDisplayer::printAbilityManager(AbilityManager& aManager)
+void ConsoleDisplayer::printAbilityManager(const AbilityManager& aManager) const
 {
 	switch (aManager.getFirstAbility())
 	{
@@ -36,7 +36,7 @@ void ConsoleDisplayer::printAbilityManager(AbilityManager& aManager)
 	}
 }
 
-void ConsoleDisplayer::drawFriendField(Battlefield& field)
+void ConsoleDisplayer::drawFriendField(const Battlefield& field) const
 {
 	std::cout << "\n";
 	Coords fieldSize = field.size();
@@ -78,7 +78,7 @@ void ConsoleDisplayer::drawFriendField(Battlefield& field)
 	std::cout << "\n";
 }
 
-void ConsoleDisplayer::drawEnemyField(Battlefield& field)
+void ConsoleDisplayer::drawEnemyField(const Battlefield& field) const
 {
 	std::cout << "\n";
 	Coords fieldSize = field.size();
@@ -107,7 +107,7 @@ void ConsoleDisplayer::drawEnemyField(Battlefield& field)
 	std::cout << "\n";
 }
 
-void ConsoleDisplayer::display(GameInfo& gInfo, int pIndex)
+void ConsoleDisplayer::display(const GameInfo& gInfo, int pIndex) const
 {
 	std::cout << "\nMove " << gInfo.mMoveIndex << '\n';
 	for (int i = 0; i < gInfo.mParticipantsNumber; i++)
@@ -131,22 +131,22 @@ void ConsoleDisplayer::display(GameInfo& gInfo, int pIndex)
 	}
 }
 
-void ConsoleDisplayer::printScannerResult(ScannerResult& scRes)
+void ConsoleDisplayer::printScannerResult(const ScannerResult& scRes) const
 {
 	std::cout << "\nScanner found " << scRes.getResult() << " ship segments in the area!\n";
 }
 
-void ConsoleDisplayer::printNewRound()
+void ConsoleDisplayer::printNewRound() const
 {
 	std::cout << "\n\nNew round has started!\n\n";
 }
 
-void ConsoleDisplayer::printNewGame()
+void ConsoleDisplayer::printNewGame() const
 {
 	std::cout << "\n\n\nNew Game has started!\n\n\n";
 }
 
-void ConsoleDisplayer::printErrorMessage(const char* str)
+void ConsoleDisplayer::printErrorMessage(const char* str) const
 {
 	std::cout << "\nAn impossible action was tried to be made:\n" << str << '\n';
 }

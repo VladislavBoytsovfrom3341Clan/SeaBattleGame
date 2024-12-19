@@ -50,9 +50,7 @@ public:
 
 	//getters for extern classes to manipulate the game
 
-	GameInfo& getInfo();
-
-	GameState& getState();
+	const GameInfo& getInfo();
 
 	Participant* getCurrentParticipant();
 

@@ -9,7 +9,7 @@
 class AbilityResult
 {
 public:
-    virtual AbilityType getType() = 0;
+    virtual AbilityType getType() const = 0;
 };
 
 #endif
