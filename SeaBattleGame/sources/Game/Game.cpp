@@ -70,13 +70,7 @@ void Game::newGame()
 
 int Game::getCurrentParticipantIndex()
 {
-    int endIndex = mInfo.mMoveIndex + mInfo.mParticipantsNumber;
-    Participant* currentParticipant = mInfo.mParticipants[mInfo.mMoveIndex % mInfo.mParticipantsNumber];
-    while (!(currentParticipant->isAlive()) && mInfo.mMoveIndex < endIndex)
-        currentParticipant = mInfo.mParticipants[(++mInfo.mMoveIndex) % mInfo.mParticipantsNumber];
-    if (endIndex == mInfo.mMoveIndex)
-        throw std::logic_error("No Alive Participants");
-    return mInfo.mMoveIndex % mInfo.mParticipantsNumber;
+    return mState->getCurrentParticipantIndex();
 }
 
 Participant* Game::getCurrentParticipant()

@@ -7,13 +7,13 @@
 
 int main()
 {
-    GameSettings sts = { {10, 10}, {{1, 1}}};
+    GameSettings sts = { {10, 10}, {{1, 3}}};
     Game my_game(sts);
     GameController myController(my_game, sts);
 
     ConcreteGameDisplayer<ConsoleDisplayer> playerDisplayer;
     PlayerController<CLIInput> plC(my_game, 0, &playerDisplayer);
     myController.addPlayerController(plC);
-    myController.addBots(1);
+    myController.addBots(2);
     myController.startGame();
 }

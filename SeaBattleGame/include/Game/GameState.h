@@ -16,6 +16,8 @@ public:
 	virtual void attack(int index, Coords coords, int damage) = 0;
 
 	virtual void castAbility(IAbilitySettings* settings) = 0;
+
+	virtual int getCurrentParticipantIndex() = 0;
 };
 
 #endif

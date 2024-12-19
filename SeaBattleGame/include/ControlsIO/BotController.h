@@ -9,7 +9,9 @@
 
 class BotController : public ParticipantController
 {
-	void placeShips();
+	Coords lastStand = { 0, 0 };
+
+	ICommand* placeShip();
 
 public:
 
