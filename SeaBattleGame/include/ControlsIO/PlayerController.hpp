@@ -3,6 +3,7 @@
 
 #include "ParticipantController.h"
 #include "IGameDisplayer.h"
+#include "Game.h"
 
 #include "Player.h"
 #include "CLIInput.h"
@@ -14,14 +15,15 @@ class PlayerController : public ParticipantController
 
 public:
 
-	PlayerController(IGameDisplayer* displayer);
+	PlayerController(Game& game, IGameDisplayer* displayer);
 
 	ICommand* getAction() override;
 	
 };
 
 template<typename Input>
-inline PlayerController<Input>::PlayerController(IGameDisplayer* displayer)
+inline PlayerController<Input>::PlayerController(Game& game, IGameDisplayer* displayer):
+	ParticipantController(game)
 {
 	mObserver.changeDisplayer(displayer);
 	mInput.rebindKeysFromFile();

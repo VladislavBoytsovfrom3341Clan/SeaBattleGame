@@ -3,6 +3,9 @@
 
 #include "AbilityType.h"
 
+/*
+* Interface describing results for some abilities
+*/
 class AbilityResult
 {
 public:

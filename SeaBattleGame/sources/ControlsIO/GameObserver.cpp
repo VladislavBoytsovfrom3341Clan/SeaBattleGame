@@ -4,8 +4,8 @@
 #include "ShipPosState.h"
 #include "Player.h"
 
-GameObserver::GameObserver(IGameDisplayer* displayer):
-	mDisplayer(displayer){}
+GameObserver::GameObserver(Game& game, IGameDisplayer* displayer):
+	mGame(game), mDisplayer(displayer){}
 
 void GameObserver::changeDisplayer(IGameDisplayer* displayer)
 {
@@ -21,9 +21,9 @@ void GameObserver::checkAbilityResultChanges(Participant* participant)
 	}
 }
 
-void GameObserver::checkNewRound(Game& game)
+void GameObserver::checkNewRound()
 {
-	if (game.getInfo().mMoveIndex == 0)
+	if (mGame.getInfo().mMoveIndex == 0)
 	{
 		if (!mRoundStartChecked)
 		{
@@ -35,9 +35,9 @@ void GameObserver::checkNewRound(Game& game)
 		mRoundStartChecked = false;
 }
 
-void GameObserver::checkNewGame(Game& game)
+void GameObserver::checkNewGame()
 {
-	if (game.getInfo().mRoundCount == 1)
+	if (mGame.getInfo().mRoundCount == 1)
 	{
 		if (!mGameStartChecked)
 		{
@@ -50,20 +50,20 @@ void GameObserver::checkNewGame(Game& game)
 		mGameStartChecked = false;
 }
 
-void GameObserver::track(Game& game, int pIndex)
+void GameObserver::track(int pIndex)
 {
 	if (mDisplayer != nullptr)
 	{
-		this->checkNewGame(game);
-		this->checkNewRound(game);
-		if (typeid(game.getState()) == typeid(ShipPosState))
+		this->checkNewGame();
+		this->checkNewRound();
+		if (mGame.getInfo().mMoveIndex == 0 && !mGame.getParticipant(pIndex)->isReady())
 		{
-			mDisplayer->displayShipPositioning(game.getInfo(), pIndex);
+			mDisplayer->displayShipPositioning(mGame.getInfo(), pIndex);
 		}
 		else
 		{
-			this->checkAbilityResultChanges(game.getParticipant(pIndex));
-			mDisplayer->display(game.getInfo(), pIndex);
+			this->checkAbilityResultChanges(mGame.getParticipant(pIndex));
+			mDisplayer->display(mGame.getInfo(), pIndex);
 		}
 	}
 }
@@ -74,4 +74,9 @@ void GameObserver::handleException(std::exception& exp)
 	{
 		mDisplayer->informError(exp);
 	}
+}
+
+Coords GameObserver::getFieldSize(int pIndex)
+{
+	return mGame.getParticipant(pIndex)->mField.size();
 }

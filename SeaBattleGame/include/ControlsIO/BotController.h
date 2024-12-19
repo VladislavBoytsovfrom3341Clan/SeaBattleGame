@@ -3,6 +3,7 @@
 
 #include "ParticipantController.h"
 
+#include "Game.h"
 #include "ICommand.h"
 #include "Bot.h"
 
@@ -12,7 +13,7 @@ class BotController : public ParticipantController
 
 public:
 
-	BotController() = default;
+	BotController(Game& game);
 
 	ICommand* getAction() override;
 };

@@ -1,10 +1,7 @@
-#include<iostream>
-
 #include "Game.h"
 #include "GameController.h"
 #include "GameSettings.h"
 #include "PlayerController.hpp"
-#include "FileHandler.h"
 #include "ConcreteGameDisplayer.hpp"
 #include "ConsoleDisplayer.h"
 
@@ -15,9 +12,8 @@ int main()
     GameController myController(my_game, sts);
 
     ConcreteGameDisplayer<ConsoleDisplayer> playerDisplayer;
-    PlayerController<CLIInput> plC(&playerDisplayer);
+    PlayerController<CLIInput> plC(my_game, &playerDisplayer);
     myController.addPlayerController(plC);
     myController.addBots(1);
     myController.startGame();
-
 }

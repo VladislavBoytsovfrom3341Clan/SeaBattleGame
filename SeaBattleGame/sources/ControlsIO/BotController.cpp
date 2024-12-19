@@ -4,6 +4,10 @@
 #include "AttackCommand.h"
 
 
+BotController::BotController(Game& game) :
+    ParticipantController(game) {
+}
+
 void BotController::placeShips()
 {
     Coords coords = { 0, 0 };
@@ -28,7 +32,8 @@ ICommand* BotController::getAction()
     if (mParticipant->mShipManager.getInactiveShipsNumber() > 0)
         this->placeShips();
     int index = 0;
-    Coords coords = { rand() % 5, rand() % 5 };
+    Coords enemyFieldSize = mObserver.getFieldSize(index);
+    Coords coords = { rand() % enemyFieldSize.x, rand() % enemyFieldSize.y };
     ICommand* command = new AttackCommand(index, coords);
     return command;
 }

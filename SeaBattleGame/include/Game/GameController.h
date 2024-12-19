@@ -3,7 +3,6 @@
 
 #include "Coords.h"
 #include "ParticipantController.h"
-#include "PlayerController.hpp"
 #include "GameSettings.h"
 #include "ICommand.h"
 
@@ -21,20 +20,21 @@ class GameController
 
 	void observeGame();
 
-public:
-
-	GameController(class Game& game, GameSettings& settings);
-
-	
-	void addPlayerController(ParticipantController& controller);
-
-	void addBots(int number);
-
 	void resetBots();
+
+	void resetParticipants();
 
 	void runRoundCycle();
 
 	void runGameCycle();
+
+public:
+
+	GameController(class Game& game, GameSettings& settings);
+	
+	void addPlayerController(ParticipantController& controller);
+
+	void addBots(int number);
 
 	void startGame();
 };

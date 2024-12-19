@@ -1,21 +1,22 @@
 #ifndef ABILITY_MANAGER_H
 #define ABILITY_MANAGER_H
 
-#include <deque>
-#include <fstream>
 
 #include "AbilityType.h"
 #include "IAbility.h"
 #include "AbilityFactory.h"
 #include "AbilitySettingsVisitor.h"
+#include "IAbilitySettings.h"
 
+#include <deque>
+#include <fstream>
 
 class AbilityManager
 {
-    std::deque<AbilityType> mAbilities;
+    std::deque<AbilityType> mAbilities;     //queue of available abilities
     AbilityFactory mFactory;
-    AbilitySettingsVisitor mVisitor;
-    std::vector<AbilityType> mAbilitiesVector;
+    AbilitySettingsVisitor mVisitor;        //used to figure out ability type
+    std::vector<AbilityType> mAbilitiesVector;  //storages all possible types, used for random
 
     IAbility* buildAbility(IAbilitySettings* settings);
 public:
@@ -23,7 +24,7 @@ public:
 
     AbilityManager(const AbilityManager& copy);
 
-    AbilityManager(AbilityManager&& moved);
+    AbilityManager(AbilityManager&& moved) noexcept;
 
     bool empty() const noexcept;
 
@@ -37,13 +38,13 @@ public:
 
     AbilityManager& operator=(const AbilityManager& manager);
 
-    AbilityManager& operator=(AbilityManager&& manager);
+    AbilityManager& operator=(AbilityManager&& manager) noexcept;
 
     friend std::istream& operator>>(std::istream& is, AbilityManager& manager);
 
     friend std::ostream& operator<<(std::ostream& os, AbilityManager& manager);
 
-    ~AbilityManager();
+    ~AbilityManager() = default;
 };
 
 #endif

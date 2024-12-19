@@ -4,6 +4,7 @@
 #include "ICommand.h"
 #include "Participant.h"
 #include "GameObserver.h"
+#include "Game.h"
 
 #include <stdexcept>
 
@@ -13,6 +14,7 @@ protected:
 	Participant* mParticipant;
 	GameObserver mObserver;
 public:
+	ParticipantController(Game& game);
 
 	virtual ICommand* getAction() = 0;
 

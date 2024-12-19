@@ -3,30 +3,34 @@
 
 #include "Game.h"
 #include "IGameDisplayer.h"
+#include "Coords.h"
 
 #include <stdexcept>
 
 class GameObserver
 {
+	Game& mGame;
 	IGameDisplayer* mDisplayer = nullptr;
 	bool mGameStartChecked = false;
 	bool mRoundStartChecked = false;
 
 	void checkAbilityResultChanges(Participant* participant);
 
-	void checkNewRound(Game& game);
+	void checkNewRound();
 
-	void checkNewGame(Game& game);
+	void checkNewGame();
 
 public:
 
-	GameObserver(IGameDisplayer* displayer = nullptr);
+	GameObserver(Game& game, IGameDisplayer* displayer = nullptr);
 
 	void changeDisplayer(IGameDisplayer* displayer);
 
-	void track(Game& game, int pIndex);
+	void track(int pIndex);
 
 	void handleException(std::exception& exp);
+
+	Coords getFieldSize(int pIndex);
 };
 
 #endif

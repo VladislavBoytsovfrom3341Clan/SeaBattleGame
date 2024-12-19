@@ -31,7 +31,7 @@ void GameController::addBots(int number)
 	for (int i = 0; i < number; i++)
 	{
 		Bot* newBot = new Bot(mSettings.mFieldSize, mSettings.mDefaultShips);
-		BotController* controller = new BotController();
+		BotController* controller = new BotController(mGame);
 		controller->setParticipant(newBot);
 		mControllers.push_back(controller);
 		mGame.addParticipant(newBot);
@@ -86,6 +86,27 @@ void GameController::resetBots()
 	}
 }
 
+void GameController::resetParticipants()
+{
+	for (int i = 0; i < mControllers.size(); i++)
+	{
+		if (typeid(*(mControllers[i])) == typeid(BotController))
+		{
+			mControllers[i]->setParticipant(mGame.resetBot(i));
+		}
+		else
+		{
+			mControllers[i]->setParticipant(mGame.resetPlayer(i));
+		}
+		while (!(mControllers[i]->isReady()))
+		{
+			mControllers[i]->observe(mGame, i);
+			ICommand* command = mControllers[i]->getAction();
+			this->acceptCommand(command);
+		}
+	}
+}
+
 void GameController::runGameCycle()
 {
 	mGame.newRound();
@@ -101,7 +122,6 @@ void GameController::runGameCycle()
 	}
 	while (mGame.countAlivePlayers() > 0)
 	{
-		this->observeGame();
 		this->runRoundCycle();
 		mGame.newRound();
 		this->resetBots();
@@ -114,22 +134,6 @@ void GameController::startGame()
 	{
 		this->runGameCycle();
 		mGame.newGame();
-		for (int i = 0; i < mControllers.size(); i++)
-		{
-			if (typeid(*(mControllers[i])) == typeid(BotController))
-			{
-				mControllers[i]->setParticipant(mGame.resetBot(i));
-			}
-			else
-			{
-				mControllers[i]->setParticipant(mGame.resetPlayer(i));
-			}
-			while (!(mControllers[i]->isReady()))
-			{
-				mControllers[i]->observe(mGame, i);
-				ICommand* command = mControllers[i]->getAction();
-				this->acceptCommand(command);
-			}
-		}
+		this->resetParticipants();
 	}
 }

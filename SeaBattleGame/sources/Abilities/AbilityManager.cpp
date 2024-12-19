@@ -1,19 +1,18 @@
 #include "AbilityManager.h"
 #include "NoAbilityException.h"
+#include "AbilityType.h"
 
 #include <vector>
 #include <algorithm>
 #include <stdexcept>
 #include <random>
 
-constexpr int abilitiesNum = 3;
 
 AbilityManager::AbilityManager():
 mVisitor(mFactory)
 {
     mAbilitiesVector =
-    //    {AbilityType::DoubleDamage, AbilityType::Scanner, AbilityType::Shelling};
-    {AbilityType::Scanner};
+        {AbilityType::DoubleDamage, AbilityType::Scanner, AbilityType::Shelling};
     auto rng = std::default_random_engine {};
     std::shuffle(mAbilitiesVector.begin(), mAbilitiesVector.end(), rng);
     
@@ -27,7 +26,7 @@ AbilityManager::AbilityManager(const AbilityManager& copy):
     this->mAbilities = copy.mAbilities;
 }
 
-AbilityManager::AbilityManager(AbilityManager&& moved):
+AbilityManager::AbilityManager(AbilityManager&& moved) noexcept:
     AbilityManager()
 {
     this->mAbilities = std::move(moved.mAbilities);
@@ -87,7 +86,7 @@ AbilityManager& AbilityManager::operator=(const AbilityManager& manager)
     return *this;
 }
 
-AbilityManager& AbilityManager::operator=(AbilityManager&& manager)
+AbilityManager& AbilityManager::operator=(AbilityManager&& manager) noexcept
 {
     this->mAbilities = std::move(manager.mAbilities);
     return *this;
@@ -159,9 +158,4 @@ std::ostream& operator<<(std::ostream& os, AbilityManager& manager)
     }
     os << '\n';
     return os;
-}
-
-AbilityManager::~AbilityManager()
-{
-    
 }
