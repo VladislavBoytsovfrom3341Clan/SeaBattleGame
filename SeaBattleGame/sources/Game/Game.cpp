@@ -62,6 +62,13 @@ void Game::newRound()
     mInfo.mRoundCount++;
 }
 
+void Game::newGame()
+{
+    mState = new ShipPosState(mInfo);
+    mInfo.mMoveIndex = 0;
+    mInfo.mRoundCount = 1;
+}
+
 int Game::getCurrentParticipantIndex()
 {
     int endIndex = mInfo.mMoveIndex + mInfo.mParticipantsNumber;

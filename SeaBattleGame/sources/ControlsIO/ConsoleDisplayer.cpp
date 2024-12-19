@@ -135,3 +135,18 @@ void ConsoleDisplayer::printScannerResult(ScannerResult& scRes)
 {
 	std::cout << "\nScanner found " << scRes.getResult() << " ship segments in the area!\n";
 }
+
+void ConsoleDisplayer::printNewRound()
+{
+	std::cout << "\n\nNew round has started!\n\n";
+}
+
+void ConsoleDisplayer::printNewGame()
+{
+	std::cout << "\n\n\nNew Game has started!\n\n\n";
+}
+
+void ConsoleDisplayer::printErrorMessage(const char* str)
+{
+	std::cout << "\nAn impossible action was tried to be made:\n" << str << '\n';
+}

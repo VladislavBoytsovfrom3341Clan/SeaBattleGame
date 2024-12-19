@@ -39,7 +39,6 @@ void GameController::addBots(int number)
 	}
 }
 
-//DELETE COUTS
 void GameController::acceptCommand(ICommand* command)
 {
 	try
@@ -47,21 +46,9 @@ void GameController::acceptCommand(ICommand* command)
 		if (command != nullptr)
 			command->execute(mGame);
 	}
-	catch (const NoAbilityException& na)
+	catch (std::exception& e)
 	{
-		std::cout << na.what();
-	}
-	catch (const OutOfRangeAttackException& ora)
-	{
-		std::cout << ora.what();
-	}
-	catch(const ShipPlacementException& sp)
-	{
-		std::cout << sp.what();
-	}
-	catch (const std::exception& e)
-	{
-		std::cout << e.what();
+		mControllers[mGame.getCurrentParticipantIndex()]->handleException(e);
 	}
 	delete command;
 }
@@ -100,11 +87,9 @@ void GameController::resetBots()
 	}
 }
 
-//all COUTs is ONLY for DUBUG time
 void GameController::runGameCycle()
 {
 	mGame.newRound();
-	//std::cout << "Started ship placing phase\n";
 	for (int i=0; i<mControllers.size(); i++)
 	{
 		ParticipantController* controller = mControllers[i];
@@ -115,16 +100,13 @@ void GameController::runGameCycle()
 			this->acceptCommand(command);
 		}
 	}
-	//std::cout << "Ended ship placing phase\n";
 	while (mGame.countAlivePlayers() > 0)
 	{
-		//std::cout << "\nNew round has started!\n";
 		this->observeGame();
 		this->runRoundCycle();
 		mGame.newRound();
 		this->resetBots();
 	}
-	//std::cout << "\nGame ended!\n";
 }
 
 void GameController::startGame()
@@ -132,7 +114,7 @@ void GameController::startGame()
 	while (true)
 	{
 		this->runGameCycle();
-		mGame.newRound();
+		mGame.newGame();
 		for (int i = 0; i < mControllers.size(); i++)
 		{
 			if (typeid(*(mControllers[i])) == typeid(BotController))

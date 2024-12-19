@@ -5,6 +5,8 @@
 #include "Participant.h"
 #include "GameObserver.h"
 
+#include <stdexcept>
+
 class ParticipantController
 {
 protected:
@@ -17,6 +19,8 @@ public:
 	void setParticipant(Participant* participant);
 
 	bool isReady();
+
+	void handleException(std::exception& exp);
 
 	virtual void observe(Game& game, int pIndex);
 };

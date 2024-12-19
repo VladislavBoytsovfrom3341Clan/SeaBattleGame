@@ -3,16 +3,17 @@
 
 #include "Coords.h"
 
+#include <exception>
 #include <string>
 
-class ShipPlacementException
+class ShipPlacementException: public std::exception
 {
     Coords mShipCoords;
     std::string mMessage = "";
 public:
     ShipPlacementException(Coords shipCoords, std::string message = "");
 
-    std::string what() const noexcept;
+    const char* what() const noexcept;
 };
 
 #endif

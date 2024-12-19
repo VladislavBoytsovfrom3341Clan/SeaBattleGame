@@ -4,6 +4,8 @@
 #include "GameInfo.h"
 #include "AbilityResult.h"
 
+#include <stdexcept>
+
 class IGameDisplayer
 {
 public:
@@ -11,7 +13,13 @@ public:
 
 	virtual void displayShipPositioning(GameInfo& gInfo, int pIndex) = 0;
 
-	virtual void displayAbilityResultResult(AbilityResult& result) = 0;
+	virtual void displayAbilityResult(AbilityResult& result) = 0;
+
+	virtual void informNewRound() = 0;
+
+	virtual void informNewGame() = 0;
+
+	virtual void informError(const std::exception& exp) = 0;
 };
 
 #endif

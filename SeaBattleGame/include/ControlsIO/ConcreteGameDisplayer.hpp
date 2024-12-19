@@ -15,7 +15,13 @@ public:
 
 	void displayShipPositioning(GameInfo& gInfo, int pIndex) override;
 
-	void displayAbilityResultResult(AbilityResult& result) override;
+	void displayAbilityResult(AbilityResult& result) override;
+
+	void informNewRound() override;
+
+	void informNewGame() override;
+
+	void informError(const std::exception& exp) override;
 };
 
 template<typename Displayer>
@@ -31,12 +37,30 @@ inline void ConcreteGameDisplayer<Displayer>::displayShipPositioning(GameInfo& g
 	mDisplayer.drawFriendField(gInfo.mParticipants[pIndex]->mField);
 }
 
-#include<iostream>
-
 template<typename Displayer>
-inline void ConcreteGameDisplayer<Displayer>::displayAbilityResultResult(AbilityResult& result)
+inline void ConcreteGameDisplayer<Displayer>::displayAbilityResult(AbilityResult& result)
 {
 	if (result.getType() == AbilityType::Scanner)
 		mDisplayer.printScannerResult(dynamic_cast<ScannerResult&>(result));
 }
+
+template<typename Displayer>
+inline void ConcreteGameDisplayer<Displayer>::informNewRound()
+{
+	mDisplayer.printNewRound();
+}
+
+
+template<typename Displayer>
+inline void ConcreteGameDisplayer<Displayer>::informNewGame()
+{
+	mDisplayer.printNewGame();
+}
+
+template<typename Displayer>
+inline void ConcreteGameDisplayer<Displayer>::informError(const std::exception& exp)
+{
+	mDisplayer.printErrorMessage(exp.what());
+}
+
 #endif

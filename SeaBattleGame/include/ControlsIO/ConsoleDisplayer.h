@@ -5,6 +5,8 @@
 #include "ScannerResult.h"
 #include "Player.h"
 
+#include <string>
+
 class ConsoleDisplayer
 {
 public:
@@ -24,6 +26,12 @@ public:
 	void drawEnemyField(Battlefield& field);
 
 	void printScannerResult(ScannerResult& scRes);
+
+	void printNewRound();
+
+	void printNewGame();
+
+	void printErrorMessage(const char* str);
 };
 
 #endif

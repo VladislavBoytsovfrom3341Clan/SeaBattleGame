@@ -14,3 +14,8 @@ void ParticipantController::observe(Game& game, int pIndex)
 {
 	mObserver.track(game, pIndex);
 }
+
+void ParticipantController::handleException(std::exception& exp)
+{
+	mObserver.handleException(exp);
+}

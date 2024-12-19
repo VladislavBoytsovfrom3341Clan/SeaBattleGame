@@ -30,6 +30,8 @@ public:
 
 	void newRound();
 
+	void newGame();
+
 	void placeShip(int playerIndex, int shipIndex, Coords coords, Orientation orientation);
 
 	void attack(int index, Coords coords);

@@ -3,12 +3,15 @@
 ShipPlacementException::ShipPlacementException(Coords shipCoords, std::string message):
 mShipCoords(shipCoords), mMessage(message){}
 
-std::string ShipPlacementException::what() const noexcept
+const char* ShipPlacementException::what() const noexcept
 {
     std::string output = "Error at ship placement occured: "
         " trying to put ship at " + mShipCoords.toString();
     if(mMessage != "")
         output+=" with message: " + mMessage;
     output+='\n';
-    return output;
+
+    char* ret = new char[output.size() + 1];
+    std::strcpy(ret, output.c_str());
+    return ret;
 }
