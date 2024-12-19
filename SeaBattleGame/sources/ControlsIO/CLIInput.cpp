@@ -132,6 +132,14 @@ int CLIInput::readIndex(std::string message)
 	}
 }
 
+void CLIInput::printBindedKeys()
+{
+	std::cout << "\nCurrent binded keys are:\n";
+	for (auto& key : mBindedKeys)
+		std::cout << key.first << " - " << key.second << '\n';
+	std::cout << '\n';
+}
+
 void CLIInput::rebindKeysFromFile(std::string fileName)
 {
 	std::ifstream iFile;
@@ -148,12 +156,14 @@ void CLIInput::rebindKeysFromFile(std::string fileName)
 				if (mCommandsParser.find(command) == mCommandsParser.end())
 				{
 					std::cout << "\nError: Command '" << command << "' is not recognized.\n";
+					this->printBindedKeys();
 					iFile.close();
 					return;
 				}
 				if (!newBinds.insert({ key, command }).second)
 				{
-					std::cout << "\nTrying to bind two keys to one command!\n";
+					std::cout << "\nTrying to bind two keys to one command!\n"; 
+					this->printBindedKeys();
 					iFile.close();
 					return;
 				}
@@ -161,6 +171,7 @@ void CLIInput::rebindKeysFromFile(std::string fileName)
 			else
 			{
 				std::cout << "\nError while reading file\n";
+				this->printBindedKeys();
 				iFile.close();
 				return;
 			}
@@ -178,4 +189,5 @@ void CLIInput::rebindKeysFromFile(std::string fileName)
 	}
 	else
 		std::cout << "\nUnable to open requested file\n";
+	this->printBindedKeys();
 }

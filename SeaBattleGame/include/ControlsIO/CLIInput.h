@@ -20,6 +20,8 @@ class CLIInput
 
 	int readIndex(std::string message = "");
 
+	void printBindedKeys();
+
 public:
 	CLIInput();
 
