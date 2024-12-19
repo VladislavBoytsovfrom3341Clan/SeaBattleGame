@@ -17,7 +17,7 @@ int main()
     ConcreteGameDisplayer<ConsoleDisplayer> playerDisplayer;
     PlayerController<CLIInput> plC(&playerDisplayer);
     myController.addPlayerController(plC);
-    myController.addBots(2);
+    myController.addBots(1);
     myController.startGame();
 
 }

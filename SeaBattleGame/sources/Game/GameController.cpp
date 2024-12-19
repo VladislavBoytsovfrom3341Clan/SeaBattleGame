@@ -129,5 +129,26 @@ void GameController::runGameCycle()
 
 void GameController::startGame()
 {
-	this->runGameCycle();
+	while (true)
+	{
+		this->runGameCycle();
+		mGame.newRound();
+		for (int i = 0; i < mControllers.size(); i++)
+		{
+			if (typeid(*(mControllers[i])) == typeid(BotController))
+			{
+				mControllers[i]->setParticipant(mGame.resetBot(i));
+			}
+			else
+			{
+				mControllers[i]->setParticipant(mGame.resetPlayer(i));
+			}
+			while (!(mControllers[i]->isReady()))
+			{
+				mControllers[i]->observe(mGame, i);
+				ICommand* command = mControllers[i]->getAction();
+				this->acceptCommand(command);
+			}
+		}
+	}
 }
