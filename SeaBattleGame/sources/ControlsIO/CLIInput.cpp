@@ -72,7 +72,7 @@ ICommand* CLIInput::readCommand()
 	catch (std::exception& e)
 	{
 		newCommand = nullptr;
-		std::cout << "\ncathed da shit\n";
+		std::cout << "\ncathed\n";
 	}
 	return newCommand;
 }

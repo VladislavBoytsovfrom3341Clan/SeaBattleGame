@@ -38,6 +38,20 @@ void GameController::addBots(int number)
 	}
 }
 
+void GameController::synchronize()
+{
+	if (mGame.checkSync())
+	{
+		int participantsNum = mGame.getInfo().mParticipantsNumber;
+		if (participantsNum != mControllers.size())
+			throw std::runtime_error("Synchroniztion failed!\n");
+		for (int i = 0; i < participantsNum; i++)
+		{
+			mControllers.at(i)->setParticipant(mGame.getParticipant(i));
+		}
+	}
+}
+
 void GameController::acceptCommand(ICommand* command)
 {
 	try
@@ -50,6 +64,7 @@ void GameController::acceptCommand(ICommand* command)
 		mControllers[mGame.getCurrentParticipantIndex()]->handleException(e);
 	}
 	delete command;
+	this->synchronize();
 }
 
 void GameController::observeGame()

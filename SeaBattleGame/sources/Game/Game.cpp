@@ -138,4 +138,15 @@ void Game::load()
     GameSaver mSaver(mInfo);
     FileHandler mHandler("testsave.txt", false);
     mHandler.read(mSaver);
+    mNeedSync = true;
+}
+
+bool Game::checkSync()
+{
+    return mNeedSync;
+}
+
+void Game::synchronize()
+{
+    mNeedSync = false;
 }

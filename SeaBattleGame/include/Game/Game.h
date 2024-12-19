@@ -16,6 +16,8 @@ class Game
 	GameState* mState = nullptr;
 	GameSettings& mSettings;
 
+	bool mNeedSync = false;
+
 public:
 	
 	Game(GameSettings& settings);
@@ -27,6 +29,10 @@ public:
 	Participant* resetPlayer(int index);
 
 	Participant* resetBot(int index);
+
+	bool checkSync();
+
+	void synchronize();
 
 	//methods for updating moves and states
 

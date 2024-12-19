@@ -20,6 +20,8 @@ class GameController
 
 	void observeGame();
 
+	void synchronize();
+
 	void resetBots();
 
 	void resetParticipants();
