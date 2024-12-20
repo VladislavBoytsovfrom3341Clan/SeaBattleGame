@@ -15,6 +15,7 @@
 #include <exception>
 #include <stdexcept>
 
+
 GameController::GameController(Game& game, GameSettings& settings) :
 	mGame(game), mSettings(settings) {}
 
@@ -143,8 +144,11 @@ void GameController::runGameCycle()
 	}
 }
 
+
 void GameController::startGame()
 {
+	//mGame.newGame();
+
 	while (true)
 	{
 		this->runGameCycle();

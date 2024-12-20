@@ -32,7 +32,10 @@ void GameObserver::checkNewRound()
 		}
 	}
 	else
+	{
 		mRoundStartChecked = false;
+		mGameStartChecked = false;
+	}
 }
 
 void GameObserver::checkNewGame()
