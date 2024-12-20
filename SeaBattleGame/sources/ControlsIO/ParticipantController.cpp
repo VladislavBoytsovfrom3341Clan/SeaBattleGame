@@ -4,7 +4,7 @@ ParticipantController::ParticipantController(Game& game, int index) :
 	mObserver(game), mIndex(index) {
 }
 
-void ParticipantController::setParticipant(Participant* participant)
+void ParticipantController::setParticipant(const Participant* participant)
 {
 	mParticipant = participant;
 }

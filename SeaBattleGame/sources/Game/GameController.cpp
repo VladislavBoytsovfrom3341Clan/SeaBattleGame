@@ -147,8 +147,6 @@ void GameController::runGameCycle()
 
 void GameController::startGame()
 {
-	//mGame.newGame();
-
 	while (true)
 	{
 		this->runGameCycle();
@@ -159,6 +157,6 @@ void GameController::startGame()
 GameController::~GameController()
 {
 	for (auto& contr : mControllers)
-		if (typeid(*contr) == typeid(Bot))
+		if (typeid(*contr) == typeid(BotController))
 			delete contr;
 }
