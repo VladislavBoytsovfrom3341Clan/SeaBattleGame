@@ -152,3 +152,9 @@ void GameController::startGame()
 		this->resetParticipants();
 	}
 }
+GameController::~GameController()
+{
+	for (auto& contr : mControllers)
+		if (typeid(*contr) == typeid(Bot))
+			delete contr;
+}

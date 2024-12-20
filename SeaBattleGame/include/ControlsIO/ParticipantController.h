@@ -26,6 +26,8 @@ public:
 	void handleException(std::exception& exp);
 
 	virtual void observe(Game& game, int pIndex);
+
+	virtual ~ParticipantController();
 };
 
 #endif

@@ -23,3 +23,8 @@ void ParticipantController::handleException(std::exception& exp)
 {
 	mObserver.handleException(exp);
 }
+
+ParticipantController::~ParticipantController()
+{
+	delete mParticipant;
+}

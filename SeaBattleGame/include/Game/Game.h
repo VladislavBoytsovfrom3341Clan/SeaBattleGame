@@ -71,6 +71,8 @@ public:
 	int countAliveBots() const;
 
 	int countAlivePlayers() const;
+
+	~Game();
 };
 
 #endif

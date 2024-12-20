@@ -39,6 +39,8 @@ public:
 	void addBots(int number);
 
 	void startGame();
+
+	~GameController();
 };
 
 #endif

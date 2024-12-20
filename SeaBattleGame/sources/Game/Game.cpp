@@ -51,11 +51,13 @@ void Game::castAbility(IAbilitySettings* settings)
 
 void Game::newMove()
 {
+    delete mState;
     mState = new AttackState(mInfo);
 }
 
 void Game::newRound()
 {
+    delete mState;
     mState = new ShipPosState(mInfo);
     mInfo.mMoveIndex = 0;
     mInfo.mRoundCount++;
@@ -63,6 +65,7 @@ void Game::newRound()
 
 void Game::newGame()
 {
+    delete mState;
     mState = new ShipPosState(mInfo);
     mInfo.mMoveIndex = 0;
     mInfo.mRoundCount = 1;
@@ -149,4 +152,9 @@ bool Game::checkSync()
 void Game::synchronize()
 {
     mNeedSync = false;
+}
+
+Game::~Game()
+{
+    delete mState;
 }
