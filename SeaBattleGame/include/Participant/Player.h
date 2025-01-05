@@ -7,7 +7,7 @@
 
 struct Player : public Participant
 {
-	Player(Battlefield field, std::vector<Battleship*> inactive, std::vector<Battleship*> active, AbilityManager aManager);
+	Player(Battlefield field, std::vector<std::shared_ptr<Battleship>> inactive, std::vector<std::shared_ptr<Battleship>> active, AbilityManager aManager);
 
 	Player(Coords fieldSize, std::vector<std::pair<int, int>> shipList);
 };

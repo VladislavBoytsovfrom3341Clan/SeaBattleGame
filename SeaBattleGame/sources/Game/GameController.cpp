@@ -147,11 +147,11 @@ void GameController::runGameCycle()
 
 void GameController::startGame()
 {
-	while (true)
+	//while (true)
 	{
 		this->runGameCycle();
-		mGame.newGame();
-		this->resetParticipants();
+		//mGame.newGame();
+		//this->resetParticipants();
 	}
 }
 GameController::~GameController()

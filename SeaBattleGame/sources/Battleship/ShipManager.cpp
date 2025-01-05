@@ -14,13 +14,12 @@ ShipManager::ShipManager(std::vector<std::pair<int, int>> shipList)
 
         for(int i=0; i<shipSeries.second; i++)
         {
-            Battleship* newShip = new Battleship(shipSeries.first);
-            mShips.push_back({ newShip, false });
+            mShips.push_back({ std::make_shared<Battleship>(shipSeries.first), false});
         }
     }
 }
 
-ShipManager::ShipManager(std::vector<Battleship*> inactive, std::vector<Battleship*> active)
+ShipManager::ShipManager(std::vector<std::shared_ptr<Battleship>> inactive, std::vector<std::shared_ptr<Battleship>> active)
 {
     for (auto& ship : inactive)
         mShips.push_back({ ship, false });
@@ -119,8 +118,3 @@ void ShipManager::setShipInactive(int index)
     mShips.at(realIndex - 1).second = false;
 }
 
-ShipManager::~ShipManager()
-{
-    for(auto& ship: mShips)
-        delete ship.first;
-}

@@ -4,7 +4,7 @@
 Participant::Participant(Coords fieldSize, std::vector<std::pair<int, int>> shipList) :
 	mShipManager(shipList), mField(fieldSize.x, fieldSize.y) {}
 
-Participant::Participant(Battlefield field, std::vector<Battleship*> inactive, std::vector<Battleship*> active) :
+Participant::Participant(Battlefield field, std::vector<std::shared_ptr<Battleship>> inactive, std::vector<std::shared_ptr<Battleship>> active) :
 	mField(field), mShipManager(inactive, active) {}
 
 bool Participant::isAlive() const

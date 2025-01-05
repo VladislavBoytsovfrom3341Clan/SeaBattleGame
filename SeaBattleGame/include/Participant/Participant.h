@@ -17,7 +17,7 @@ struct Participant
 
 	Participant() = default;
 
-	Participant(Battlefield field, std::vector<Battleship*> inactive, std::vector<Battleship*> active);
+	Participant(Battlefield field, std::vector<std::shared_ptr<Battleship>> inactive, std::vector<std::shared_ptr<Battleship>> active);
 
 	Participant(Coords fieldSize, std::vector<std::pair<int, int>> shipList);
 

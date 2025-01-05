@@ -28,15 +28,15 @@ std::ifstream& operator>>(std::ifstream& is, GameSaver& state)
 		is >> aManager;
 		int activeShipsNumber;
 		is >> activeShipsNumber;
-		std::vector<Battleship*> activeShips(activeShipsNumber);
+		std::vector<std::shared_ptr<Battleship>> activeShips(activeShipsNumber);
 		for (int j = 0; j < activeShipsNumber; j++)
 		{
-			activeShips[j] = new Battleship();
+			activeShips[j] = std::make_shared<Battleship>();
 			is >> *(activeShips[j]);
 		}
 		Battlefield field;
 		is >> field;
-		for (Battleship* ship : activeShips)
+		for (std::shared_ptr<Battleship> ship : activeShips)
 		{
 			field.setShip(*ship, ship->getPosition(), ship->getOrientation());
 		}

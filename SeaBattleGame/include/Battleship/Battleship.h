@@ -93,7 +93,7 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, Battleship& ship);
     
-    ~Battleship() = default;
+    ~Battleship();
 };
 
 #endif
