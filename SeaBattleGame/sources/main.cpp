@@ -7,7 +7,7 @@
 
 int main()
 {
-    GameSettings sts = { {10, 10}, {{1, 1}}};
+    GameSettings sts = { {10, 10}, {{1, 1}, {4, 1}} };
     Game my_game(sts);
     GameController myController(my_game, sts);
 

@@ -14,8 +14,11 @@
 */
 class ShipManager
 {
-    std::vector<Battleship*> mInactiveShipsArray;
-    std::vector<Battleship*> mActiveShipsArray;
+    /*
+    * Vector of ships storaged in manager; 
+    * bool stays for false = inactive / true = active
+    */
+    std::vector<std::pair<Battleship*, bool>> mShips;
 
 public:
     ShipManager() = default;
