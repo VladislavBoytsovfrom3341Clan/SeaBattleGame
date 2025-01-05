@@ -16,9 +16,13 @@ class Game
 	GameState* mState = nullptr;
 	GameSettings& mSettings;
 
+	bool mNeedSync = false;
+
 public:
 	
 	Game(GameSettings& settings);
+
+	//methods for setting up participants 
 
 	void addParticipant(Participant* participant);
 
@@ -26,9 +30,19 @@ public:
 
 	Participant* resetBot(int index);
 
+	bool checkSync();
+
+	void synchronize();
+
+	//methods for updating moves and states
+
 	void newMove();
 
 	void newRound();
+
+	void newGame();
+
+	//methods used to perform actions
 
 	void placeShip(int playerIndex, int shipIndex, Coords coords, Orientation orientation);
 
@@ -40,19 +54,25 @@ public:
 
 	void load();
 
-	Participant* getCurrentParticipant();
+	//getters for extern classes to manipulate the game
 
-	Participant* getParticipant(int index);
+	const GameInfo& getInfo();
 
-	int getCurrentParticipantIndex();
+	Participant* getCurrentParticipant() const;
 
-	int countAliveParticipants();
+	Participant* getParticipant(int index) const;
 
-	int countAliveBots();
+	int getCurrentParticipantIndex() const;
 
-	int countAlivePlayers();
+	//methods for game end control
 
-	void Display();
+	int countAliveParticipants() const;
+
+	int countAliveBots() const;
+
+	int countAlivePlayers() const;
+
+	~Game();
 };
 
 #endif

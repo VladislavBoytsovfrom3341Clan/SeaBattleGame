@@ -19,6 +19,8 @@ public:
 	void castAbility(IAbilitySettings* settings) override;
 
 	void attack(int index, Coords coords, int damage) override;
+
+	int getCurrentParticipantIndex() const override;
 };
 
 #endif

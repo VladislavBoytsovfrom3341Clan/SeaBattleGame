@@ -4,7 +4,6 @@
 #include "Battlefield.h"
 
 #include <stdexcept>
-#include <iostream>
 
 FileHandler::FileHandler(std::string name, bool writeMode)
 {
@@ -24,13 +23,11 @@ FileHandler::FileHandler(std::string name, bool writeMode)
 
 void FileHandler::write(GameSaver& state)
 {
-	std::cout << "+handler\n";
 	mOutFile << state;
 }
 
 void FileHandler::read(GameSaver& state)
 {
-	std::cout << "+handler\n";
 	mInFile >> state;
 }
 

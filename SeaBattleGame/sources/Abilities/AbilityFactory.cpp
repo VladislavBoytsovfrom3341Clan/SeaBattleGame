@@ -1,10 +1,7 @@
 #include "AbilityFactory.h"
 
-#include "DoubleDamage.h"
-#include "Shelling.h"
-#include "Scanner.h"
 
-IAbility* AbilityFactory::getAbility()
+IAbility* AbilityFactory::getAbility() const noexcept
 {
     return mBuildedAbility;
 }

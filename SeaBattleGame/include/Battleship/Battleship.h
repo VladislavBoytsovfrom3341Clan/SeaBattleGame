@@ -67,9 +67,9 @@ public:
 
     void setPosition(Coords coords, Orientation ornt);
 
-    Coords getPosition();
+    Coords getPosition() const noexcept;
 
-    Orientation getOrientation();
+    Orientation getOrientation() const noexcept;
 
     //checks if there are not destroyed segments
     bool isAlive() const noexcept;

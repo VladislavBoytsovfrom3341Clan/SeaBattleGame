@@ -1,30 +1,19 @@
-#include<iostream>
-
 #include "Game.h"
 #include "GameController.h"
 #include "GameSettings.h"
-#include "PlayerController.h"
-#include "FileHandler.h"
+#include "PlayerController.hpp"
+#include "ConcreteGameDisplayer.hpp"
+#include "ConsoleDisplayer.h"
 
-
-
-//no OOP only as DEBUG func
-void printShip(Battleship& ship);
-
-
-//no OOP only as DEBUG func
-void printShipsInManager(ShipManager& manager);
-
-
-//WE USE MAIN AS DEBUGGING BASE
 int main()
 {
-    GameSettings sts = { {10, 10}, {{4, 1}}};
+    GameSettings sts = { {10, 10}, {{1, 1}}};
     Game my_game(sts);
     GameController myController(my_game, sts);
-    PlayerController plC;
-    myController.addPlayerController(plC);
-    myController.addBots(2);
-    myController.startGame();
 
+    ConcreteGameDisplayer<ConsoleDisplayer> playerDisplayer;
+    PlayerController<CLIInput> plC(my_game, 0, &playerDisplayer);
+    myController.addPlayerController(plC);
+    myController.addBots(1);
+    myController.startGame();
 }

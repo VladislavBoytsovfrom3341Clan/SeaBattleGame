@@ -3,16 +3,19 @@
 
 #include "ParticipantController.h"
 
+#include "Game.h"
 #include "ICommand.h"
 #include "Bot.h"
 
 class BotController : public ParticipantController
 {
-	void placeShips();
+	Coords lastStand = { 0, 0 };
+
+	ICommand* placeShip();
 
 public:
 
-	BotController() = default;
+	BotController(Game& game, int index);
 
 	ICommand* getAction() override;
 };

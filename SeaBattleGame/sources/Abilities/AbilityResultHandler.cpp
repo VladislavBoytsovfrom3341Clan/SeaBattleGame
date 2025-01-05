@@ -1,11 +1,11 @@
 #include"AbilityResultHandler.h"
 
-AbilityResult* AbilityResultHandler::getResult()
+AbilityResult* AbilityResultHandler::getResult() const noexcept
 {
     return mResult;
 }
 
-void AbilityResultHandler::setResult(AbilityResult* result)
+void AbilityResultHandler::setResult(AbilityResult* result) noexcept
 {
     mResult = result;
 }

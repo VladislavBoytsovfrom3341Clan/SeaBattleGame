@@ -12,6 +12,7 @@ struct Participant
 	Battlefield mField;
 	ShipManager mShipManager;
 	AbilityManager mAbilityManager;
+	AbilityResultHandler mHandler;
 	int mDamageMultiplier = 1;
 
 	Participant() = default;
@@ -20,8 +21,8 @@ struct Participant
 
 	Participant(Coords fieldSize, std::vector<std::pair<int, int>> shipList);
 
-	bool isAlive();
+	bool isAlive() const;
 
-	virtual bool isReady();
+	virtual bool isReady() const;
 };
 #endif

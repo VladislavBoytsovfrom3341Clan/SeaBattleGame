@@ -1,6 +1,9 @@
 #ifndef I_VISITOR_H
 #define I_VISITOR_H
 
+/*
+* Interface describing behavior of visitor class for abilities
+*/
 class IVisitor
 {
 public:

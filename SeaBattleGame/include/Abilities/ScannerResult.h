@@ -12,9 +12,9 @@ public:
 
     ScannerResult(const ScannerResult& copy);
 
-    int getResult();
+    int getResult() const;
     
-    AbilityType getType() override;
+    AbilityType getType() const override;
 };
 
 #endif

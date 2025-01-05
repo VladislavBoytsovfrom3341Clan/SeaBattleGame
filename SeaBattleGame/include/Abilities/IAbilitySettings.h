@@ -3,10 +3,16 @@
 
 #include "IVisitor.h"
 #include "AbilityType.h"
-class IAbilitySettings
+
+/*
+* Interface describing Ability settings behavior
+*/
+struct IAbilitySettings
 {
 public:
+
     virtual AbilityType getType()=0;
+
     virtual void acceptVisitor(IVisitor& visitor)=0;
 };
 

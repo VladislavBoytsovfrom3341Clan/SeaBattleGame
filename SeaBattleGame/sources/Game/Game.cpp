@@ -6,7 +6,6 @@
 #include "Player.h"
 #include "Bot.h"
 
-#include <iostream>
 
 Game::Game(GameSettings& settings):
     mSettings(settings)
@@ -52,38 +51,42 @@ void Game::castAbility(IAbilitySettings* settings)
 
 void Game::newMove()
 {
+    delete mState;
     mState = new AttackState(mInfo);
 }
 
 void Game::newRound()
 {
+    delete mState;
     mState = new ShipPosState(mInfo);
     mInfo.mMoveIndex = 0;
     mInfo.mRoundCount++;
 }
 
-int Game::getCurrentParticipantIndex()
+void Game::newGame()
 {
-    int endIndex = mInfo.mMoveIndex + mInfo.mParticipantsNumber;
-    Participant* currentParticipant = mInfo.mParticipants[mInfo.mMoveIndex % mInfo.mParticipantsNumber];
-    while (!(currentParticipant->isAlive()) && mInfo.mMoveIndex < endIndex)
-        currentParticipant = mInfo.mParticipants[(++mInfo.mMoveIndex) % mInfo.mParticipantsNumber];
-    if (endIndex == mInfo.mMoveIndex)
-        throw std::logic_error("No Alive Participants");
-    return mInfo.mMoveIndex % mInfo.mParticipantsNumber;
+    delete mState;
+    mState = new ShipPosState(mInfo);
+    mInfo.mMoveIndex = 0;
+    mInfo.mRoundCount = 1;
 }
 
-Participant* Game::getCurrentParticipant()
+int Game::getCurrentParticipantIndex() const
+{
+    return mState->getCurrentParticipantIndex();
+}
+
+Participant* Game::getCurrentParticipant() const
 {
     return mInfo.mParticipants[this->getCurrentParticipantIndex()];
 }
 
-Participant* Game::getParticipant(int index)
+Participant* Game::getParticipant(int index) const
 {
-    return mInfo.mParticipants[index];
+    return mInfo.mParticipants.at(index);
 }
 
-int Game::countAliveParticipants()
+int Game::countAliveParticipants() const
 {
     int count = 0;
 
@@ -95,7 +98,7 @@ int Game::countAliveParticipants()
     return count;
 }
 
-int Game::countAliveBots()
+int Game::countAliveBots() const
 {
     int count = 0;
     for (Participant* i : mInfo.mParticipants)
@@ -107,7 +110,7 @@ int Game::countAliveBots()
     return count;
 }
 
-int Game::countAlivePlayers()
+int Game::countAlivePlayers() const
 {
     int count = 0;
     for (Participant* i : mInfo.mParticipants)
@@ -121,76 +124,37 @@ int Game::countAlivePlayers()
     return count;
 }
 
+const GameInfo& Game::getInfo()
+{
+    return mInfo;
+}
+
 void Game::save()
 {
-    std::cout << "+Game start\n";
     GameSaver mSaver(mInfo);
     FileHandler mHandler("testsave.txt", true);
     mHandler.write(mSaver);
-    std::cout << "+Game End\n";
 }
 
 void Game::load()
 {
-    std::cout << "+Game start\n";
     GameSaver mSaver(mInfo);
     FileHandler mHandler("testsave.txt", false);
     mHandler.read(mSaver);
-    std::cout << "+Game End\n";
+    mNeedSync = true;
 }
 
-
-//FOR DEBUG ONLY
-
-#include "AbilityManager.h"
-#include "AbilityType.h"
-
-void printAbility(AbilityType t)
+bool Game::checkSync()
 {
-    switch (t)
-    {
-    case AbilityType::DoubleDamage:
-        std::cout << "DoubleDamage\n";
-        break;
-    case AbilityType::Scanner:
-        std::cout << "Scanner\n";
-        break;
-    case AbilityType::Shelling:
-        std::cout << "Shelling\n";
-    }
+    return mNeedSync;
 }
 
-//no OOP only as DEBUG func
-void printShip(Battleship& ship)
+void Game::synchronize()
 {
-    auto segments = ship.getShipCondition();
-    std::cout << "Ship " << ship.getPosition().toString() << " condition:\n\t";
-    for (auto segment : segments)
-        std::cout << int(segment) << ' ';
-    std::cout << '\n';
+    mNeedSync = false;
 }
 
-//no OOP only as DEBUG func
-void printShipsInManager(ShipManager& manager)
+Game::~Game()
 {
-    std::cout << "Inactive ships in manager: " << manager.getInactiveShipsNumber() << '\n';
-    for (int i = 0; i < manager.getInactiveShipsNumber(); i++)
-        printShip(manager.getInactiveShip(i));
-
-    std::cout << "Active ships in manager: " << manager.getActiveShipsNumber() << '\n';
-    for (int i = 0; i < manager.getActiveShipsNumber(); i++)
-        printShip(manager.getActiveShip(i));
-}
-
-void Game::Display()
-{
-    std::cout << "\nMove " << mInfo.mMoveIndex << '\n';
-    for (int i = 0; i < mInfo.mParticipants.size(); i++)
-    {
-        std::cout << "\nParticipant #" << i <<"   " << mInfo.mParticipants[i]->isAlive() << '\n';
-        if(!(mInfo.mParticipants[i]->mAbilityManager.empty()))
-            printAbility(mInfo.mParticipants[i]->mAbilityManager.getFirstAbility());
-        printShipsInManager(mInfo.mParticipants[i]->mShipManager);
-        mInfo.mParticipants[i]->mField.display();
-    }
+    delete mState;
 }

@@ -2,37 +2,28 @@
 
 #include "ShipPlacementException.h"
 #include "AttackCommand.h"
+#include "PlaceShipCommand.h"
 
-#include <iostream>
 
-void BotController::placeShips()
+BotController::BotController(Game& game, int index) :
+    ParticipantController(game, index) {
+}
+
+ICommand* BotController::placeShip()
 {
-    Coords coords = { 0, 0 };
-    std::cout << "Init ship placement\n";
-    while (mParticipant->mShipManager.getInactiveShipsNumber() > 0)
-    {
-        try
-        {
-            Battleship& ship = mParticipant->mShipManager.getInactiveShip(0);
-            mParticipant->mField.setShip(ship, { coords.x, coords.y }, Orientation::vertical);
-            mParticipant->mShipManager.setShipActive(0);
-        }
-        catch (ShipPlacementException& e)
-        {
-            std::cout << e.what();
-        }
-        coords.x += 2;
-    }
-    std::cout << "Ended with " << mParticipant->mShipManager.getActiveShipsNumber() << '\n';
+    ICommand* place = new PlaceShipCommand(0, lastStand, Orientation::vertical);
+    lastStand.x += 2;
+    return place;
 }
 
 ICommand* BotController::getAction()
 {
     if (mParticipant->mShipManager.getInactiveShipsNumber() > 0)
-        this->placeShips();
+        return this->placeShip();
+    lastStand = { 0, 0 };
     int index = 0;
-    Coords coords = { rand() % 5, rand() % 5 };
+    Coords enemyFieldSize = mObserver.getFieldSize(index);
+    Coords coords = { rand() % enemyFieldSize.x, rand() % enemyFieldSize.y };
     ICommand* command = new AttackCommand(index, coords);
-   //std::cout << "\nBot made an attack command!\n";
     return command;
 }

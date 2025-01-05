@@ -19,3 +19,11 @@ void ShipPosState::castAbility(IAbilitySettings* settings)
 void ShipPosState::attack(int index, Coords coords, int damage)
 {
 }
+
+int ShipPosState::getCurrentParticipantIndex() const
+{
+	for (int i = 0; i < mInfo.mParticipantsNumber; i++)
+		if (!mInfo.mParticipants.at(i)->isReady())
+			return i;
+	return 0;
+}
