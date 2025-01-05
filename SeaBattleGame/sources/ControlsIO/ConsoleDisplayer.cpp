@@ -143,7 +143,7 @@ void ConsoleDisplayer::printNewRound() const
 
 void ConsoleDisplayer::printNewGame() const
 {
-	std::cout << "\n\n\nNew Game has started!\n\n\n";
+	//std::cout << "\n\n\nNew Game has started!\n\n\n";
 }
 
 void ConsoleDisplayer::printErrorMessage(const char* str) const

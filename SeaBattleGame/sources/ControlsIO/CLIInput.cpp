@@ -11,6 +11,7 @@
 #include <exception>
 #include <iostream>
 #include <fstream>
+#include <unordered_set>
 
 CLIInput::CLIInput()
 {
@@ -147,6 +148,8 @@ void CLIInput::rebindKeysFromFile(std::string fileName)
 	if (iFile.is_open())
 	{
 		std::unordered_map<char, std::string> newBinds;
+		std::unordered_set<std::string> bindedCommands;
+
 		while (!iFile.eof())
 		{
 			char key;
@@ -160,13 +163,22 @@ void CLIInput::rebindKeysFromFile(std::string fileName)
 					iFile.close();
 					return;
 				}
-				if (!newBinds.insert({ key, command }).second)
+				if (bindedCommands.find(command) != bindedCommands.end())
 				{
-					std::cout << "\nTrying to bind two keys to one command!\n"; 
+					std::cout << "\nTrying to bind two keys to one command!\n";
 					this->printBindedKeys();
 					iFile.close();
 					return;
 				}
+				if (!newBinds.insert({ key, command }).second)
+				{
+					std::cout << "\nTrying to bind two keys to one command!\n";
+					this->printBindedKeys();
+					iFile.close();
+					return;
+				}
+				else
+					bindedCommands.insert(command);
 			}
 			else
 			{
