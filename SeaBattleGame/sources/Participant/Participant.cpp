@@ -16,3 +16,10 @@ bool Participant::isReady() const
 {
 	return mShipManager.getInactiveShipsNumber() == 0;
 }
+
+#include <iostream>
+
+Participant::~Participant()
+{
+	std::cout << "Participant destructor\n";
+}

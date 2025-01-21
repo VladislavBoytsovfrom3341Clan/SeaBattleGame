@@ -13,23 +13,23 @@ Game::Game(GameSettings& settings):
     mState = new ShipPosState(mInfo);
 }
 
-void Game::addParticipant(Participant* participant)
+void Game::addParticipant(std::shared_ptr<Participant> participant)
 {
-    mInfo.mParticipants.push_back(participant);
+    mInfo.mParticipants.emplace_back(participant);
     mInfo.mParticipantsNumber++;
 }
 
-Participant* Game::resetPlayer(int index)
+std::shared_ptr<Participant> Game::resetPlayer(int index)
 {
-    delete mInfo.mParticipants[index];
-    mInfo.mParticipants[index] = new Player(mSettings.mFieldSize, mSettings.mDefaultShips);
+    //delete mInfo.mParticipants[index];
+    mInfo.mParticipants[index] = std::make_shared<Player>(mSettings.mFieldSize, mSettings.mDefaultShips);
     return mInfo.mParticipants[index];
 }
 
-Participant* Game::resetBot(int index)
+std::shared_ptr<Participant> Game::resetBot(int index)
 {
-    delete mInfo.mParticipants[index];
-    mInfo.mParticipants[index] = new Bot(mSettings.mFieldSize, mSettings.mDefaultShips);
+    //delete mInfo.mParticipants[index];
+    mInfo.mParticipants[index] = std::make_shared<Bot>(mSettings.mFieldSize, mSettings.mDefaultShips);
     return mInfo.mParticipants[index];
 }
 
@@ -76,12 +76,12 @@ int Game::getCurrentParticipantIndex() const
     return mState->getCurrentParticipantIndex();
 }
 
-Participant* Game::getCurrentParticipant() const
+std::shared_ptr<Participant> Game::getCurrentParticipant() const
 {
     return mInfo.mParticipants[this->getCurrentParticipantIndex()];
 }
 
-Participant* Game::getParticipant(int index) const
+std::shared_ptr<Participant> Game::getParticipant(int index) const
 {
     return mInfo.mParticipants.at(index);
 }
@@ -90,7 +90,7 @@ int Game::countAliveParticipants() const
 {
     int count = 0;
 
-    for (Participant* participant : mInfo.mParticipants)
+    for (auto& participant : mInfo.mParticipants)
     {
         if (participant->isAlive())
             count++;
@@ -101,7 +101,7 @@ int Game::countAliveParticipants() const
 int Game::countAliveBots() const
 {
     int count = 0;
-    for (Participant* i : mInfo.mParticipants)
+    for (auto& i : mInfo.mParticipants)
     {
         if (typeid(*i) == typeid(Bot))
             if (i->isAlive())
@@ -113,7 +113,7 @@ int Game::countAliveBots() const
 int Game::countAlivePlayers() const
 {
     int count = 0;
-    for (Participant* i : mInfo.mParticipants)
+    for (auto& i : mInfo.mParticipants)
     {
         if (typeid(*i) == typeid(Player))
         {

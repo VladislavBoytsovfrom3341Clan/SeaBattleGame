@@ -17,7 +17,7 @@ std::ifstream& operator>>(std::ifstream& is, GameSaver& state)
 	is >> state.mInfo.mPlayersNumber;
 	is >> state.mInfo.mBotsNumber;
 
-	std::vector<Participant*> tempParticipants(state.mInfo.mParticipantsNumber);
+	std::vector<std::shared_ptr<Participant>> tempParticipants(state.mInfo.mParticipantsNumber);
 	for (int i = 0; i < state.mInfo.mParticipantsNumber; i++)
 	{
 		int index;
@@ -29,6 +29,7 @@ std::ifstream& operator>>(std::ifstream& is, GameSaver& state)
 		int activeShipsNumber;
 		is >> activeShipsNumber;
 		std::vector<std::shared_ptr<Battleship>> activeShips(activeShipsNumber);
+		std::vector<std::shared_ptr<Battleship>> inactiveShips(0);
 		for (int j = 0; j < activeShipsNumber; j++)
 		{
 			activeShips[j] = std::make_shared<Battleship>();
@@ -41,9 +42,9 @@ std::ifstream& operator>>(std::ifstream& is, GameSaver& state)
 			field.setShip(*ship, ship->getPosition(), ship->getOrientation());
 		}
 		if (entity == 0)
-			tempParticipants[i] = new Bot(field, {}, activeShips);
+			tempParticipants[i] = std::make_shared<Bot>(field, inactiveShips, activeShips);
 		else
-			tempParticipants[i] = new Player(field, {}, activeShips, aManager);
+			tempParticipants[i] = std::make_shared<Player>(field, inactiveShips, activeShips, aManager);
 	}
 	state.mInfo.mParticipants.resize(state.mInfo.mParticipantsNumber);
 	for (int i=0; i<state.mInfo.mParticipantsNumber; i++)

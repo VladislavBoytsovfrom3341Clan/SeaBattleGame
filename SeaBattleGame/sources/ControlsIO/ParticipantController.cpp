@@ -4,7 +4,9 @@ ParticipantController::ParticipantController(Game& game, int index) :
 	mObserver(game), mIndex(index) {
 }
 
-void ParticipantController::setParticipant(const Participant* participant)
+#include <iostream>
+
+void ParticipantController::setParticipant(std::shared_ptr<const Participant> participant)
 {
 	mParticipant = participant;
 }
@@ -24,7 +26,8 @@ void ParticipantController::handleException(std::exception& exp)
 	mObserver.handleException(exp);
 }
 
+#include <iostream>
 ParticipantController::~ParticipantController()
 {
-	delete mParticipant;
+	std::cout << "Participant controller destructor\n";
 }

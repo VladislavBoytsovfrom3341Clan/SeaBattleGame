@@ -7,19 +7,21 @@
 #include "Game.h"
 
 #include <stdexcept>
+#include <memory>
 
 class ParticipantController
 {
 protected:
 	int mIndex = 0;
-	const Participant* mParticipant = nullptr;
+	std::shared_ptr<const Participant> mParticipant;
 	GameObserver mObserver;
+
 public:
 	ParticipantController(Game& game, int index);
 
 	virtual ICommand* getAction() = 0;
 
-	void setParticipant(const Participant* participant);
+	void setParticipant(std::shared_ptr<const Participant> participant);
 
 	bool isReady() const;
 

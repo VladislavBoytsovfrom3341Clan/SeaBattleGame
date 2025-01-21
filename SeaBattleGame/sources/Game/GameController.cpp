@@ -21,7 +21,7 @@ GameController::GameController(Game& game, GameSettings& settings) :
 
 void GameController::addPlayerController(ParticipantController& controller)
 {
-	Player* newPlayer = new Player(mSettings.mFieldSize, mSettings.mDefaultShips);
+	std::shared_ptr<Player> newPlayer = std::make_shared<Player>(mSettings.mFieldSize, mSettings.mDefaultShips);
 	controller.setParticipant(newPlayer);
 	mControllers.push_back(&controller);
 	mGame.addParticipant(newPlayer);
@@ -31,7 +31,7 @@ void GameController::addBots(int number)
 {
 	for (int i = 0; i < number; i++)
 	{
-		Bot* newBot = new Bot(mSettings.mFieldSize, mSettings.mDefaultShips);
+		std::shared_ptr<Bot> newBot = std::make_shared<Bot>(mSettings.mFieldSize, mSettings.mDefaultShips);
 		BotController* controller = new BotController(mGame, mControllers.size() + i);
 		controller->setParticipant(newBot);
 		mControllers.push_back(controller);

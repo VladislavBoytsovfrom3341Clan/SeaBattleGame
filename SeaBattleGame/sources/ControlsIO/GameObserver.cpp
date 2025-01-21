@@ -65,7 +65,7 @@ void GameObserver::track(int pIndex)
 		}
 		else
 		{
-			this->checkAbilityResultChanges(mGame.getParticipant(pIndex));
+			this->checkAbilityResultChanges(mGame.getParticipant(pIndex).get());
 			mDisplayer->display(mGame.getInfo(), pIndex);
 		}
 	}

@@ -24,5 +24,7 @@ struct Participant
 	bool isAlive() const;
 
 	virtual bool isReady() const;
+
+	virtual ~Participant();
 };
 #endif
