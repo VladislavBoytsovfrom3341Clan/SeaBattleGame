@@ -8,7 +8,7 @@
 constexpr int minimalFieldSize = minimalShipLength;
 constexpr int maximalFieldSize = 25;
 
-//enum for plsyers vision of battlefield
+//enum for players vision of battlefield
 enum class CellStatus
 {
     unknown,

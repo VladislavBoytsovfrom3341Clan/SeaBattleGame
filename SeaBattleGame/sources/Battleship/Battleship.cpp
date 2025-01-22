@@ -217,9 +217,3 @@ std::ostream& operator<<(std::ostream& os, Battleship& ship)
     os << '\n';
     return os;
 }
-
-
-Battleship::~Battleship()
-{
-    
-}

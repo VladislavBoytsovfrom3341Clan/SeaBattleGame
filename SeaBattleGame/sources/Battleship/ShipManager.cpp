@@ -37,6 +37,7 @@ int ShipManager::getShipsNumber() const noexcept
     return mShips.size();
 }
 
+//Iterates through all ships, counts alive by Battleship::isAlive()
 int ShipManager::getAliveShipsNumber() const noexcept
 {
     int shipNum=0;
@@ -47,6 +48,7 @@ int ShipManager::getAliveShipsNumber() const noexcept
     return shipNum;
 }
 
+//Iterates through all ships, counts all false inactive
 int ShipManager::getInactiveShipsNumber() const noexcept
 {
     int num = 0;
@@ -56,6 +58,7 @@ int ShipManager::getInactiveShipsNumber() const noexcept
     return num;
 }
 
+//Iterates through all ships, counts all true as active
 int ShipManager::getActiveShipsNumber() const noexcept
 {
     int num = 0;
@@ -65,6 +68,7 @@ int ShipManager::getActiveShipsNumber() const noexcept
     return num;
 }
 
+//Iterates through all ships
 Battleship& ShipManager::getActiveShip(int index) const
 {
     int realIndex = 0;
@@ -78,7 +82,7 @@ Battleship& ShipManager::getActiveShip(int index) const
     return *mShips.at(realIndex-1).first;
 }
 
-
+//Iterates through all ships
 Battleship& ShipManager::getInactiveShip(int index) const
 {
     int realIndex = 0;
@@ -91,7 +95,7 @@ Battleship& ShipManager::getInactiveShip(int index) const
     }
     return *mShips.at(realIndex-1).first;
 }
-
+//Iterates through all ships
 void ShipManager::setShipActive(int index)
 {
     int realIndex = 0;
@@ -105,6 +109,7 @@ void ShipManager::setShipActive(int index)
     mShips.at(realIndex - 1).second = true;
 }
 
+//Iterates through all ships
 void ShipManager::setShipInactive(int index)
 {
     int realIndex = 0;

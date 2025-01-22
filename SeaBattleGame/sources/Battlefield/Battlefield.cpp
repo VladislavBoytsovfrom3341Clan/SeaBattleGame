@@ -58,7 +58,7 @@ Battlefield::Battlefield(Battlefield&& moved) noexcept
 
 void Battlefield::setShip(Battleship& ship, Coords coords, Orientation orientation)
 {
-    /**
+    /*
      * Uses offset to calculate the exact ships area as
      * (x+xOffset, y+yOffset)
     */
@@ -126,6 +126,7 @@ CellStatus Battlefield::getCellStatus(Coords coords) const
     return mBattlefieldArray[coords.y][coords.x].getStatus();
 }
 
+//may throw an exception if there is no ship
 SegmentCondition Battlefield::getCellShipCondition(Coords coords) const
 {
     if(coords.x<0 || coords.x>=mHorizontalSize || coords.y<0 || coords.y>=mVerticalSize)

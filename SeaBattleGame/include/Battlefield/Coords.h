@@ -10,6 +10,9 @@ enum class Orientation
     vertical
 };
 
+/*
+* Used to set any point on Battlefield
+*/
 struct Coords
 {
     int x;
@@ -19,6 +22,7 @@ struct Coords
 
     Coords(int c_x, int c_y);
 
+    //Converts to string for std::cout 'cause I'm lasy af
     std::string toString() const;
 };
 

@@ -61,6 +61,7 @@ class Battleship
 
 public:
     Battleship() = default;
+
     explicit Battleship(int length);
 
     Battleship(Coords coords, Orientation ornt, std::vector<int> init);
@@ -93,7 +94,7 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, Battleship& ship);
     
-    ~Battleship();
+    ~Battleship() = default;
 };
 
 #endif
