@@ -5,16 +5,20 @@
 #include "DoubleDamageSettings.h"
 
 /*
-* ability sets some given multiplier to 2
+* Used to change player attack stats
+* for doubling next attack damage
+* Ability sets some given multiplier to 2
 */
 class DoubleDamage: public IAbility
 {
-    int& mMultiplier;   //extern multiplier to be set
+    //Extern multiplier to be set
+    int& mMultiplier;
 
 public:
 
     DoubleDamage(DoubleDamageSettings* ddSettings);  
 
+    //Doubles damage by setting multiplier to 2
     void cast() override;
 };
 

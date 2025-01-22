@@ -6,7 +6,8 @@
 #include "IAbilitySettings.h"
 
 /*
-* Struct describing settings for double damage (multiplier)
+* Struct describing settings for double damage 
+* (storages multiplier)
 */
 struct DoubleDamageSettings: public IAbilitySettings
 {
@@ -18,6 +19,7 @@ public:
 
     AbilityType getType() override;
 
+    //Visitor deducts type of ability to build
     void acceptVisitor(IVisitor& visitor) override;
 };
 

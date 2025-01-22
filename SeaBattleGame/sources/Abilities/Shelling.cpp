@@ -5,6 +5,9 @@
 Shelling::Shelling(ShellingSettings* shSettings):
 mShipManager(shSettings->mManager){}
 
+//Simply chooses random ship from list of active,
+//then chooses random segment of chosen ship
+//and calls damageSegment() on it
 void Shelling::cast()
 {
     int shipNumber = mShipManager.getActiveShipsNumber();

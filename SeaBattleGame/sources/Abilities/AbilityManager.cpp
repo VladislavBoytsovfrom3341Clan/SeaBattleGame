@@ -7,7 +7,7 @@
 #include <stdexcept>
 #include <random>
 
-
+//Initialises deque of abilities randomly 
 AbilityManager::AbilityManager():
 mVisitor(mFactory)
 {
@@ -16,7 +16,7 @@ mVisitor(mFactory)
     auto rng = std::default_random_engine {};
     std::shuffle(mAbilitiesVector.begin(), mAbilitiesVector.end(), rng);
     
-    for(auto i: mAbilitiesVector)
+    for(auto& i: mAbilitiesVector)
         mAbilities.push_back(i);
 }
 
@@ -45,13 +45,16 @@ void AbilityManager::addRandomAbility()
     this->addAbility(mAbilitiesVector.front());
 }
 
+//Calls visitor on settings, who calls factory to build ability
 IAbility* AbilityManager::buildAbility(IAbilitySettings* settings)
 {
     settings->acceptVisitor(mVisitor);
     return mFactory.getAbility();
 }
 
-void AbilityManager::castLastAbility(IAbilitySettings& settings)
+//Calls build ability on proper settings type or throws an exception
+//Then casts ability and delete one
+void AbilityManager::castFirstAbility(IAbilitySettings& settings)
 {
     if (this->empty())
         throw NoAbilityException();
@@ -72,7 +75,6 @@ bool AbilityManager::empty() const noexcept
     return mAbilities.empty();
 }
 
-
 AbilityType AbilityManager::getFirstAbility() const
 {
     if (this->empty())
@@ -92,6 +94,7 @@ AbilityManager& AbilityManager::operator=(AbilityManager&& manager) noexcept
     return *this;
 }
 
+//Reads types of abilities by according chars
 std::istream& operator>>(std::istream& is, AbilityManager& manager)
 {
     int n = 0;
@@ -132,6 +135,7 @@ std::istream& operator>>(std::istream& is, AbilityManager& manager)
     return is;
 }
 
+//Writes abilities with according chars
 std::ostream& operator<<(std::ostream& os, AbilityManager& manager)
 {
     os << manager.mAbilities.size() << '\n';

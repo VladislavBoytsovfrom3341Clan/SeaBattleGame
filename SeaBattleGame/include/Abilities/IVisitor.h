@@ -3,6 +3,7 @@
 
 /*
 * Interface describing behavior of visitor class for abilities
+* Is used to deduct ability types by their settings
 */
 class IVisitor
 {

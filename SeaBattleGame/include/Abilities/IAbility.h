@@ -8,6 +8,7 @@ class IAbility
 {
 public:
 
+    //Virtual method describing "behavior" of any ability
     virtual void cast()=0;
 };
 

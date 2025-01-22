@@ -6,7 +6,7 @@
 #include "IVisitor.h"
 
 /*
-* Class giving factory proper types of abilities to build
+* Class gives factory proper types of abilities to build
 */
 class AbilitySettingsVisitor: public IVisitor
 {

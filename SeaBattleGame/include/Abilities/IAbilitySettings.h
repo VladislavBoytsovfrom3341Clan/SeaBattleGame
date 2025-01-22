@@ -13,6 +13,8 @@ public:
 
     virtual AbilityType getType()=0;
 
+    //Virtual method to accept visitor in order to
+    //deduct proper ability type to build
     virtual void acceptVisitor(IVisitor& visitor)=0;
 };
 

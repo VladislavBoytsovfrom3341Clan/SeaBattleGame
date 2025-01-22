@@ -5,10 +5,12 @@
 
 /*
 * Class used for storaging and receiving result of casted abilities
+* Basically just getter and setter with polymorphism
 */
 class AbilityResultHandler
 {
-    AbilityResult* mResult = nullptr;   //storages result
+    //Storages result
+    AbilityResult* mResult = nullptr;   
 
 public:
 

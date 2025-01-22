@@ -5,6 +5,7 @@
 
 /*
 * Interface describing results for some abilities
+* Is virtual as sacrifice to polymorphism
 */
 class AbilityResult
 {

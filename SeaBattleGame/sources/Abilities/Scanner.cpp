@@ -4,6 +4,8 @@
 Scanner::Scanner(ScannerSettings* scSettings):
 mField(scSettings->mField), mCoords(scSettings->mCoords), mHandler(scSettings->mHandler){}
 
+//Simply double for() to search for ships
+//Uses Battlefield::hasShipAtCell()
 void Scanner::cast()
 {
     int mSegNum = 0;
