@@ -3,9 +3,15 @@
 
 #include "Game.h"
 
+/*
+* Interface describing behavior of any command
+* that may be received from Controllers
+*/
 class ICommand
 {
 public:
+
+	//Basically should call some Game methods
 	virtual void execute(Game& game) = 0;
 };
 

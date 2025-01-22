@@ -3,11 +3,16 @@
 
 #include "ICommand.h"
 
+
+/*
+* Command orders to save current game state
+*/
 class SaveCommand : public ICommand
 {
 public:
 	SaveCommand() = default;
 
+	//Saves game
 	void execute(class Game& game) override;
 };
 

@@ -10,6 +10,7 @@
 ScannerCommand::ScannerCommand(int participantIndex, Coords coords):
 	mParticipantIndex(participantIndex), mCoords(coords) {}
 
+//Builds scannerSettings and calls Game::castAbility()
 void ScannerCommand::execute(Game& game)
 {
 	ScannerSettings scSettings(game.getParticipant(mParticipantIndex)->mField, mCoords, game.getCurrentParticipant()->mHandler);

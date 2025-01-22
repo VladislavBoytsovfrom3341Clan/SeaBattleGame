@@ -4,6 +4,12 @@
 #include "ICommand.h"
 #include "Coords.h"
 
+
+/*
+* Command orders to place
+* some ship of CURRENT player
+* to some position
+*/
 class PlaceShipCommand : public ICommand
 {
 	int mShipIndex;
@@ -14,6 +20,7 @@ public:
 
 	PlaceShipCommand(int shipIndex, Coords coords, Orientation orientation);
 
+	//Orders to place ship at received position
 	void execute(class Game& game) override;
 };
 

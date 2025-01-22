@@ -4,6 +4,10 @@
 #include "ICommand.h"
 #include "Coords.h"
 
+
+/*
+* Command orders to attack some player's field at some coords
+*/
 class AttackCommand : public ICommand
 {
 	int mAttackedParticipantIndex;
@@ -12,6 +16,7 @@ class AttackCommand : public ICommand
 public:
 	AttackCommand(int participantIndex, Coords targetCoords);
 
+	//Attacks player set by index at set coords
 	void execute(class Game& game) override;
 };
 
