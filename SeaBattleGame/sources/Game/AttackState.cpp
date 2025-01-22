@@ -31,9 +31,9 @@ void AttackState::attack(int index, Coords coords, int damage)
 int AttackState::getCurrentParticipantIndex() const
 {
 	int endIndex = mInfo.mMoveIndex + mInfo.mParticipantsNumber;
-	Participant* currentParticipant = mInfo.mParticipants[mInfo.mMoveIndex % mInfo.mParticipantsNumber];
+	Participant* currentParticipant = mInfo.mParticipants[mInfo.mMoveIndex % mInfo.mParticipantsNumber].get();
 	while (!(currentParticipant->isAlive()) && mInfo.mMoveIndex < endIndex)
-		currentParticipant = mInfo.mParticipants[(++mInfo.mMoveIndex) % mInfo.mParticipantsNumber];
+		currentParticipant = mInfo.mParticipants[(++mInfo.mMoveIndex) % mInfo.mParticipantsNumber].get();
 	if (endIndex == mInfo.mMoveIndex)
 		throw std::logic_error("No Alive Participants");
 	return mInfo.mMoveIndex % mInfo.mParticipantsNumber;

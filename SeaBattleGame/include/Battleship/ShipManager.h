@@ -5,6 +5,8 @@
 #include"Battleship.h"
 #include"Battlefield.h"
 
+#include <memory>
+
 /**
  * This class contains all placed-on-field ships
  * and yet not placed ones, also taking responsibility for
@@ -14,8 +16,11 @@
 */
 class ShipManager
 {
-    std::vector<Battleship*> mInactiveShipsArray;
-    std::vector<Battleship*> mActiveShipsArray;
+    /*
+    * Vector of ships storaged in manager; 
+    * bool stays for false = inactive / true = active
+    */
+    std::vector<std::pair<std::shared_ptr<Battleship>, bool>> mShips;
 
 public:
     ShipManager() = default;
@@ -23,7 +28,7 @@ public:
     //gets list of pairs <shipLength, amount>, places all to inactive ships
     ShipManager(std::vector<std::pair<int, int>> shipList);
 
-    ShipManager(std::vector<Battleship*> inactive, std::vector<Battleship*> active);
+    ShipManager(std::vector<std::shared_ptr<Battleship>> inactive, std::vector<std::shared_ptr<Battleship>> active);
 
     ShipManager(const ShipManager& copy);
 
@@ -43,7 +48,7 @@ public:
 
     void setShipInactive(int index);
 
-    ~ShipManager();
+    ~ShipManager() = default;
 };
 
 #endif

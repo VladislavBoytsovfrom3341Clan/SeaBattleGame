@@ -218,3 +218,8 @@ std::ostream& operator<<(std::ostream& os, Battleship& ship)
     return os;
 }
 
+
+Battleship::~Battleship()
+{
+    
+}

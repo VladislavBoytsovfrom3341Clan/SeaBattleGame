@@ -24,11 +24,11 @@ public:
 
 	//methods for setting up participants 
 
-	void addParticipant(Participant* participant);
+	void addParticipant(std::shared_ptr<Participant>);
 
-	Participant* resetPlayer(int index);
+	std::shared_ptr<Participant> resetPlayer(int index);
 
-	Participant* resetBot(int index);
+	std::shared_ptr<Participant> resetBot(int index);
 
 	bool checkSync();
 
@@ -58,9 +58,9 @@ public:
 
 	const GameInfo& getInfo();
 
-	Participant* getCurrentParticipant() const;
+	std::shared_ptr<Participant> getCurrentParticipant() const;
 
-	Participant* getParticipant(int index) const;
+	std::shared_ptr<Participant> getParticipant(int index) const;
 
 	int getCurrentParticipantIndex() const;
 
