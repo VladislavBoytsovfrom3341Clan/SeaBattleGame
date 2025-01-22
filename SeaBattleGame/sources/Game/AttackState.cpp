@@ -14,7 +14,7 @@ void AttackState::placeShip(int playerIndex, int shipIndex, Coords coords, Orien
 void AttackState::castAbility(IAbilitySettings* settings)
 {
 	if(mInfo.mUsedAbility == false)
-		mInfo.mParticipants.at(mInfo.mMoveIndex % mInfo.mParticipantsNumber)->mAbilityManager.castLastAbility(*settings);
+		mInfo.mParticipants.at(mInfo.mMoveIndex % mInfo.mParticipantsNumber)->mAbilityManager.castFirstAbility(*settings);
 	mInfo.mUsedAbility = true;
 }
 
