@@ -16,11 +16,11 @@
 */
 class ShipManager
 {
-    /*
-    * Vector of ships storaged in manager; 
-    * bool stays for false = inactive / true = active
-    */
-    std::vector<std::pair<std::shared_ptr<Battleship>, bool>> mShips;
+    //vector of inactive ships (aka not placed on map)
+    std::vector<std::shared_ptr<Battleship>> mInactiveShipsVector;
+
+    //vector of active ships (aka placed on map)
+    std::vector<std::shared_ptr<Battleship>> mActiveShipsVector;
 
 public:
     ShipManager() = default;

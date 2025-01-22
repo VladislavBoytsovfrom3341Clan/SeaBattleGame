@@ -14,27 +14,26 @@ ShipManager::ShipManager(std::vector<std::pair<int, int>> shipList)
 
         for(int i=0; i<shipSeries.second; i++)
         {
-            mShips.push_back({ std::make_shared<Battleship>(shipSeries.first), false});
+            mInactiveShipsVector.push_back( std::make_shared<Battleship>(shipSeries.first));
         }
     }
 }
 
 ShipManager::ShipManager(std::vector<std::shared_ptr<Battleship>> inactive, std::vector<std::shared_ptr<Battleship>> active)
 {
-    for (auto& ship : inactive)
-        mShips.push_back({ ship, false });
-    for (auto& ship : active)
-        mShips.push_back({ship, true});
+    mInactiveShipsVector = inactive;
+    mActiveShipsVector = active;
 }
 
 ShipManager::ShipManager(const ShipManager& copy)
 {
-    mShips = copy.mShips;
+    mActiveShipsVector = copy.mActiveShipsVector;
+    mInactiveShipsVector = copy.mInactiveShipsVector;
 }
 
 int ShipManager::getShipsNumber() const noexcept
 {
-    return mShips.size();
+    return mInactiveShipsVector.size() + mActiveShipsVector.size();
 }
 
 //Iterates through all ships, counts alive by Battleship::isAlive()
@@ -42,84 +41,57 @@ int ShipManager::getAliveShipsNumber() const noexcept
 {
     int shipNum=0;
 
-    for(auto& ship: mShips)
-        if(ship.first->isAlive())
+    for (auto& inactiveShip : mInactiveShipsVector)
+        if (inactiveShip->isAlive())
             shipNum++;
+    for (auto& activeShip : mActiveShipsVector)
+        if (activeShip->isAlive())
+            shipNum++;
+    
     return shipNum;
 }
 
-//Iterates through all ships, counts all false inactive
 int ShipManager::getInactiveShipsNumber() const noexcept
 {
-    int num = 0;
-    for (auto& ship : mShips)
-        if (ship.second == false)
-            num++;
-    return num;
+    return mInactiveShipsVector.size();
 }
 
-//Iterates through all ships, counts all true as active
 int ShipManager::getActiveShipsNumber() const noexcept
 {
-    int num = 0;
-    for (auto& ship : mShips)
-        if (ship.second == true)
-            num++;
-    return num;
+    return mActiveShipsVector.size();
 }
 
-//Iterates through all ships
+//returns i-th ship in mActiveShipsVector
 Battleship& ShipManager::getActiveShip(int index) const
 {
-    int realIndex = 0;
-    for (int i = -1; i < index; realIndex++)
-    {
-        if (realIndex >= mShips.size())
-            throw std::invalid_argument("Invalid ship index");
-        if (mShips.at(realIndex).second == true)
-            i++;
-    }
-    return *mShips.at(realIndex-1).first;
+    if (index < 0 || index >= mActiveShipsVector.size())
+        throw std::invalid_argument("Invalid ship index");
+    return *(mActiveShipsVector[index]);
 }
 
-//Iterates through all ships
+//returns i-th ship in mInactiveShipsVector
 Battleship& ShipManager::getInactiveShip(int index) const
 {
-    int realIndex = 0;
-    for (int i = -1; i < index; realIndex++)
-    {
-        if (realIndex >= mShips.size())
-            throw std::invalid_argument("Invalid ship index");
-        if (mShips.at(realIndex).second == false)
-            i++;
-    }
-    return *mShips.at(realIndex-1).first;
-}
-//Iterates through all ships
-void ShipManager::setShipActive(int index)
-{
-    int realIndex = 0;
-    for (int i = -1; i < index; realIndex++)
-    {
-        if (realIndex >= mShips.size())
-            throw std::invalid_argument("Invalid ship index");
-        if (mShips.at(realIndex).second == false)
-            i++;
-    }
-    mShips.at(realIndex - 1).second = true;
+    if (index < 0 || index >= mInactiveShipsVector.size())
+        throw std::invalid_argument("Invalid ship index");
+    return *(mInactiveShipsVector[index]);
 }
 
-//Iterates through all ships
+//Moves i-th ship from mInactiveShipsVector to end of mActiveShipsVector
+void ShipManager::setShipActive(int index)
+{
+    if (index < 0 || index >= mInactiveShipsVector.size())
+        throw std::invalid_argument("Invalid ship index");
+    std::move(mInactiveShipsVector.begin() + index, mInactiveShipsVector.begin() + index + 1, std::back_inserter(mActiveShipsVector));
+    mInactiveShipsVector.erase(mInactiveShipsVector.begin() + index);
+}
+
+//Moves i-th ship from mActiveShipsVector to end of mInactiveShipsVector
 void ShipManager::setShipInactive(int index)
 {
-    int realIndex = 0;
-    for (int i = -1; i < index; realIndex++)
-    {
-        if (realIndex >= mShips.size())
-            throw std::invalid_argument("Invalid ship index");
-        if (mShips.at(realIndex).second == true)
-            i++;
-    }
-    mShips.at(realIndex - 1).second = false;
+    if (index < 0 || index >= mActiveShipsVector.size())
+        throw std::invalid_argument("Invalid ship index");
+    std::move(mActiveShipsVector.begin() + index, mActiveShipsVector.begin() + index + 1, std::back_inserter(mInactiveShipsVector));
+    mActiveShipsVector.erase(mActiveShipsVector.begin() + index);
 }
 
